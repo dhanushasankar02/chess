@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Grandmaster Portal | Apex Chess Academy</title>
+
+    <!-- Google Fonts & Font Awesome 6 Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ---------- RESET & SYSTEM DESIGN TOKENS ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #f1f5f9;
+            --surface-glass: rgba(255, 255, 255, 0.95);
+            --card-bg: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent: #d97706; /* Chess Amber / Championship Gold */
+            --accent-hover: #b45309;
+            --accent-glow: rgba(217, 119, 6, 0.25);
+            --border-light: rgba(15, 23, 42, 0.12);
+            --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 20px 45px -15px rgba(0, 0, 0, 0.12);
+            --transition-smooth: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            --font-main: 'Inter', sans-serif;
+            --font-heading: 'Outfit', sans-serif;
+            --sidebar-width: 280px;
+        }
+
+        body.dark-mode {
+            --bg-primary: #080a0f;
+            --bg-secondary: #0e121b;
+            --surface-glass: rgba(14, 18, 27, 0.95);
+            --card-bg: #141a26;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-light: rgba(255, 255, 255, 0.1);
+            --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.35);
+            --shadow-lg: 0 20px 45px -15px rgba(0, 0, 0, 0.65);
+        }
+
+        /* RTL Icon Flipping & Layout Fixes */
+        body[dir="rtl"] .fa-angle-right,
+        body[dir="rtl"] .fa-arrow-right,
+        body[dir="rtl"] .fa-chevron-right,
+        body[dir="rtl"] .fa-angle-double-right {
+            transform: scaleX(-1);
+            display: inline-block;
+        }
+
+        body {
+            font-family: var(--font-main);
+            font-size: 1rem;
+            line-height: 1.6;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* ---------- CHESS DASHBOARD SIDEBAR ---------- */
+        .dashboard-sidebar {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-light);
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 2rem 1.25rem;
+            transition: var(--transition-smooth);
+        }
+
+        body[dir="rtl"] .dashboard-sidebar {
+            left: auto;
+            right: 0;
+            border-right: none;
+            border-left: 1px solid var(--border-light);
+        }
+
+        .logo-area {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            color: inherit;
+            text-decoration: none !important;
+            line-height: 1;
+        }
+
+        .logo-knight {
+            font-size: 2.3rem;
+            color: var(--accent);
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(0 2px 8px var(--accent-glow));
+            transition: var(--transition-smooth);
+            flex-shrink: 0;
+        }
+
+        .logo-area:hover .logo-knight {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .logo-text-block {
+            display: inline-flex;
+            flex-direction: column;
+            justify-content: center;
+            line-height: 1;
+        }
+
+        .logo-title {
+            font-family: var(--font-heading);
+            font-weight: 900;
+            font-size: 1.35rem;
+            letter-spacing: 1.5px;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #a06834 0%, #d4a373 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+        }
+
+        body.dark-mode .logo-title {
+            font-family: var(--font-heading);
+            font-weight: 900;
+            font-size: 1.35rem;
+            letter-spacing: 1.5px;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #a06834 0%, #d4a373 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+        }
+
+        .logo-sub {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            letter-spacing: 3px;
+            line-height: 1;
+            margin-top: 2px;
+            display: block;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .menu-item-link {
+            white-space: nowrap !important;
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: var(--transition-smooth);
+        }
+
+        .menu-item-link i {
+            font-size: 1.15rem;
+            width: 22px;
+            text-align: center;
+        }
+
+        .menu-item-link:hover,
+        .menu-item-link.active {
+            background: rgba(217, 119, 6, 0.12);
+            color: var(--accent);
+        }
+
+        .sidebar-footer {
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .sidebar-footer .ctrl-btn,
+        .ctrl-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 0.88rem;
+            padding: 0.45rem 0.9rem;
+            border-radius: 50px;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 8px !important;
+            line-height: 1;
+            height: 40px;
+            width: 100%;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-sm);
+            backdrop-filter: blur(12px);
+            box-sizing: border-box;
+        }
+
+        .ctrl-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* ---------- MAIN WRAPPER ---------- */
+        .dashboard-main-content {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition-smooth);
+        }
+
+        body[dir="rtl"] .dashboard-main-content {
+            margin-left: 0;
+            margin-right: var(--sidebar-width);
+        }
+
+        /* TOP DASHBOARD BAR */
+        .dashboard-topbar {
+            min-height: 70px;
+            height: auto;
+            background: var(--surface-glass);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-light);
+            padding: 0.6rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 90;
+        }
+
+        .topbar-search {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-light);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            width: 100%;
+            max-width: 340px;
+            min-width: 120px;
+            flex: 1 1 auto;
+        }
+
+        .topbar-search input {
+            border: none;
+            background: transparent;
+            outline: none;
+            color: var(--text-primary);
+            font-size: 0.88rem;
+            width: 100%;
+            min-width: 40px;
+        }
+
+        .user-top-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+
+        body[dir="rtl"] .user-top-info {
+            text-align: left !important;
+        }
+
+        .mobile-sidebar-btn {
+            display: none;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-light);
+            color: var(--text-primary);
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+            font-size: 1rem;
+            transition: var(--transition-smooth);
+        }
+
+        .mobile-sidebar-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .sidebar-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar-backdrop.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .user-avatar-mini {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent) 0%, #92400e 100%);
+            color: #ffffff;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        /* SECTION ANIMATION SYSTEM */
+        [data-framer-section] {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        [data-framer-section].framer-animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* SECTION STYLING */
+        .container-fluid {
+            padding: 2.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .db-section {
+            display: none;
+            margin-bottom: 2rem;
+        }
+
+        .db-section.active-tab {
+            display: block;
+        }
+
+        .section-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(217, 119, 6, 0.12);
+            color: #92400e;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            margin-bottom: 0.75rem;
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-desc {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            margin-bottom: 2rem;
+        }
+
+        .overview-grid-2col, .slot-layout-grid, .loyalty-grid, .settings-grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .user-welcome-card, .card-box {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 2.5rem;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stats-grid-3col {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .stat-num {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-weight: 700;
+            font-size: 0.88rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.85rem 1.1rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-light);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            outline: none;
+            transition: var(--transition-smooth);
+        }
+
+        .form-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: var(--accent);
+            color: #ffffff;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            padding: 0.85rem 1.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            width: 100%;
+            font-size: 0.95rem;
+            box-shadow: 0 6px 18px var(--accent-glow);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        /* PROGRESS STEPS (ENGINE DEPTH EVAL) */
+        .progress-steps-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 2rem 0 2.5rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .progress-step {
+            text-align: center;
+            flex: 1 1 0px;
+            min-width: 120px;
+        }
+
+        .step-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--bg-primary);
+            border: 2px solid var(--border-light);
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.75rem;
+            font-weight: 800;
+            font-size: 1.15rem;
+        }
+
+        .step-icon.done {
+            background: #10b981;
+            border-color: #10b981;
+            color: #ffffff;
+        }
+
+        .step-icon.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #ffffff;
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        /* REPERTOIRE GRIDS */
+        .repertoire-grid-3col {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .repertoire-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: var(--transition-smooth);
+        }
+
+        .repertoire-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .reward-item {
+            background: var(--card-bg);
+            border-radius: 18px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.25rem;
+        }
+
+        /* HISTORY TABLE */
+        .history-table-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+            overflow-x: auto !important;
+            width: 100%;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .history-table {
+            width: 100%;
+            min-width: 650px;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        body[dir="rtl"] .history-table {
+            text-align: right;
+        }
+
+        .history-table th {
+            background: var(--bg-secondary);
+            padding: 1.2rem 1.5rem;
+            font-family: var(--font-heading);
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--border-light);
+            white-space: nowrap !important;
+        }
+
+        .history-table td {
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid var(--border-light);
+            font-size: 0.95rem;
+            white-space: nowrap !important;
+        }
+
+        .history-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* PURE CSS STYLED BOARD DISPLAY */
+        .chess-board-card {
+            width: 100%;
+            max-width: 480px;
+            aspect-ratio: 1/1;
+            margin: 0 auto;
+            border-radius: 20px;
+            border: 10px solid #1e293b;
+            box-shadow: var(--shadow-lg);
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            grid-template-rows: repeat(8, 1fr);
+            overflow: hidden;
+            background: #cbd5e1;
+        }
+
+        .tile-light { background: #f8fafc; }
+        .tile-dark { background: #64748b; }
+
+        .chess-square {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(1.2rem, 3.2vw, 2.2rem);
+            color: #0f172a;
+            user-select: none;
+        }
+
+        .chess-square.white-piece {
+            color: #ffffff;
+            filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.7));
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 992px) {
+            .mobile-sidebar-btn {
+                display: flex !important;
+            }
+            .dashboard-sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 285px !important;
+                height: 100vh;
+                z-index: 1000 !important;
+                transform: translateX(-105%);
+                transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+                box-shadow: 0 0 35px rgba(0, 0, 0, 0.55);
+                display: flex !important;
+                visibility: hidden;
+            }
+            .dashboard-sidebar.mobile-active {
+                transform: translateX(0) !important;
+                visibility: visible !important;
+            }
+            body[dir="rtl"] .dashboard-sidebar {
+                left: auto;
+                right: 0;
+                transform: translateX(105%);
+            }
+            body[dir="rtl"] .dashboard-sidebar.mobile-active {
+                transform: translateX(0) !important;
+            }
+            .dashboard-main-content {
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+            }
+            .overview-grid-2col, .slot-layout-grid, .loyalty-grid, .settings-grid-2col { 
+                grid-template-columns: 1fr; 
+            }
+            .repertoire-grid-3col { grid-template-columns: 1fr; }
+            .stats-grid-3col { grid-template-columns: 1fr; }
+            .container-fluid { padding: 1.25rem; }
+        }
+
+        @media (max-width: 640px) {
+            .user-top-info {
+                display: none !important;
+            }
+            .topbar-search {
+                max-width: 100% !important;
+            }
+            .dashboard-topbar {
+                padding: 0.5rem 0.75rem !important;
+            }
+        }
+    </style>
+<style>
+        /* High Contrast Badge & Banner Overrides for Dark Mode */
+        body.dark-mode .idx-badge,
+        body.dark-mode .about-badge,
+        body.dark-mode .coach-badge,
+        body.dark-mode .cnt-badge,
+        body.dark-mode .h2-badge,
+        body.dark-mode .tourn-badge,
+        body.dark-mode .section-badge,
+        body.dark-mode .val-icon-badge,
+        body.dark-mode .pillar-icon-badge {
+            color: #fbbf24 !important;
+            background: rgba(212, 163, 115, 0.18) !important;
+            border-color: rgba(251, 191, 36, 0.35) !important;
+        }
+</style>
+<style>
+        /* Global Mobile Overflow & Alignment Protection */
+        html, body {
+            overflow-x: hidden !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            position: relative;
+            margin: 0;
+            padding: 0;
+        }
+
+        .mobile-panel {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 340px;
+            max-width: 88vw;
+            height: 100vh;
+            background: var(--card-bg);
+            border-left: 1px solid var(--border-light);
+            box-shadow: var(--shadow-lg);
+            z-index: 10001;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            overflow-y: auto;
+            transform: translateX(100%);
+            transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        .mobile-panel.active {
+            transform: translateX(0);
+        }
+
+        body[dir="rtl"] .mobile-panel {
+            right: auto;
+            left: 0;
+            transform: translateX(-100%);
+            border-left: none;
+            border-right: 1px solid var(--border-light);
+        }
+
+        body[dir="rtl"] .mobile-panel.active {
+            transform: translateX(0);
+        }
+</style>
+<style>
+        /* Responsive Table Container Overflow Protection */
+        .table-wrap, .table-responsive, .history-table-wrap, .board-table-wrap {
+            overflow-x: auto !important;
+            max-width: 100% !important;
+            -webkit-overflow-scrolling: touch;
+        }
+</style>
+<style>
+        /* Global Tournament & VIP Row Alignment Fixes */
+        .idx-match-item, .h2-vip-row, .cal-row, .tourn-row, .league-row {
+            display: flex !important;
+            align-items: flex-start !important;
+            justify-content: space-between !important;
+            gap: 1rem !important;
+        }
+
+        .idx-match-info, .h2-vip-info, .cal-info, .tourn-info {
+            flex: 1 !important;
+            min-width: 0 !important;
+        }
+
+        .idx-match-status, .h2-vip-seat-tag, .cal-tag, .tourn-status {
+            flex-shrink: 0 !important;
+            white-space: nowrap !important;
+            margin-top: 0.1rem !important;
+        }
+
+        @media (max-width: 600px) {
+            .idx-match-item, .h2-vip-row, .cal-row, .tourn-row, .league-row {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 0.75rem !important;
+            }
+            .idx-match-status, .h2-vip-seat-tag, .cal-tag, .tourn-status {
+                align-self: flex-start !important;
+                margin-top: 0 !important;
+            }
+        }
+</style>
+<style>
+        /* Mobile Header & Dossier Alignment Fixes */
+        @media (max-width: 650px) {
+            .nav-container {
+                padding: 0.6rem 0.85rem !important;
+                gap: 0.5rem !important;
+            }
+            .logo-knight {
+            font-size: 2.3rem;
+            color: var(--accent);
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(0 2px 8px var(--accent-glow));
+            transition: var(--transition-smooth);
+            flex-shrink: 0;
+        }
+            .logo-title {
+            font-family: var(--font-heading);
+            font-weight: 900;
+            font-size: 1.35rem;
+            letter-spacing: 1.5px;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #a06834 0%, #d4a373 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+        }
+            .logo-sub {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            letter-spacing: 3px;
+            line-height: 1;
+            margin-top: 2px;
+            display: block;
+        }
+            .nav-actions {
+                gap: 0.4rem !important;
+            }
+            .nav-actions .action-btn.btn-login {
+                padding: 0.4rem 0.75rem !important;
+                font-size: 0.82rem !important;
+            }
+            .menu-toggle {
+                padding: 0.4rem 0.7rem !important;
+                font-size: 1.15rem !important;
+            }
+        }
+</style>
+<style>
+        
+            .menu-toggle {
+                display: inline-flex !important;
+            }
+        }
+</style>
+<style>
+/* ---------- GLOBAL MOBILE GRID & HERO ALIGNMENT FIXES ---------- */
+        @media (max-width: 992px) {
+            .hero-section, #hero, #contactHero, #arenaHero, #idxHero, .layout-sec {
+                padding-top: 110px !important;
+            }
+            .hero-split-grid,
+            .idx-hero-grid,
+            .cnt-hero-card,
+            .bento-col-8,
+            .curriculum-grid,
+            .overview-grid-2col {
+                grid-template-columns: 1fr !important;
+                gap: 2rem !important;
+            }
+            .bento-col-8 {
+                grid-column: span 12 !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-stats,
+            .cnt-stats-bar,
+            .hero-stats-band,
+            .stats-grid-3col,
+            .form-row,
+            .form-row-2 {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+            .cnt-stat-item, .stat-box {
+                width: 100% !important;
+            }
+        }
+</style>
+<style>
+/* ---------- BENTO, CURRICULUM, ENROLLMENT & MOBILE GRID FIXES ---------- */
+        @media (max-width: 992px) {
+            .bento-grid,
+            .curriculum-grid,
+            .bento-card[style*="grid-template-columns"],
+            div[style*="grid-template-columns: 1.4fr 1fr"],
+            div[style*="grid-template-columns: 1fr 1fr"] {
+                grid-template-columns: 1fr !important;
+                gap: 1.5rem !important;
+            }
+            .bento-col-8,
+            .bento-col-4 {
+                grid-column: span 12 !important;
+                width: 100% !important;
+            }
+            .enroll-card {
+                padding: 2rem 1.25rem !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-row,
+            .form-row-2,
+            .form-row-3,
+            .elo-calc-inputs,
+            .elo-result-banner {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+            .enroll-submit-btn {
+                width: 100% !important;
+                padding: 0.9rem 1rem !important;
+                font-size: 0.92rem !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                text-align: center !important;
+                line-height: 1.35 !important;
+                min-height: 50px !important;
+                white-space: normal !important;
+                word-break: break-word !important;
+            }
+        }
+</style>
+<style>
+/* ---------- FULL RESPONSIVE GRID & SUBMIT BUTTON ALIGNMENT FIXES ---------- */
+        .bento-card-split {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        button[type="submit"].action-btn,
+        form .action-btn,
+        .enroll-submit-btn {
+            height: auto !important;
+            min-height: 52px !important;
+            padding: 0.9rem 1.2rem !important;
+            white-space: normal !important;
+            word-break: break-word !important;
+            line-height: 1.35 !important;
+            text-align: center !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+
+        @media (max-width: 992px) {
+            .bento-card-split,
+            .timeline-matrix,
+            .hero-split-grid,
+            .idx-hero-grid,
+            .cnt-hero-card,
+            .curriculum-grid,
+            .overview-grid-2col {
+                grid-template-columns: 1fr !important;
+                gap: 2rem !important;
+            }
+            .bento-col-8,
+            .bento-col-4 {
+                grid-column: span 12 !important;
+                width: 100% !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .deck-form-grid,
+            .form-row,
+            .form-row-2,
+            .form-row-3,
+            .elo-calc-inputs,
+            .elo-result-banner,
+            .hero-stats,
+            .cnt-stats-bar,
+            .hero-stats-band,
+            .stats-grid-3col {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+            .cnt-stat-item, .stat-box {
+                width: 100% !important;
+            }
+        }
+</style>
+<style>
+/* ---------- ABSOLUTE COMPLETE RESPONSIVE GRID & BUTTON FIXES ---------- */
+        @media (max-width: 992px) {
+            .studio-columns,
+            .timeline-matrix,
+            .deck-form-grid,
+            .pathway-cards-grid,
+            .bento-grid,
+            .curriculum-grid,
+            .hero-split-grid,
+            .idx-hero-grid,
+            .cnt-hero-card,
+            .bento-card-split,
+            .overview-grid-2col,
+            .fame-grid,
+            .stadium-hero-card,
+            .reg-portal-wrap,
+            div[style*="grid-template-columns"] {
+                grid-template-columns: 1fr !important;
+                gap: 1.5rem !important;
+            }
+            .bento-col-8,
+            .bento-col-4 {
+                grid-column: span 12 !important;
+                width: 100% !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-stats,
+            .cnt-stats-bar,
+            .hero-stats-band,
+            .stats-grid-3col,
+            .form-row,
+            .form-row-2,
+            .form-row-3,
+            .elo-calc-inputs,
+            .elo-result-banner {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+            .cnt-stat-item, .stat-box {
+                width: 100% !important;
+            }
+            button[type="submit"].action-btn,
+            form .action-btn,
+            .enroll-submit-btn {
+                height: auto !important;
+                min-height: 52px !important;
+                padding: 0.9rem 1rem !important;
+                font-size: 0.92rem !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                text-align: center !important;
+                line-height: 1.35 !important;
+                white-space: normal !important;
+                word-break: break-word !important;
+            }
+        }
+</style>
+<style>
+/* ---------- DASHBOARD & TABLE RESPONSIVE ALIGNMENT FIXES ---------- */
+        .section-title, .section-heading, .banner-headline, .hero-title, h1, h2 {
+            white-space: normal !important;
+            word-break: break-word !important;
+            overflow-wrap: break-word !important;
+        }
+
+        code, pre {
+            white-space: pre-wrap !important;
+            word-break: break-word !important;
+        }
+
+        .history-table-card {
+            width: 100% !important;
+            max-width: 100% !important;
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+            display: block !important;
+        }
+
+        .history-table {
+            min-width: 600px !important;
+            width: 100% !important;
+        }
+
+        @media (max-width: 768px) {
+            .progress-steps-row {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 1.25rem !important;
+            }
+            .dashboard-topbar {
+                flex-wrap: wrap !important;
+                gap: 0.75rem !important;
+                padding: 0.85rem 1rem !important;
+            }
+            .topbar-search {
+                order: 3 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .progress-steps-row {
+                grid-template-columns: 1fr !important;
+            }
+            .section-title {
+                font-size: 1.5rem !important;
+            }
+        }
+</style>
+<style>
+/* ---------- VIEWPORT OVERFLOW & MOBILE ALIGNMENT CONTAINMENT ---------- */
+        html, body {
+            overflow-x: hidden !important;
+            max-width: 100vw !important;
+            width: 100% !important;
+        }
+
+        .dashboard-main-content,
+        .container-fluid,
+        .db-section,
+        main,
+        .navbar,
+        header,
+        footer,
+        section {
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        .history-table-card {
+            width: 100% !important;
+            max-width: 100% !important;
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+            display: block !important;
+            border-radius: 16px !important;
+        }
+
+        .history-table {
+            width: 100% !important;
+            min-width: 550px !important;
+            table-layout: auto !important;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-topbar {
+                display: flex !important;
+                flex-wrap: wrap !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                padding: 0.6rem 0.85rem !important;
+                gap: 0.5rem !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+            }
+            .topbar-search {
+                order: 3 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                margin-top: 0.4rem !important;
+            }
+            .topbar-search input {
+                width: 100% !important;
+                font-size: 0.85rem !important;
+            }
+            .user-top-profile {
+                margin-left: auto !important;
+            }
+            .section-title, .section-heading, .banner-headline, .hero-title, h1, h2 {
+                font-size: clamp(1.4rem, 5vw, 2.2rem) !important;
+                line-height: 1.25 !important;
+                white-space: normal !important;
+                word-break: break-word !important;
+                overflow-wrap: break-word !important;
+            }
+            .section-desc, .section-subtitle, p {
+                font-size: 0.92rem !important;
+                line-height: 1.5 !important;
+                white-space: normal !important;
+                word-break: break-word !important;
+            }
+        }
+</style>
+</head>
+<body class="dark-mode">
+
+    <!-- SIDEBAR MOBILE OVERLAY BACKDROP -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <!-- ==================== STANDALONE CHESS DASHBOARD SIDEBAR ==================== -->
+    <aside class="dashboard-sidebar">
+        <div>
+            <a href="index.html" class="logo-area" aria-label="Chess Academy Home">
+                <span class="logo-knight">♞</span>
+                <div class="logo-text-block">
+                    <span class="logo-title">CHESS ACADEMY</span>
+                    <span class="logo-sub">TACTICS &amp; MASTERY</span>
+                </div>
+            </a>
+            <ul class="sidebar-menu">
+                <li><a href="#overview" class="menu-item-link active"><i class="fas fa-chess-board"></i> <span>Dashboard</span></a></li>
+                <li><a href="#bookSlot" class="menu-item-link"><i class="fas fa-calendar-plus"></i> <span>Book Masterclass</span></a></li>
+                <li><a href="#liveStatus" class="menu-item-link"><i class="fas fa-microchip"></i> <span>Engine Room</span></a></li>
+                <li><a href="#garage" class="menu-item-link"><i class="fas fa-book-open"></i> <span>Opening Vault</span></a></li>
+                <li><a href="#loyalty" class="menu-item-link"><i class="fas fa-trophy"></i> <span>Tournament Credits</span></a></li>
+                <li><a href="#history" class="menu-item-link"><i class="fas fa-clock-rotate-left"></i> <span>PGN Archives</span></a></li>
+                <li><a href="#settings" class="menu-item-link"><i class="fas fa-gear"></i> <span>Player Settings</span></a></li>
+            </ul>
+        </div>
+        <div class="sidebar-footer">
+            <button class="ctrl-btn" id="rtlBtn">
+                <i class="fas fa-right-left" id="rtlIcon"></i>
+                <span id="rtlLabel">RTL Layout</span>
+            </button>
+            <button class="ctrl-btn" id="dbThemeToggle">
+                <i class="fas fa-sun" id="dbThemeIcon"></i>
+                <span>Theme Mode</span>
+            </button>
+            <a href="index.html" class="ctrl-btn" style="text-decoration: none; color: #ef4444;">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Sign Out</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- ==================== MAIN DASHBOARD VIEW WRAPPER ==================== -->
+    <div class="dashboard-main-content">
+
+        <!-- TOP DASHBOARD BAR -->
+        <header class="dashboard-topbar">
+            <button class="mobile-sidebar-btn" id="mobileSidebarToggle" aria-label="Toggle Navigation Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="topbar-search">
+                <i class="fas fa-magnifying-glass" style="color: var(--text-secondary);"></i>
+                <input type="text" placeholder="Search opening lines, master games, or PGNs...">
+            </div>
+            <div class="user-top-profile">
+                <div class="user-top-info" style="text-align: right; white-space: nowrap;">
+                    <div style="font-weight: 700; font-size: 0.9rem; line-height: 1.25; white-space: nowrap;">Alexander Mercer</div>
+                    <div style="color: var(--accent); font-size: 0.78rem; font-weight: 700; line-height: 1.25; white-space: nowrap;"><i class="fas fa-crown"></i> Master Candidate (2458 ELO)</div>
+                </div>
+                <div class="user-avatar-mini" style="flex-shrink: 0;">AM</div>
+            </div>
+        </header>
+
+        <!-- MAIN DASHBOARD CONTENT CONTAINER -->
+        <div class="container-fluid">
+
+            <!-- SECTION 1: DASHBOARD OVERVIEW -->
+            <section class="db-section" id="overview" data-framer-section="dashboard-overview">
+                <div class="overview-grid-2col">
+                    <div class="user-welcome-card">
+                        <div class="section-badge"><i class="fas fa-id-card-clip"></i> Student Progress Dashboard</div>
+                        <h1 class="section-title">Welcome Back, Alexander</h1>
+                        <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                            Your grandmaster academy control center. Track your tactical puzzle runs, review deep Stockfish engine evaluations, and manage your weekly masterclasses.
+                        </p>
+                        <div class="stats-grid-3col">
+                            <div class="stat-card">
+                                <div class="stat-num">2458</div>
+                                <div class="stat-label">Blitz ELO Rating</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-num">94.2%</div>
+                                <div class="stat-label">Tactics Accuracy</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-num">18 Days</div>
+                                <div class="stat-label">Analysis Streak</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <!-- Pure CSS Board Layout -->
+                        <div class="chess-board-card">
+                            <div class="chess-square tile-light">♜</div>
+                            <div class="chess-square tile-dark">♞</div>
+                            <div class="chess-square tile-light">♝</div>
+                            <div class="chess-square tile-dark">♛</div>
+                            <div class="chess-square tile-light">♚</div>
+                            <div class="chess-square tile-dark">♝</div>
+                            <div class="chess-square tile-light">♞</div>
+                            <div class="chess-square tile-dark">♜</div>
+
+                            <div class="chess-square tile-dark">♟</div>
+                            <div class="chess-square tile-light">♟</div>
+                            <div class="chess-square tile-dark">♟</div>
+                            <div class="chess-square tile-light">♟</div>
+                            <div class="chess-square tile-dark">♟</div>
+                            <div class="chess-square tile-light">♟</div>
+                            <div class="chess-square tile-dark">♟</div>
+                            <div class="chess-square tile-light">♟</div>
+
+                            <div class="chess-square tile-light"></div><div class="chess-square tile-dark"></div>
+                            <div class="chess-square tile-light"></div><div class="chess-square tile-dark"></div>
+                            <div class="chess-square tile-light"></div><div class="chess-square tile-dark"></div>
+                            <div class="chess-square tile-light"></div><div class="chess-square tile-dark"></div>
+
+                            <div class="chess-square tile-dark"></div><div class="chess-square tile-light"></div>
+                            <div class="chess-square tile-dark"></div>
+                            <div class="chess-square tile-light white-piece">♙</div>
+                            <div class="chess-square tile-dark"></div><div class="chess-square tile-light"></div>
+                            <div class="chess-square tile-dark"></div><div class="chess-square tile-light"></div>
+
+                            <div class="chess-square tile-light"></div><div class="chess-square tile-dark"></div>
+                            <div class="chess-square tile-light white-piece">♘</div>
+                            <div class="chess-square tile-dark"></div><div class="chess-square tile-light"></div>
+                            <div class="chess-square tile-dark"></div><div class="chess-square tile-light"></div>
+                            <div class="chess-square tile-dark"></div>
+
+                            <div class="chess-square tile-dark"></div><div class="chess-square tile-light"></div>
+                            <div class="chess-square tile-dark"></div><div class="chess-square tile-light"></div>
+                            <div class="chess-square tile-dark"></div><div class="chess-square tile-light"></div>
+                            <div class="chess-square tile-dark"></div><div class="chess-square tile-light"></div>
+
+                            <div class="chess-square tile-light white-piece">♙</div>
+                            <div class="chess-square tile-dark white-piece">♙</div>
+                            <div class="chess-square tile-light white-piece">♙</div>
+                            <div class="chess-square tile-dark"></div>
+                            <div class="chess-square tile-light white-piece">♙</div>
+                            <div class="chess-square tile-dark white-piece">♙</div>
+                            <div class="chess-square tile-light white-piece">♙</div>
+                            <div class="chess-square tile-dark white-piece">♙</div>
+
+                            <div class="chess-square tile-dark white-piece">♖</div>
+                            <div class="chess-square tile-light"></div>
+                            <div class="chess-square tile-dark white-piece">♗</div>
+                            <div class="chess-square tile-light white-piece">♕</div>
+                            <div class="chess-square tile-dark white-piece">♔</div>
+                            <div class="chess-square tile-light white-piece">♗</div>
+                            <div class="chess-square tile-dark white-piece">♘</div>
+                            <div class="chess-square tile-light white-piece">♖</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 2: BOOK COACHING SESSION -->
+            <section class="db-section" id="bookSlot" data-framer-section="dashboard-book-slot">
+                <div class="section-badge"><i class="fas fa-calendar-check"></i> Grandmaster Coaching</div>
+                <h2 class="section-title">Schedule 1-on-1 Masterclass</h2>
+                <p class="section-desc">Lock your private analysis bay with a FIDE Certified Grandmaster or Senior Trainer.</p>
+                <div class="slot-layout-grid">
+                    <div class="card-box" style="text-align: center;">
+                        <div style="font-size: 3.5rem; color: var(--accent); margin-bottom: 1rem;"><i class="fas fa-graduation-cap"></i></div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem;">Preparation Bay Active</h3>
+                        <p style="color: var(--text-secondary); max-width: 400px; margin: 0 auto 1.5rem;">
+                            Personalized session including real-time engine evaluation, custom opening tree construction, and psychological match strategy.
+                        </p>
+                        <div style="padding: 1rem; background: var(--bg-primary); border-radius: 12px; display: inline-block;">
+                            <strong>Next Slot Available:</strong> Tomorrow at 16:00 GMT
+                        </div>
+                    </div>
+                    <div class="card-box">
+                        <h3 style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; margin-bottom: 1.5rem;">Schedule Detailing Slot</h3>
+                        <form onsubmit="event.preventDefault(); alert('Session Confirmed! Coaching bay reserved with GM Ramesh.');">
+                            <div class="form-group">
+                                <label>Assigned Coach / Grandmaster</label>
+                                <select class="form-input">
+                                    <option>GM R.B. Ramesh (FIDE Senior Trainer)</option>
+                                    <option>GM Boris Gelfand (World Championship Finalist)</option>
+                                    <option>IM Sagar Shah (Opening Specialist)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Select Focus Subject</label>
+                                <select class="form-input">
+                                    <option>Sicilian Defense (Najdorf 6.Bg5 Repertoire)</option>
+                                    <option>Minor Piece & Rook Endgames Calculation</option>
+                                    <option>Candidate Moves Under Time Pressure</option>
+                                    <option>Opposite-Side Castling Attacking Formations</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Preferred Date</label>
+                                <input type="date" class="form-input" required>
+                            </div>
+                            <button type="submit" class="btn-primary" style="margin-top: 1rem;"><i class="fas fa-check-circle"></i> Confirm Bay Reservation</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 3: LIVE SERVICE STATUS & MY BOOKINGS -->
+            <section class="db-section" id="liveStatus" data-framer-section="dashboard-active-status">
+                <div class="section-badge"><i class="fas fa-microchip"></i> Engine Evaluation</div>
+                <h2 class="section-title">Stockfish 16.1 Cloud Analysis Bay</h2>
+                <p class="section-desc">Real-time deep engine calculation for tournament and training games.</p>
+                <div class="card-box">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
+                        <div>
+                            <h3 style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 800;">Round 7: Modern Defense (A42)</h3>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem;">Move 26, White to Play • Time Remaining: 14:22</p>
+                        </div>
+                        <span style="background: rgba(16,185,129,0.15); color: #10b981; font-size: 0.85rem; font-weight: 700; padding: 0.4rem 1rem; border-radius: 50px;">
+                            <i class="fas fa-check"></i> Advantage White (+1.42)
+                        </span>
+                    </div>
+
+                    <div class="progress-steps-row">
+                        <div class="progress-step">
+                            <div class="step-icon done"><i class="fas fa-check"></i></div>
+                            <strong style="display: block; font-size: 0.85rem;">1. Opening Book</strong>
+                            <span style="color: var(--text-secondary); font-size: 0.75rem;">100% Accuracy</span>
+                        </div>
+                        <div class="progress-step">
+                            <div class="step-icon done"><i class="fas fa-check"></i></div>
+                            <strong style="display: block; font-size: 0.85rem;">2. Center Break</strong>
+                            <span style="color: var(--text-secondary); font-size: 0.75rem;">Excellency d4-d5</span>
+                        </div>
+                        <div class="progress-step">
+                            <div class="step-icon active"><i class="fas fa-bolt"></i></div>
+                            <strong style="display: block; font-size: 0.85rem; color: var(--accent);">3. Queen Exchange</strong>
+                            <span style="color: var(--accent); font-size: 0.75rem; font-weight: 700;">Evaluating Qxf7</span>
+                        </div>
+                        <div class="progress-step">
+                            <div class="step-icon"><i class="fas fa-crown"></i></div>
+                            <strong style="display: block; font-size: 0.85rem;">4. Conversion</strong>
+                            <span style="color: var(--text-secondary); font-size: 0.75rem;">Pending</span>
+                        </div>
+                    </div>
+
+                    <div style="background: var(--bg-primary); border: 1px solid var(--border-light); border-radius: 12px; padding: 1.25rem;">
+                        <strong>Engine Principal Variation (PV1):</strong> <code>26. Qxf7+ Kxf7 27. Rd7+ Ke6 28. Rxb7 Rd8 29. g4 h6</code>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 4: VEHICLE DETAILS & SAVED GARAGE (OPENING REPERTOIRE) -->
+            <section class="db-section" id="garage" data-framer-section="dashboard-vehicle-details">
+                <div class="section-badge"><i class="fas fa-book-bookmark"></i> Opening Repertoires</div>
+                <h2 class="section-title">Grandmaster Repertoire Vault</h2>
+                <p class="section-desc">Manage structured PGN lines, novelty preparations, and interactive trainer trees.</p>
+                <div class="repertoire-grid-3col">
+                    <div class="repertoire-card">
+                        <div>
+                            <span style="background: rgba(217,119,6,0.12); color: var(--accent); font-weight: 800; font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 4px; text-transform: uppercase;">White Repertoire</span>
+                            <h3 style="font-family: var(--font-heading); font-size: 1.35rem; font-weight: 800; margin: 0.75rem 0 0.5rem;">Catalan Opening Master</h3>
+                            <p style="color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 1rem;">1.d4 Nf6 2.c4 e6 3.g3</p>
+                            <div style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
+                                <div><strong>Prepared Lines:</strong> 128 Variations</div>
+                                <div><strong>Key Novelty:</strong> 14.b3! vs Closed Catalan</div>
+                                <div><strong>Win Rate:</strong> 68% in 42 Classical games</div>
+                            </div>
+                        </div>
+                        <a href="#liveStatus" class="btn-primary" style="background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-light); box-shadow: none;"><i class="fas fa-play"></i> Train Lines</a>
+                    </div>
+
+                    <div class="repertoire-card">
+                        <div>
+                            <span style="background: rgba(16,185,129,0.12); color: #10b981; font-weight: 800; font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 4px; text-transform: uppercase;">Black Weapon</span>
+                            <h3 style="font-family: var(--font-heading); font-size: 1.35rem; font-weight: 800; margin: 0.75rem 0 0.5rem;">King's Indian Defense</h3>
+                            <p style="color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 1rem;">Mar del Plata Attack Focus</p>
+                            <div style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
+                                <div><strong>Prepared Lines:</strong> 94 Variations</div>
+                                <div><strong>Target:</strong> Kingside pawn storms (f5-f4)</div>
+                                <div><strong>Win Rate:</strong> 59% in tournament play</div>
+                            </div>
+                        </div>
+                        <button class="btn-primary" onclick="alert('Exporting Repertoire PGN File...');" style="background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-light); box-shadow: none;"><i class="fas fa-download"></i> Export PGN</button>
+                    </div>
+
+                    <div class="repertoire-card" style="border: 2px dashed var(--border-light); display: flex; align-items: center; justify-content: center; text-align: center; cursor: pointer;" onclick="alert('Create New Opening File dialog opened.');">
+                        <div>
+                            <div style="width: 50px; height: 50px; border-radius: 50%; background: rgba(217,119,6,0.1); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin: 0 auto 1rem;"><i class="fas fa-plus"></i></div>
+                            <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 700;">Add Opening Tree</h3>
+                            <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.5rem;">Import PGN or build custom defenses.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 5: TOURNAMENTS & ELO REWARDS -->
+            <section class="db-section" id="loyalty" data-framer-section="dashboard-loyalty-points">
+                <div class="section-badge"><i class="fas fa-medal"></i> Academy Honors</div>
+                <h2 class="section-title">Tournament Credits & Trophy Vault</h2>
+                <p class="section-desc">You currently hold <strong>3,400 Academy Honor Credits</strong> earned from arena victories.</p>
+                <div class="loyalty-grid">
+                    <div class="card-box" style="text-align: center;">
+                        <div style="font-size: 4rem; color: var(--accent); margin-bottom: 1rem;"><i class="fas fa-trophy"></i></div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800;">Autumn Grand Prix 2026 Champion</h3>
+                        <p style="color: var(--text-secondary); margin-top: 0.5rem;">Top board performance with 8.5/9.0 score. Earned FIDE IM Norm grant.</p>
+                    </div>
+                    <div>
+                        <div class="reward-item">
+                            <div>
+                                <h4 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700;">Private GM Simul Ticket</h4>
+                                <p style="color: var(--text-secondary); font-size: 0.85rem;">2,000 Academy Credits</p>
+                            </div>
+                            <button class="btn-primary" onclick="alert('Ticket Claimed for GM Exhibition!');" style="width: auto; padding: 0.5rem 1rem;">Claim</button>
+                        </div>
+                        <div class="reward-item">
+                            <div>
+                                <h4 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700;">Cloud Stockfish Pro (1 Year)</h4>
+                                <p style="color: var(--text-secondary); font-size: 0.85rem;">1,200 Academy Credits</p>
+                            </div>
+                            <button class="btn-primary" onclick="alert('Cloud Engine key unlocked!');" style="width: auto; padding: 0.5rem 1rem;">Claim</button>
+                        </div>
+                        <div class="reward-item">
+                            <div>
+                                <h4 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700;">Physical DGT Electronic Board</h4>
+                                <p style="color: var(--text-secondary); font-size: 0.85rem;">5,000 Academy Credits</p>
+                            </div>
+                            <button class="btn-primary" disabled style="width: auto; padding: 0.5rem 1rem; opacity: 0.5; cursor: not-allowed;">Locked</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 6: PGN ARCHIVES & MATCH HISTORY -->
+            <section class="db-section" id="history" data-framer-section="dashboard-booking-history">
+                <div class="section-badge"><i class="fas fa-scroll"></i> Match Archives</div>
+                <h2 class="section-title">Official Tournament Game Records</h2>
+                <p class="section-desc">Download verified PGN files, clock telemetry, and post-game centipawn loss graphs.</p>
+                <div class="history-table-card">
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Opponent</th>
+                                <th>Opening</th>
+                                <th>Result</th>
+                                <th>Accuracy</th>
+                                <th>PGN File</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Oct 04, 2026</td>
+                                <td>GM Praggnanandhaa R (2745)</td>
+                                <td>Ruy Lopez (Berlin)</td>
+                                <td><span style="color: #10b981; font-weight: 700;">½ - ½</span></td>
+                                <td>98.4%</td>
+                                <td><button onclick="alert('Downloading PGN: Mercer_vs_Pragg_2026.pgn');" style="background: none; border: none; color: var(--accent); cursor: pointer; font-weight: 700;"><i class="fas fa-file-arrow-down"></i> .PGN</button></td>
+                            </tr>
+                            <tr>
+                                <td>Sep 28, 2026</td>
+                                <td>GM Vincent Keymer (2730)</td>
+                                <td>Queen's Gambit Declined</td>
+                                <td><span style="color: #10b981; font-weight: 700;">1 - 0</span></td>
+                                <td>96.1%</td>
+                                <td><button onclick="alert('Downloading PGN: Mercer_vs_Keymer_2026.pgn');" style="background: none; border: none; color: var(--accent); cursor: pointer; font-weight: 700;"><i class="fas fa-file-arrow-down"></i> .PGN</button></td>
+                            </tr>
+                            <tr>
+                                <td>Sep 12, 2026</td>
+                                <td>GM Nodirbek Abdusattorov (2760)</td>
+                                <td>Sicilian Defense (Najdorf)</td>
+                                <td><span style="color: #ef4444; font-weight: 700;">0 - 1</span></td>
+                                <td>89.3%</td>
+                                <td><button onclick="alert('Downloading PGN: Abdusattorov_vs_Mercer_2026.pgn');" style="background: none; border: none; color: var(--accent); cursor: pointer; font-weight: 700;"><i class="fas fa-file-arrow-down"></i> .PGN</button></td>
+                            </tr>
+                            <tr>
+                                <td>Aug 22, 2026</td>
+                                <td>IM Christopher Yoo (2490)</td>
+                                <td>English Opening (Four Knights)</td>
+                                <td><span style="color: #10b981; font-weight: 700;">1 - 0</span></td>
+                                <td>95.8%</td>
+                                <td><button onclick="alert('Downloading PGN: Mercer_vs_Yoo_2026.pgn');" style="background: none; border: none; color: var(--accent); cursor: pointer; font-weight: 700;"><i class="fas fa-file-arrow-down"></i> .PGN</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SECTION 7: PLAYER PROFILE & SETTINGS -->
+            <section class="db-section" id="settings" data-framer-section="dashboard-profile-settings">
+                <div class="section-badge"><i class="fas fa-user-gear"></i> Account & Preferences</div>
+                <h2 class="section-title">Player Profile & Federation Settings</h2>
+                <p class="section-desc">Manage personal contact information, FIDE registration, and pairing updates.</p>
+                <div class="card-box">
+                    <div class="settings-grid-2col">
+                        <div>
+                            <h3 style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 800; margin-bottom: 1.25rem;">Player Information</h3>
+                            <form onsubmit="event.preventDefault(); alert('Profile updated successfully!');">
+                                <div class="form-group">
+                                    <label>Full Name</label>
+                                    <input type="text" class="form-input" value="Alexander Mercer" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>FIDE Registration ID</label>
+                                    <input type="text" class="form-input" value="25059530" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Registered Academy Email</label>
+                                    <input type="email" class="form-input" value="alexander@apexchess.com" required>
+                                </div>
+                                <button type="submit" class="btn-primary" style="margin-top: 1rem;"><i class="fas fa-floppy-disk"></i> Save Profile</button>
+                            </form>
+                        </div>
+                        <div>
+                            <h3 style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 800; margin-bottom: 1.25rem;">Training Preferences</h3>
+                            <div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem;">
+                                <label style="display: flex; align-items: center; gap: 0.75rem; font-weight: 600; cursor: pointer;">
+                                    <input type="checkbox" checked style="accent-color: var(--accent); width: 18px; height: 18px;">
+                                    Daily tactical puzzle reminder at 08:00 AM
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.75rem; font-weight: 600; cursor: pointer;">
+                                    <input type="checkbox" checked style="accent-color: var(--accent); width: 18px; height: 18px;">
+                                    Pairing notification alerts for weekend Swiss tournaments
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.75rem; font-weight: 600; cursor: pointer;">
+                                    <input type="checkbox" checked style="accent-color: var(--accent); width: 18px; height: 18px;">
+                                    Auto-sync games played on Lichess & Chess.com
+                                </label>
+                            </div>
+                            <button class="btn-primary" onclick="alert('Password reset link sent to registered email.');" style="background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-light); box-shadow: none;"><i class="fas fa-key"></i> Reset Security Password</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const body = document.body;
+            const dbThemeToggle = document.getElementById('dbThemeToggle');
+            const dbThemeIcon = document.getElementById('dbThemeIcon');
+            const rtlBtn = document.getElementById('rtlBtn');
+            const rtlLabel = document.getElementById('rtlLabel');
+
+            function updateThemeUI(isDark) {
+                if (isDark) {
+                    body.classList.add('dark-mode');
+                    if (dbThemeIcon) dbThemeIcon.className = 'fas fa-sun';
+                } else {
+                    body.classList.remove('dark-mode');
+                    if (dbThemeIcon) dbThemeIcon.className = 'fas fa-moon';
+                }
+            }
+
+            const savedTheme = localStorage.getItem('chessStudioTheme');
+            if (savedTheme === 'light') {
+                updateThemeUI(false);
+            } else {
+                updateThemeUI(true);
+            }
+
+            if (dbThemeToggle) {
+                dbThemeToggle.addEventListener('click', () => {
+                    const isCurrentlyDark = body.classList.contains('dark-mode');
+                    const nextDark = !isCurrentlyDark;
+                    updateThemeUI(nextDark);
+                    localStorage.setItem('chessStudioTheme', nextDark ? 'dark' : 'light');
+                });
+            }
+
+            function updateRTLUI(isRtl) {
+                const dir = isRtl ? 'rtl' : 'ltr';
+                body.setAttribute('dir', dir);
+                document.documentElement.setAttribute('dir', dir);
+                if (rtlLabel) rtlLabel.textContent = isRtl ? 'LTR' : 'RTL';
+                localStorage.setItem('chessStudioDir', dir);
+            }
+
+            const savedDir = localStorage.getItem('chessStudioDir');
+            if (savedDir === 'rtl') {
+                updateRTLUI(true);
+            } else {
+                updateRTLUI(false);
+            }
+
+            if (rtlBtn) {
+                rtlBtn.addEventListener('click', () => {
+                    const currentDir = body.getAttribute('dir');
+                    updateRTLUI(currentDir !== 'rtl');
+                });
+            }
+
+            // Mobile Sidebar Drawer Toggle & Overlay Handler
+            const mobileSidebarToggle = document.getElementById('mobileSidebarToggle');
+            const dashboardSidebar = document.querySelector('.dashboard-sidebar');
+            const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+
+            function openSidebar() {
+                if (dashboardSidebar) dashboardSidebar.classList.add('mobile-active');
+                if (sidebarBackdrop) sidebarBackdrop.classList.add('active');
+            }
+
+            function closeSidebar() {
+                if (dashboardSidebar) dashboardSidebar.classList.remove('mobile-active');
+                if (sidebarBackdrop) sidebarBackdrop.classList.remove('active');
+            }
+
+            if (mobileSidebarToggle) {
+                mobileSidebarToggle.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (dashboardSidebar && dashboardSidebar.classList.contains('mobile-active')) {
+                        closeSidebar();
+                    } else {
+                        openSidebar();
+                    }
+                });
+            }
+
+            if (sidebarBackdrop) {
+                sidebarBackdrop.addEventListener('click', closeSidebar);
+            }
+
+            // Instant Tab Switcher (No Page Scroll)
+            const menuLinks = document.querySelectorAll('.menu-item-link');
+            const sections = document.querySelectorAll('.db-section');
+
+            function switchTab(targetId) {
+                closeSidebar();
+                let targetSec = document.getElementById(targetId);
+                if (!targetSec) {
+                    targetId = 'overview';
+                    targetSec = document.getElementById('overview');
+                }
+
+                // Hide all sections
+                sections.forEach(sec => {
+                    sec.classList.remove('active-tab');
+                    sec.classList.remove('framer-animated');
+                });
+
+                // Show target section at top
+                if (targetSec) {
+                    targetSec.classList.add('active-tab');
+                    setTimeout(() => {
+                        targetSec.classList.add('framer-animated');
+                    }, 20);
+                }
+
+                // Update sidebar active link
+                menuLinks.forEach(link => {
+                    link.classList.remove('active');
+                    const href = link.getAttribute('href');
+                    if (href === '#' + targetId || href === targetId) {
+                        link.classList.add('active');
+                    }
+                });
+
+                window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+            }
+
+            // Set initial tab (overview)
+            switchTab('overview');
+
+            menuLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const href = link.getAttribute('href');
+                    const targetId = href.startsWith('#') ? href.substring(1) : href;
+                    switchTab(targetId);
+                });
+            });
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = anchor.getAttribute('href').substring(1);
+                    if (document.getElementById(targetId)) {
+                        switchTab(targetId);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

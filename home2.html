@@ -1,0 +1,2917 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Chess Academy | Grandmaster Masterclass &amp; Positional Studio</title>
+
+    <!-- Google Fonts & Font Awesome 6 Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ---------- RESET & SYSTEM DESIGN TOKENS ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #f1f5f9;
+            --surface-glass: rgba(255, 255, 255, 0.92);
+            --card-bg: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent: #d4a373;
+            --accent-hover: #b07d4f;
+            --accent-glow: rgba(212, 163, 115, 0.3);
+            --border-light: rgba(15, 23, 42, 0.12);
+            --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 20px 45px -15px rgba(0, 0, 0, 0.12);
+            --transition-smooth: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            --font-main: 'Inter', sans-serif;
+            --font-heading: 'Outfit', sans-serif;
+        }
+
+        body.dark-mode {
+            --bg-primary: #0d1117;
+            --bg-secondary: #131923;
+            --surface-glass: rgba(19, 25, 35, 0.92);
+            --card-bg: #1a2230;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-light: rgba(255, 255, 255, 0.1);
+            --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.35);
+            --shadow-lg: 0 20px 45px -15px rgba(0, 0, 0, 0.65);
+        }
+
+        body {
+            font-family: var(--font-main);
+            font-size: 1rem;
+            line-height: 1.6;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ---------- GLOBAL LINK RESET ---------- */
+        a, button, .action-btn, .btn-login, .nav-link, .dropdown-item, .footer-link, .mobile-link, .mobile-sublink {
+            text-decoration: none !important;
+            outline: none !important;
+        }
+
+        /* ---------- RTL ICON FLIPPING & ALIGNMENT ---------- */
+        [dir="rtl"] .fa-angle-right,
+        [dir="rtl"] .fa-arrow-right,
+        [dir="rtl"] .fa-chevron-right,
+        [dir="rtl"] .fa-angle-double-right,
+        [dir="rtl"] .footer-link i.fa-chevron-right {
+            transform: scaleX(-1) !important;
+            display: inline-block !important;
+        }
+
+        [dir="rtl"] {
+            text-align: right;
+        }
+
+        [dir="rtl"] .nav-container,
+        [dir="rtl"] .footer-container,
+        [dir="rtl"] .footer-bottom,
+        [dir="rtl"] .form-group {
+            text-align: right;
+        }
+
+        [dir="rtl"] .dropdown-menu {
+            left: auto !important;
+            right: 0 !important;
+        }
+
+        [dir="rtl"] .dropdown-item:hover,
+        [dir="rtl"] .footer-link:hover {
+            transform: translateX(-4px) !important;
+        }
+
+        /* ---------- STICKY GLASS NAVBAR ---------- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 9999;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            background: var(--surface-glass);
+            border-bottom: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-smooth);
+        }
+
+        .nav-container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0.75rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            white-space: nowrap;
+        }
+
+        .logo-area {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            color: inherit;
+            text-decoration: none !important;
+            line-height: 1;
+        }
+
+        .logo-knight {
+            font-size: 2.3rem;
+            color: var(--accent);
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(0 2px 8px var(--accent-glow));
+            transition: var(--transition-smooth);
+            flex-shrink: 0;
+        }
+
+        .logo-area:hover .logo-knight {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .logo-text-block {
+            display: inline-flex;
+            flex-direction: column;
+            justify-content: center;
+            line-height: 1;
+        }
+
+        .logo-title {
+            font-family: var(--font-heading);
+            font-weight: 900;
+            font-size: 1.35rem;
+            letter-spacing: 1.5px;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #a06834 0%, #d4a373 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+        }
+
+        body.dark-mode .logo-title {
+            font-family: var(--font-heading);
+            font-weight: 900;
+            font-size: 1.35rem;
+            letter-spacing: 1.5px;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #a06834 0%, #d4a373 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+        }
+
+        .logo-sub {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            letter-spacing: 3px;
+            line-height: 1;
+            margin-top: 2px;
+            display: block;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            list-style: none;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            font-weight: 600;
+            font-size: 0.92rem;
+            padding: 0.5rem 0.85rem;
+            color: var(--text-primary);
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(212, 163, 115, 0.15);
+            color: var(--accent);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            margin-top: 8px;
+            min-width: 220px;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 0.6rem;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: var(--transition-smooth);
+            z-index: 1000;
+            list-style: none;
+        }
+
+        .nav-item.dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.65rem 1rem;
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 0.9rem;
+            border-radius: 10px;
+            transition: var(--transition-smooth);
+        }
+
+        .dropdown-item i {
+            color: var(--accent);
+            width: 18px;
+            text-align: center;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(212, 163, 115, 0.15);
+            color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        /* Nav Action Buttons */
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .action-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            color: var(--text-primary);
+            font-size: 0.88rem;
+            font-weight: 600;
+            padding: 0.45rem 0.9rem;
+            border-radius: 50px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            line-height: 1;
+            height: 38px;
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .action-btn i {
+            color: var(--accent);
+        }
+
+        .action-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px var(--accent-glow);
+        }
+
+        .action-btn.btn-login {
+            background: var(--accent);
+            color: #12151c;
+            border-color: var(--accent);
+            font-weight: 700;
+        }
+
+        .action-btn.btn-login i {
+            color: #12151c;
+        }
+
+        .action-btn.btn-login:hover {
+            background: var(--accent-hover);
+            color: #ffffff;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: rgba(212, 163, 115, 0.12);
+            border: 1px solid rgba(212, 163, 115, 0.3);
+            color: var(--accent);
+            font-size: 1.25rem;
+            padding: 0.45rem 0.8rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        /* ---------- MOBILE DRAWER ---------- */
+        .mobile-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 12, 16, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-smooth);
+        }
+
+        .mobile-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-panel {
+            position: fixed;
+            top: 0;
+            right: -380px;
+            width: 340px;
+            max-width: 88vw;
+            height: 100vh;
+            background: var(--card-bg);
+            border-left: 1px solid var(--border-light);
+            box-shadow: var(--shadow-lg);
+            z-index: 10001;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            overflow-y: auto;
+            transition: right 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        body[dir="rtl"] .mobile-panel {
+            right: auto;
+            left: -380px;
+            border-left: none;
+            border-right: 1px solid var(--border-light);
+            transition: left 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        .mobile-panel.active {
+            right: 0;
+        }
+
+        body[dir="rtl"] .mobile-panel.active {
+            left: 0;
+        }
+
+        .mobile-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .mobile-close {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.4rem;
+            cursor: pointer;
+        }
+
+        .mobile-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .mobile-link-item {
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 0.4rem;
+        }
+
+        .mobile-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 1.05rem;
+            padding: 0.75rem 0.85rem;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        .mobile-link:hover, .mobile-link.active {
+            color: var(--accent);
+            background: rgba(212, 163, 115, 0.1);
+        }
+
+        .mobile-accordion-content {
+            display: none;
+            padding-left: 1rem;
+            padding-top: 0.4rem;
+            flex-direction: column;
+            gap: 0.4rem;
+            list-style: none;
+        }
+
+        body[dir="rtl"] .mobile-accordion-content {
+            padding-left: 0;
+            padding-right: 1rem;
+        }
+
+        .mobile-accordion-content.show {
+            display: flex;
+        }
+
+        .mobile-sublink {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: 0.55rem 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-radius: 10px;
+        }
+
+        .mobile-sublink:hover {
+            color: var(--accent);
+            background: rgba(212, 163, 115, 0.1);
+        }
+
+        .mobile-actions {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .mobile-actions .action-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            color: var(--text-primary);
+            font-size: 0.88rem;
+            font-weight: 600;
+            padding: 0.45rem 0.9rem;
+            border-radius: 50px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            line-height: 1;
+            height: 38px;
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* ---------- FOOTER ---------- */
+        .footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-light);
+            padding: 4.5rem 2rem 2rem;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 3.5rem;
+            margin-bottom: 3.5rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .footer-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            max-width: 380px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .social-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(212, 163, 115, 0.15);
+            border: 1px solid rgba(212, 163, 115, 0.3);
+            color: var(--accent) !important;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-smooth);
+            font-size: 1.1rem;
+        }
+
+        .social-btn:hover {
+            background: var(--accent) !important;
+            color: #12151c !important;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        .footer-col h4 {
+            font-family: var(--font-heading);
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition-smooth);
+        }
+
+        .footer-link i {
+            font-size: 0.75rem;
+            color: var(--accent);
+        }
+
+        .footer-link:hover {
+            color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .newsletter-input {
+            width: 100%;
+            padding: 0.85rem 1.4rem;
+            border-radius: 50px;
+            border: 1px solid var(--border-light);
+            background: var(--card-bg);
+            color: var(--text-primary);
+            font-family: inherit;
+            outline: none;
+            font-size: 0.95rem;
+        }
+
+        .newsletter-btn {
+            padding: 0.85rem 1.5rem;
+            border-radius: 50px;
+            border: none;
+            background: var(--accent);
+            color: #12151c;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .newsletter-btn:hover {
+            background: var(--accent-hover);
+            color: #ffffff;
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            border-top: 1px solid var(--border-light);
+            padding-top: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        /* ---------- LOGIN MODAL ---------- */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            z-index: 20000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-smooth);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .login-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 420px;
+            padding: 2.5rem 2rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            transform: scale(0.95);
+            transition: var(--transition-smooth);
+        }
+
+        .modal-overlay.active .login-card {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        body[dir="rtl"] .modal-close {
+            right: auto;
+            left: 1.2rem;
+        }
+
+        .login-card h3 {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.88rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-light);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            outline: none;
+        }
+
+        .login-submit {
+            width: 100%;
+            padding: 0.85rem;
+            background: var(--accent);
+            color: #12151c;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            margin-top: 0.5rem;
+        }
+
+        .login-submit:hover {
+            background: var(--accent-hover);
+            color: #ffffff;
+        }
+
+        /* ---------- RESPONSIVE BREAKPOINTS ---------- */
+        /* ---------- RESPONSIVE HEADER ---------- */
+        @media (max-width: 1100px) {
+            .nav-links {
+                display: none !important;
+            }
+            .nav-actions .action-btn:not(.menu-toggle),
+            .nav-actions #darkModeBtn,
+            .nav-actions #rtlBtn,
+            .nav-actions #loginModalBtn,
+            .nav-actions .btn-login {
+                display: none !important;
+            }
+            .menu-toggle {
+                display: inline-flex !important;
+                align-items: center;
+                justify-content: center;
+                background: rgba(212, 163, 115, 0.15);
+                border: 1px solid rgba(212, 163, 115, 0.35);
+                color: var(--accent);
+                font-size: 1.25rem;
+                padding: 0.45rem 0.8rem;
+                border-radius: 12px;
+                cursor: pointer;
+            }
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0.6rem 1rem !important;
+                gap: 0.5rem !important;
+            }
+            .logo-knight {
+                font-size: 1.8rem !important;
+            }
+            .logo-title {
+                font-size: 1.1rem !important;
+            }
+            .logo-sub {
+                font-size: 0.6rem !important;
+                letter-spacing: 1.5px !important;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .nav-container {
+                padding: 0.5rem 0.65rem !important;
+            }
+            .menu-toggle {
+                padding: 0.35rem 0.65rem !important;
+                font-size: 1.1rem !important;
+            }
+        }
+
+        
+
+        
+
+        @media (max-width: 650px) {
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* ==========================================================================
+           7 COMPLETELY FRESH & UNIQUE FRAMER MOTION ENGINES (FOR HOME2 MASTERCLASS)
+           ========================================================================== */
+
+        [data-framer-section] {
+            opacity: 0;
+            will-change: transform, opacity, filter;
+            transition-property: opacity, transform, filter;
+        }
+
+        /* 1. 3D Perspective Tilt Drop (Amphitheater Hero) */
+        [data-framer-section="h2-amphitheater"] {
+            transform: perspective(1000px) rotateX(-15deg) translateY(60px) scale(0.94);
+            filter: blur(12px);
+            transition-duration: 1.15s;
+            transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        [data-framer-section="h2-amphitheater"].framer-animated {
+            opacity: 1;
+            transform: perspective(1000px) rotateX(0deg) translateY(0) scale(1);
+            filter: blur(0);
+        }
+
+        /* 2. Diagonal Wave Slide (5 Dimensions Bento) */
+        [data-framer-section="h2-bento-dimensions"] {
+            transform: translate(-60px, 40px) scale(0.96);
+            transition-duration: 0.9s;
+            transition-timing-function: cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+        body[dir="rtl"] [data-framer-section="h2-bento-dimensions"] {
+            transform: translate(60px, 40px) scale(0.96);
+        }
+        [data-framer-section="h2-bento-dimensions"].framer-animated {
+            opacity: 1;
+            transform: translate(0, 0) scale(1);
+        }
+
+        /* 3. Horizontal Curtain Unfold (Repertoire Vault) */
+        [data-framer-section="h2-vault-accordion"] {
+            transform: translateX(80px);
+            filter: blur(8px);
+            transition-duration: 1.0s;
+            transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        body[dir="rtl"] [data-framer-section="h2-vault-accordion"] {
+            transform: translateX(-80px);
+        }
+        [data-framer-section="h2-vault-accordion"].framer-animated {
+            opacity: 1;
+            transform: translateX(0);
+            filter: blur(0);
+        }
+
+        /* 4. 3D Flip Rise (Endgame Studio) */
+        [data-framer-section="h2-endgame-studio"] {
+            transform: perspective(900px) rotateY(-14deg) translateY(50px);
+            transition-duration: 0.95s;
+            transition-timing-function: cubic-bezier(0.3, 1.2, 0.4, 1);
+        }
+        body[dir="rtl"] [data-framer-section="h2-endgame-studio"] {
+            transform: perspective(900px) rotateY(14deg) translateY(50px);
+        }
+        [data-framer-section="h2-endgame-studio"].framer-animated {
+            opacity: 1;
+            transform: perspective(900px) rotateY(0deg) translateY(0);
+        }
+
+        /* 5. Scale Pulse Elevate (Mindset Protocol) */
+        [data-framer-section="h2-mindset-protocol"] {
+            transform: scale(0.85) translateY(45px);
+            transition-duration: 0.85s;
+            transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        [data-framer-section="h2-mindset-protocol"].framer-animated {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        /* 6. Isometric Skew Reveal (VIP Retreat Schedule) */
+        [data-framer-section="h2-vip-schedule"] {
+            transform: scale(0.92) skewX(-3deg) translateY(40px);
+            transition-duration: 0.9s;
+            transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        body[dir="rtl"] [data-framer-section="h2-vip-schedule"] {
+            transform: scale(0.92) skewX(3deg) translateY(40px);
+        }
+        [data-framer-section="h2-vip-schedule"].framer-animated {
+            opacity: 1;
+            transform: scale(1) skewX(0deg) translateY(0);
+        }
+
+        /* 7. 3D Twist Lock (Application Pass Portal) */
+        [data-framer-section="h2-application-portal"] {
+            transform: perspective(1000px) rotateX(12deg) rotateY(6deg) translateY(50px);
+            transition-duration: 0.95s;
+            transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        body[dir="rtl"] [data-framer-section="h2-application-portal"] {
+            transform: perspective(1000px) rotateX(12deg) rotateY(-6deg) translateY(50px);
+        }
+        [data-framer-section="h2-application-portal"].framer-animated {
+            opacity: 1;
+            transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0);
+        }
+
+        /* ==========================================================================
+           7 FRESH UNIQUE SECTION DESIGNS (FOR HOME2 MASTERCLASS LAYOUT)
+           ========================================================================== */
+
+        main {
+            flex: 1;
+            padding-top: 86px;
+        }
+
+        .h2-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(212, 163, 115, 0.16);
+            color: #92400e;
+            font-size: 0.82rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2.2px;
+            padding: 0.45rem 1.25rem;
+            border-radius: 50px;
+            border: 1px solid rgba(212, 163, 115, 0.35);
+            margin-bottom: 1.2rem;
+        }
+
+        .h2-sec-title {
+            font-family: var(--font-heading);
+            font-size: clamp(2.2rem, 4.8vw, 3.3rem);
+            font-weight: 900;
+            line-height: 1.12;
+            margin-bottom: 0.85rem;
+        }
+
+        .h2-sec-sub {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .h2-center-head {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        /* SECTION 1: MASTERCLASS AMPHITHEATER & LIVE ENGINE BOARD */
+        .h2-hero-wrap {
+            padding: 5rem 2rem 4.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .h2-hero-grid {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 3.5rem;
+            align-items: center;
+        }
+
+        .h2-hero-h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(2.5rem, 5.5vw, 4.2rem);
+            font-weight: 900;
+            line-height: 1.06;
+            margin-bottom: 1.4rem;
+            background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .h2-hero-p {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            line-height: 1.75;
+            margin-bottom: 2rem;
+        }
+
+        /* Live Move Analysis Engine Control Widget */
+        .engine-hud-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 24px;
+            padding: 1.6rem;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 2.2rem;
+            max-width: 500px;
+        }
+
+        .engine-hud-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .engine-eval-pill {
+            background: #10b981;
+            color: #ffffff;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: 900;
+            font-size: 0.95rem;
+            padding: 0.35rem 0.85rem;
+            border-radius: 50px;
+            box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+        }
+
+        .engine-moves-row {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .engine-move-btn {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-light);
+            color: var(--text-primary);
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: 800;
+            font-size: 0.92rem;
+            padding: 0.5rem 0.9rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .engine-move-btn.active {
+            background: var(--accent);
+            color: #12151c;
+            border-color: var(--accent);
+        }
+
+        .h2-hero-media {
+            border-radius: 30px;
+            overflow: hidden;
+            border: 2px solid var(--border-light);
+            box-shadow: var(--shadow-lg);
+            position: relative;
+        }
+
+        .h2-hero-media img {
+            width: 100%;
+            height: 520px;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* SECTION 2: 5 DIMENSIONS OF POSITIONAL MASTERY (BENTO GRID) */
+        .h2-bento-sec {
+            padding: 5.5rem 2rem;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .h2-bento-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.6rem;
+        }
+
+        .h2-bento-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 26px;
+            padding: 2.2rem;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: var(--transition-smooth);
+        }
+
+        .h2-bento-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .bento-span-7 { grid-column: span 7; }
+        .bento-span-5 { grid-column: span 5; }
+        .bento-span-4 { grid-column: span 4; }
+
+        .h2-bento-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            background: rgba(212, 163, 115, 0.15);
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .h2-bento-card h3 {
+            font-family: var(--font-heading);
+            font-size: 1.35rem;
+            font-weight: 800;
+            margin-bottom: 0.6rem;
+        }
+
+        .h2-bento-card p {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            line-height: 1.6;
+            margin-bottom: 1.4rem;
+        }
+
+        .h2-bento-img {
+            height: 160px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+        }
+
+        .h2-bento-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* SECTION 3: REPERTOIRE VAULT ACCORDION */
+        .h2-vault-sec {
+            padding: 5.5rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .h2-vault-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .h2-vault-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-smooth);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .h2-vault-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .h2-vault-img {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .h2-vault-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .h2-vault-card:hover .h2-vault-img img {
+            transform: scale(1.08);
+        }
+
+        .h2-win-badge {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: rgba(16, 185, 129, 0.9);
+            color: #ffffff;
+            font-size: 0.78rem;
+            font-weight: 900;
+            padding: 0.3rem 0.75rem;
+            border-radius: 50px;
+            backdrop-filter: blur(8px);
+        }
+
+        body[dir="rtl"] .h2-win-badge {
+            right: auto;
+            left: 14px;
+        }
+
+        .h2-vault-body {
+            padding: 1.6rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .h2-vault-body h4 {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .h2-vault-body p {
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            line-height: 1.6;
+        }
+
+        /* SECTION 4: ENDGAME MASTERCLASS STUDIO */
+        .h2-endgame-sec {
+            padding: 5.5rem 2rem;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .h2-endgame-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .h2-endgame-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 22px;
+            padding: 1.8rem;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: var(--transition-smooth);
+        }
+
+        .h2-endgame-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .h2-endgame-card h4 {
+            font-family: var(--font-heading);
+            font-size: 1.15rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .h2-endgame-card p {
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            line-height: 1.6;
+            margin-bottom: 1.2rem;
+        }
+
+        .h2-endgame-img {
+            height: 150px;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+        }
+
+        .h2-endgame-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* SECTION 5: MINDSET & TOURNAMENT CONDITIONING PROTOCOL */
+        .h2-mindset-sec {
+            padding: 5.5rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .h2-mindset-console {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 32px;
+            padding: 3rem;
+            box-shadow: var(--shadow-lg);
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 3.5rem;
+            align-items: center;
+        }
+
+        .h2-mindset-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+        }
+
+        .h2-hex-meter {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-light);
+            border-radius: 18px;
+            padding: 1.4rem;
+            text-align: center;
+        }
+
+        .h2-hex-num {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--accent);
+            margin-bottom: 0.2rem;
+        }
+
+        .h2-hex-meter h5 {
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            font-weight: 800;
+            margin-bottom: 0.3rem;
+        }
+
+        .h2-hex-meter p {
+            color: var(--text-secondary);
+            font-size: 0.82rem;
+            line-height: 1.5;
+        }
+
+        .h2-mindset-media {
+            border-radius: 24px;
+            overflow: hidden;
+            border: 2px solid var(--border-light);
+            height: 420px;
+        }
+
+        .h2-mindset-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* SECTION 6: VIP GRANDMASTER RETREAT & BOOTCAMP SCHEDULE */
+        .h2-vip-sec {
+            padding: 5.5rem 2rem;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .h2-vip-board {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 32px;
+            padding: 3rem;
+            box-shadow: var(--shadow-lg);
+            display: grid;
+            grid-template-columns: 1fr 1.15fr;
+            gap: 3.5rem;
+            align-items: center;
+        }
+
+        .h2-vip-media {
+            border-radius: 22px;
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+            height: 400px;
+        }
+
+        .h2-vip-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .h2-vip-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .h2-vip-row {
+            background: var(--bg-primary);
+            border: 1.5px solid var(--border-light);
+            border-radius: 18px;
+            padding: 1.3rem 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1.2rem;
+            transition: var(--transition-smooth);
+        }
+
+        .h2-vip-row:hover {
+            border-color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        body[dir="rtl"] .h2-vip-row:hover {
+            transform: translateX(-4px);
+        }
+
+        .h2-vip-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .h2-vip-info h5 {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            font-weight: 800;
+            line-height: 1.35;
+            margin-bottom: 0.35rem;
+            color: var(--text-primary);
+        }
+
+        .h2-vip-info span {
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            line-height: 1.5;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.35rem 0.6rem;
+        }
+
+        .h2-vip-seat-tag {
+            background: #fef3c7;
+            color: #92400e;
+            font-size: 0.82rem;
+            font-weight: 800;
+            padding: 0.45rem 1rem;
+            border-radius: 50px;
+            border: 1.5px solid #fde68a;
+            white-space: nowrap;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+
+        body.dark-mode .h2-vip-seat-tag {
+            background: rgba(212, 163, 115, 0.2);
+            color: #fbbf24;
+            border-color: rgba(251, 191, 36, 0.35);
+        }
+
+        @media (max-width: 600px) {
+            .h2-vip-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.85rem;
+                padding: 1.25rem 1.4rem;
+            }
+
+            .h2-vip-seat-tag {
+                align-self: flex-start;
+                margin-top: 0;
+            }
+        }
+
+        /* SECTION 7: EXCLUSIVE MASTERCLASS APPLICATION PORTAL */
+        .h2-portal-sec {
+            padding: 6rem 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .h2-portal-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 36px;
+            padding: 3.5rem;
+            box-shadow: var(--shadow-lg);
+            display: grid;
+            grid-template-columns: 1fr 1.15fr;
+            gap: 3.5rem;
+            align-items: center;
+        }
+
+        .h2-portal-info h3 {
+            font-family: var(--font-heading);
+            font-size: 2.3rem;
+            font-weight: 900;
+            line-height: 1.18;
+            margin-bottom: 0.8rem;
+        }
+
+        .h2-portal-info p {
+            color: var(--text-secondary);
+            font-size: 0.98rem;
+            line-height: 1.7;
+            margin-bottom: 1.6rem;
+        }
+
+        .h2-portal-img-thumb {
+            height: 180px;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+        }
+
+        .h2-portal-img-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .h2-portal-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.15rem;
+        }
+
+        .h2-form-row {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .h2-form-row label {
+            font-size: 0.86rem;
+            font-weight: 700;
+        }
+
+        .h2-field {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            border-radius: 14px;
+            border: 1px solid var(--border-light);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: inherit;
+            outline: none;
+            transition: var(--transition-smooth);
+        }
+
+        .h2-field:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .h2-submit-btn {
+            padding: 1rem;
+            border-radius: 14px;
+            border: none;
+            background: var(--accent);
+            color: #12151c;
+            font-weight: 800;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 0.5rem;
+            box-shadow: 0 4px 18px var(--accent-glow);
+        }
+
+        .h2-submit-btn:hover {
+            background: var(--accent-hover);
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        /* ---------- RESPONSIVE RULES (HOME2 SPECIFIC) ---------- */
+        @media (max-width: 1024px) {
+            .h2-hero-grid,
+            .h2-mindset-console,
+            .h2-vip-board,
+            .h2-portal-card {
+                grid-template-columns: 1fr !important;
+                gap: 2.5rem !important;
+            }
+            .bento-span-7, .bento-span-5, .bento-span-4 {
+                grid-column: span 12 !important;
+            }
+            .h2-vault-grid,
+            .h2-endgame-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+            .h2-hero-media img,
+            .h2-mindset-media,
+            .h2-vip-media {
+                height: 380px !important;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .h2-vault-grid,
+            .h2-endgame-grid,
+            .h2-mindset-grid {
+                grid-template-columns: 1fr !important;
+            }
+            .h2-portal-card {
+                padding: 2.2rem 1.5rem !important;
+            }
+            .engine-hud-top {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+<style>
+        /* High Contrast Badge & Banner Overrides for Dark Mode */
+        body.dark-mode .idx-badge,
+        body.dark-mode .about-badge,
+        body.dark-mode .coach-badge,
+        body.dark-mode .cnt-badge,
+        body.dark-mode .h2-badge,
+        body.dark-mode .tourn-badge,
+        body.dark-mode .section-badge,
+        body.dark-mode .val-icon-badge,
+        body.dark-mode .pillar-icon-badge {
+            color: #fbbf24 !important;
+            background: rgba(212, 163, 115, 0.18) !important;
+            border-color: rgba(251, 191, 36, 0.35) !important;
+        }
+</style>
+<style>
+        /* Global Mobile Overflow & Alignment Protection */
+        html, body {
+            overflow-x: hidden !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            position: relative;
+            margin: 0;
+            padding: 0;
+        }
+
+        .mobile-panel {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 340px;
+            max-width: 88vw;
+            height: 100vh;
+            background: var(--card-bg);
+            border-left: 1px solid var(--border-light);
+            box-shadow: var(--shadow-lg);
+            z-index: 10001;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            overflow-y: auto;
+            transform: translateX(100%);
+            transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        .mobile-panel.active {
+            transform: translateX(0);
+        }
+
+        body[dir="rtl"] .mobile-panel {
+            right: auto;
+            left: 0;
+            transform: translateX(-100%);
+            border-left: none;
+            border-right: 1px solid var(--border-light);
+        }
+
+        body[dir="rtl"] .mobile-panel.active {
+            transform: translateX(0);
+        }
+</style>
+<style>
+        /* Responsive Table Container Overflow Protection */
+        .table-wrap, .table-responsive, .history-table-wrap, .board-table-wrap {
+            overflow-x: auto !important;
+            max-width: 100% !important;
+            -webkit-overflow-scrolling: touch;
+        }
+</style>
+<style>
+        /* Global Tournament & VIP Row Alignment Fixes */
+        .idx-match-item, .h2-vip-row, .cal-row, .tourn-row, .league-row {
+            display: flex !important;
+            align-items: flex-start !important;
+            justify-content: space-between !important;
+            gap: 1rem !important;
+        }
+
+        .idx-match-info, .h2-vip-info, .cal-info, .tourn-info {
+            flex: 1 !important;
+            min-width: 0 !important;
+        }
+
+        .idx-match-status, .h2-vip-seat-tag, .cal-tag, .tourn-status {
+            flex-shrink: 0 !important;
+            white-space: nowrap !important;
+            margin-top: 0.1rem !important;
+        }
+
+        @media (max-width: 600px) {
+            .idx-match-item, .h2-vip-row, .cal-row, .tourn-row, .league-row {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 0.75rem !important;
+            }
+            .idx-match-status, .h2-vip-seat-tag, .cal-tag, .tourn-status {
+                align-self: flex-start !important;
+                margin-top: 0 !important;
+            }
+        }
+</style>
+<style>
+        /* Mobile Header & Dossier Alignment Fixes */
+        @media (max-width: 650px) {
+            .nav-container {
+                padding: 0.6rem 0.85rem !important;
+                gap: 0.5rem !important;
+            }
+            .logo-knight {
+            font-size: 2.3rem;
+            color: var(--accent);
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(0 2px 8px var(--accent-glow));
+            transition: var(--transition-smooth);
+            flex-shrink: 0;
+        }
+            .logo-title {
+            font-family: var(--font-heading);
+            font-weight: 900;
+            font-size: 1.35rem;
+            letter-spacing: 1.5px;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #a06834 0%, #d4a373 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+        }
+            .logo-sub {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            letter-spacing: 3px;
+            line-height: 1;
+            margin-top: 2px;
+            display: block;
+        }
+            .nav-actions {
+                gap: 0.4rem !important;
+            }
+            .nav-actions .action-btn.btn-login {
+                padding: 0.4rem 0.75rem !important;
+                font-size: 0.82rem !important;
+            }
+            .menu-toggle {
+                padding: 0.4rem 0.7rem !important;
+                font-size: 1.15rem !important;
+            }
+        }
+</style>
+<style>
+        
+            .menu-toggle {
+                display: inline-flex !important;
+            }
+        }
+</style>
+<style>
+/* ---------- GLOBAL MOBILE GRID & HERO ALIGNMENT FIXES ---------- */
+        @media (max-width: 992px) {
+            .hero-section, #hero, #contactHero, #arenaHero, #idxHero, .layout-sec {
+                padding-top: 110px !important;
+            }
+            .hero-split-grid,
+            .idx-hero-grid,
+            .cnt-hero-card,
+            .bento-col-8,
+            .curriculum-grid,
+            .overview-grid-2col {
+                grid-template-columns: 1fr !important;
+                gap: 2rem !important;
+            }
+            .bento-col-8 {
+                grid-column: span 12 !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-stats,
+            .cnt-stats-bar,
+            .hero-stats-band,
+            .stats-grid-3col,
+            .form-row,
+            .form-row-2 {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+            .cnt-stat-item, .stat-box {
+                width: 100% !important;
+            }
+        }
+</style>
+<style>
+/* ---------- BENTO, CURRICULUM, ENROLLMENT & MOBILE GRID FIXES ---------- */
+        @media (max-width: 992px) {
+            .bento-grid,
+            .curriculum-grid,
+            .bento-card[style*="grid-template-columns"],
+            div[style*="grid-template-columns: 1.4fr 1fr"],
+            div[style*="grid-template-columns: 1fr 1fr"] {
+                grid-template-columns: 1fr !important;
+                gap: 1.5rem !important;
+            }
+            .bento-col-8,
+            .bento-col-4 {
+                grid-column: span 12 !important;
+                width: 100% !important;
+            }
+            .enroll-card {
+                padding: 2rem 1.25rem !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-row,
+            .form-row-2,
+            .form-row-3,
+            .elo-calc-inputs,
+            .elo-result-banner {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+            .enroll-submit-btn {
+                width: 100% !important;
+                padding: 0.9rem 1rem !important;
+                font-size: 0.92rem !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                text-align: center !important;
+                line-height: 1.35 !important;
+                min-height: 50px !important;
+                white-space: normal !important;
+                word-break: break-word !important;
+            }
+        }
+</style>
+<style>
+/* ---------- FULL RESPONSIVE GRID & SUBMIT BUTTON ALIGNMENT FIXES ---------- */
+        .bento-card-split {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        button[type="submit"].action-btn,
+        form .action-btn,
+        .enroll-submit-btn {
+            height: auto !important;
+            min-height: 52px !important;
+            padding: 0.9rem 1.2rem !important;
+            white-space: normal !important;
+            word-break: break-word !important;
+            line-height: 1.35 !important;
+            text-align: center !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+
+        @media (max-width: 992px) {
+            .bento-card-split,
+            .timeline-matrix,
+            .hero-split-grid,
+            .idx-hero-grid,
+            .cnt-hero-card,
+            .curriculum-grid,
+            .overview-grid-2col {
+                grid-template-columns: 1fr !important;
+                gap: 2rem !important;
+            }
+            .bento-col-8,
+            .bento-col-4 {
+                grid-column: span 12 !important;
+                width: 100% !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .deck-form-grid,
+            .form-row,
+            .form-row-2,
+            .form-row-3,
+            .elo-calc-inputs,
+            .elo-result-banner,
+            .hero-stats,
+            .cnt-stats-bar,
+            .hero-stats-band,
+            .stats-grid-3col {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+            .cnt-stat-item, .stat-box {
+                width: 100% !important;
+            }
+        }
+</style>
+<style>
+/* ---------- ABSOLUTE COMPLETE RESPONSIVE GRID & BUTTON FIXES ---------- */
+        @media (max-width: 992px) {
+            .studio-columns,
+            .timeline-matrix,
+            .deck-form-grid,
+            .pathway-cards-grid,
+            .bento-grid,
+            .curriculum-grid,
+            .hero-split-grid,
+            .idx-hero-grid,
+            .cnt-hero-card,
+            .bento-card-split,
+            .overview-grid-2col,
+            .fame-grid,
+            .stadium-hero-card,
+            .reg-portal-wrap,
+            div[style*="grid-template-columns"] {
+                grid-template-columns: 1fr !important;
+                gap: 1.5rem !important;
+            }
+            .bento-col-8,
+            .bento-col-4 {
+                grid-column: span 12 !important;
+                width: 100% !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-stats,
+            .cnt-stats-bar,
+            .hero-stats-band,
+            .stats-grid-3col,
+            .form-row,
+            .form-row-2,
+            .form-row-3,
+            .elo-calc-inputs,
+            .elo-result-banner {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+            .cnt-stat-item, .stat-box {
+                width: 100% !important;
+            }
+            button[type="submit"].action-btn,
+            form .action-btn,
+            .enroll-submit-btn {
+                height: auto !important;
+                min-height: 52px !important;
+                padding: 0.9rem 1rem !important;
+                font-size: 0.92rem !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                text-align: center !important;
+                line-height: 1.35 !important;
+                white-space: normal !important;
+                word-break: break-word !important;
+            }
+        }
+</style>
+<style>
+/* ---------- DASHBOARD & TABLE RESPONSIVE ALIGNMENT FIXES ---------- */
+        .section-title, .section-heading, .banner-headline, .hero-title, h1, h2 {
+            white-space: normal !important;
+            word-break: break-word !important;
+            overflow-wrap: break-word !important;
+        }
+
+        code, pre {
+            white-space: pre-wrap !important;
+            word-break: break-word !important;
+        }
+
+        .history-table-card {
+            width: 100% !important;
+            max-width: 100% !important;
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+            display: block !important;
+        }
+
+        .history-table {
+            min-width: 600px !important;
+            width: 100% !important;
+        }
+
+        @media (max-width: 768px) {
+            .progress-steps-row {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 1.25rem !important;
+            }
+            .dashboard-topbar {
+                flex-wrap: wrap !important;
+                gap: 0.75rem !important;
+                padding: 0.85rem 1rem !important;
+            }
+            .topbar-search {
+                order: 3 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .progress-steps-row {
+                grid-template-columns: 1fr !important;
+            }
+            .section-title {
+                font-size: 1.5rem !important;
+            }
+        }
+</style>
+<style>
+/* ---------- VIEWPORT OVERFLOW & MOBILE ALIGNMENT CONTAINMENT ---------- */
+        html, body {
+            overflow-x: hidden !important;
+            max-width: 100vw !important;
+            width: 100% !important;
+        }
+
+        .dashboard-main-content,
+        .container-fluid,
+        .db-section,
+        main,
+        .navbar,
+        header,
+        footer,
+        section {
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        .history-table-card {
+            width: 100% !important;
+            max-width: 100% !important;
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+            display: block !important;
+            border-radius: 16px !important;
+        }
+
+        .history-table {
+            width: 100% !important;
+            min-width: 550px !important;
+            table-layout: auto !important;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-topbar {
+                display: flex !important;
+                flex-wrap: wrap !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                padding: 0.6rem 0.85rem !important;
+                gap: 0.5rem !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+            }
+            .topbar-search {
+                order: 3 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                margin-top: 0.4rem !important;
+            }
+            .topbar-search input {
+                width: 100% !important;
+                font-size: 0.85rem !important;
+            }
+            .user-top-profile {
+                margin-left: auto !important;
+            }
+            .section-title, .section-heading, .banner-headline, .hero-title, h1, h2 {
+                font-size: clamp(1.4rem, 5vw, 2.2rem) !important;
+                line-height: 1.25 !important;
+                white-space: normal !important;
+                word-break: break-word !important;
+                overflow-wrap: break-word !important;
+            }
+            .section-desc, .section-subtitle, p {
+                font-size: 0.92rem !important;
+                line-height: 1.5 !important;
+                white-space: normal !important;
+                word-break: break-word !important;
+            }
+        }
+</style>
+</head>
+<body class="dark-mode" dir="ltr">
+
+    <!-- ==================== HEADER / NAVBAR ==================== -->
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <!-- Brand Logo -->
+            <a href="index.html" class="logo-area" aria-label="Chess Academy Home">
+                <span class="logo-knight">♞</span>
+                <div class="logo-text-block">
+                    <span class="logo-title">CHESS ACADEMY</span>
+                    <span class="logo-sub">TACTICS &amp; MASTERY</span>
+                </div>
+            </a>
+
+            <!-- Navigation Links -->
+            <ul class="nav-links">
+                <li class="nav-item dropdown">
+                    <a href="home2.html" class="nav-link active">
+                        Home <i class="fas fa-chevron-down chevron"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="index.html" class="dropdown-item"><i class="fas fa-chess-board"></i> Home 1 (Tactical)</a></li>
+                        <li><a href="home2.html" class="dropdown-item"><i class="fas fa-crown"></i> Home 2 (Masterclass)</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a href="programs.html" class="nav-link">Programs</a></li>
+                <li class="nav-item"><a href="coaches.html" class="nav-link">Coaches</a></li>
+                <li class="nav-item"><a href="tournaments.html" class="nav-link">Tournaments</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About Academy</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                <li class="nav-item dropdown">
+                    <a href="user dashboard.html" class="nav-link">
+                        Dashboard <i class="fas fa-chevron-down chevron"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="user dashboard.html" class="dropdown-item"><i class="fas fa-user-graduate"></i> Student Dashboard</a></li>
+                        <li><a href="admin dashboard.html" class="dropdown-item"><i class="fas fa-shield-alt"></i> Admin Dashboard</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <!-- Controls: Theme, RTL, Login, Mobile Toggle -->
+            <div class="nav-actions">
+                <button class="action-btn" id="darkModeBtn" aria-label="Toggle Theme">
+                    <i class="fas fa-moon" id="themeIcon"></i>
+                    <span id="themeLabel">Dark</span>
+                </button>
+
+                <button class="action-btn" id="rtlBtn" aria-label="Toggle Layout Direction">
+                    <i class="fas fa-right-left" id="rtlIcon"></i>
+                    <span id="rtlLabel">RTL</span>
+                </button>
+
+                <a href="login.html" class="action-btn btn-login" id="loginModalBtn">
+                    <i class="fas fa-arrow-right-to-bracket"></i>
+                    <span>Login</span>
+                </a>
+
+                <button class="menu-toggle" id="mobileToggleBtn" aria-label="Open Mobile Menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== MOBILE DRAWER ==================== -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+    <div class="mobile-panel" id="mobilePanel">
+        <div class="mobile-header">
+            <a href="index.html" class="logo-area">
+                <span class="logo-knight">♞</span>
+                <div class="logo-text-block">
+                    <span class="logo-title">CHESS ACADEMY</span>
+                    <span class="logo-sub">TACTICS &amp; MASTERY</span>
+                </div>
+            </a>
+            <button class="mobile-close" id="mobileCloseBtn"><i class="fas fa-times"></i></button>
+        </div>
+
+        <ul class="mobile-links">
+            <li class="mobile-link-item">
+                <div class="mobile-link" id="mobileHomeAcc">
+                    <span>Home</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <ul class="mobile-accordion-content" id="mobileHomeContent">
+                    <li><a href="index.html" class="mobile-sublink"><i class="fas fa-chess-board"></i> Home 1</a></li>
+                    <li><a href="home2.html" class="mobile-sublink"><i class="fas fa-crown"></i> Home 2</a></li>
+                </ul>
+            </li>
+            <li class="mobile-link-item"><a href="programs.html" class="mobile-link">Programs</a></li>
+            <li class="mobile-link-item"><a href="coaches.html" class="mobile-link">Coaches</a></li>
+            <li class="mobile-link-item"><a href="tournaments.html" class="mobile-link">Tournaments</a></li>
+            <li class="mobile-link-item"><a href="about.html" class="mobile-link">About Academy</a></li>
+            <li class="mobile-link-item"><a href="contact.html" class="mobile-link">Contact</a></li>
+            <li class="mobile-link-item">
+                <div class="mobile-link" id="mobileDashAcc">
+                    <span>Dashboard</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <ul class="mobile-accordion-content" id="mobileDashContent">
+                    <li><a href="user dashboard.html" class="mobile-sublink"><i class="fas fa-user-graduate"></i> Student Dashboard</a></li>
+                    <li><a href="admin dashboard.html" class="mobile-sublink"><i class="fas fa-shield-alt"></i> Admin Dashboard</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="mobile-actions">
+            <button class="action-btn" id="mobileDarkBtn">
+                <i class="fas fa-moon" id="mobileThemeIcon"></i>
+                <span id="mobileThemeLabel">Dark Mode</span>
+            </button>
+            <button class="action-btn" id="mobileRtlBtn">
+                <i class="fas fa-right-left" id="mobileRtlIcon"></i>
+                <span id="mobileRtlLabel">RTL Layout</span>
+            </button>
+            <a href="login.html" class="action-btn btn-login" id="mobileLoginModalBtn">
+                <i class="fas fa-arrow-right-to-bracket"></i>
+                <span>Login</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- ==================== MAIN CONTENT (7 FRESH UNIQUE SECTIONS FOR HOME2) ==================== -->
+    <main>
+
+        <!-- SECTION 1: MASTERCLASS AMPHITHEATER & LIVE ENGINE BOARD -->
+        <section class="h2-hero-wrap" id="h2Amphitheater" data-framer-section="h2-amphitheater">
+            <div class="h2-hero-grid">
+                <div>
+                    <div class="h2-badge"><i class="fas fa-crown"></i> Grandmaster Studio</div>
+                    <h1 class="h2-hero-h1">The Masterclass Amphitheater.<br>Deep Positional Artistry.</h1>
+                    <p class="h2-hero-p">
+                        Step into our high-performance grandmaster laboratory. Study romantic piece play alongside real-time engine evaluation and grandmaster opening novelty suites.
+                    </p>
+
+                    <!-- Interactive Live Move Analysis Engine Control Widget -->
+                    <div class="engine-hud-box">
+                        <div class="engine-hud-top">
+                            <span style="font-weight: 800; font-size: 0.88rem; text-transform: uppercase; color: var(--text-secondary);">Stockfish 16 Engine</span>
+                            <span class="engine-eval-pill" id="engineEvalScore">+1.4 White Advantage</span>
+                        </div>
+                        <div class="engine-moves-row">
+                            <button class="engine-move-btn active" data-eval="+1.4 White Advantage" data-text="1. e4 Control of the central squares e4 &amp; d5.">1. e4 King's Pawn</button>
+                            <button class="engine-move-btn" data-eval="+0.8 White Advantage" data-text="1. d4 Strategic grip on c5 &amp; e5 outposts.">1. d4 Queen's Pawn</button>
+                            <button class="engine-move-btn" data-eval="+0.6 White Advantage" data-text="1. c4 English Opening central clamp.">1. c4 English</button>
+                            <button class="engine-move-btn" data-eval="+0.5 White Advantage" data-text="1. Nf3 Flexible Reti Opening setup.">1. Nf3 Reti</button>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.8rem;" id="engineNoteText">
+                            1. e4 Control of the central squares e4 &amp; d5.
+                        </p>
+                    </div>
+
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <a href="#h2ApplicationPortal" class="action-btn btn-login" style="padding: 0.95rem 2.2rem; font-size: 1rem;">
+                            <i class="fas fa-chess-king"></i> Apply for Masterclass
+                        </a>
+                        <a href="#h2VaultAccordion" class="action-btn" style="padding: 0.95rem 2.2rem; font-size: 1rem;">
+                            <i class="fas fa-vault"></i> Repertoire Vault
+                        </a>
+                    </div>
+                </div>
+
+                <div class="h2-hero-media">
+                    <img src="images/h2_masterclass_hero.jpg" alt="Luxury Grandmaster Masterclass Studio Visual">
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: THE 5 DIMENSIONS OF POSITIONAL MASTERY (BENTO GRID) -->
+        <section class="h2-bento-sec" id="h2BentoDimensions" data-framer-section="h2-bento-dimensions">
+            <div class="h2-center-head">
+                <div class="h2-badge"><i class="fas fa-layer-group"></i> Architectural Pillars</div>
+                <h2 class="h2-sec-title">Five Dimensions of Positional Supremacy</h2>
+                <p class="h2-sec-sub">
+                    Master the foundational rules of grandmaster strategy that dictate piece placements, space claims, and king safety.
+                </p>
+            </div>
+
+            <div class="h2-bento-container">
+                <div class="h2-bento-card bento-span-7">
+                    <div>
+                        <div class="h2-bento-icon"><i class="fas fa-shield-halved"></i></div>
+                        <h3>King Safety &amp; Fortress Architecture</h3>
+                        <p>Construct impenetrable pawn shields, eliminate dark-square holes around castled kings, and prevent speculative sacrifices.</p>
+                    </div>
+                    <div class="h2-bento-img">
+                        <img src="images/h2_bento_king_safety.jpg" alt="King Safety Fortress Architecture">
+                    </div>
+                </div>
+
+                <div class="h2-bento-card bento-span-5">
+                    <div>
+                        <div class="h2-bento-icon"><i class="fas fa-expand"></i></div>
+                        <h3>Space Supremacy &amp; Outpost Control</h3>
+                        <p>Claim central territory, lock enemy pieces behind pawn chains, and occupy permanent knight outposts on d5 and e6.</p>
+                    </div>
+                    <div class="h2-bento-img">
+                        <img src="images/h2_bento_space.jpg" alt="Space Supremacy Outpost Control">
+                    </div>
+                </div>
+
+                <div class="h2-bento-card bento-span-4">
+                    <div>
+                        <div class="h2-bento-icon"><i class="fas fa-chess-pawn"></i></div>
+                        <h3>Minority Attack</h3>
+                        <p>Launch b4-b5 pawn rushes on the queenside to isolate c6/d5 pawns.</p>
+                    </div>
+                    <div class="h2-bento-img">
+                        <img src="images/h2_bento_minority.jpg" alt="Minority Attack Demonstration">
+                    </div>
+                </div>
+
+                <div class="h2-bento-card bento-span-4">
+                    <div>
+                        <div class="h2-bento-icon"><i class="fas fa-hand-fist"></i></div>
+                        <h3>Prophylaxis Defense</h3>
+                        <p>Spot enemy counterplay early and neutralize candidate moves before execution.</p>
+                    </div>
+                    <div class="h2-bento-img">
+                        <img src="images/h2_bento_prophylaxis.jpg" alt="Prophylaxis Threat Denial">
+                    </div>
+                </div>
+
+                <div class="h2-bento-card bento-span-4">
+                    <div>
+                        <div class="h2-bento-icon"><i class="fas fa-fire"></i></div>
+                        <h3>Dynamic Initiative</h3>
+                        <p>Sacrifice material for time, tempo, and open piece channels towards the king.</p>
+                    </div>
+                    <div class="h2-bento-img">
+                        <img src="images/h2_bento_initiative.jpg" alt="Dynamic Initiative Sacrifice">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: REPERTOIRE VAULT ACCORDION -->
+        <section class="h2-vault-sec" id="h2VaultAccordion" data-framer-section="h2-vault-accordion">
+            <div class="h2-center-head">
+                <div class="h2-badge"><i class="fas fa-vault"></i> Repertoire Arsenal</div>
+                <h2 class="h2-sec-title">Opening Repertoire Vault &amp; Engine Tabiyas</h2>
+                <p class="h2-sec-sub">
+                    Tested theoretical weapon systems for Black and White with proven high master win rates.
+                </p>
+            </div>
+
+            <div class="h2-vault-grid">
+                <div class="h2-vault-card">
+                    <div class="h2-vault-img">
+                        <img src="images/h2_opening_najdorf.jpg" alt="Sicilian Najdorf Board Position">
+                        <span class="h2-win-badge">58% Win Rate</span>
+                    </div>
+                    <div class="h2-vault-body">
+                        <h4>Sicilian Najdorf (5...a6)</h4>
+                        <p>Sharp, aggressive counterattack for Black. Controls b5, prepares queenside expansion, and fights for dynamic victory.</p>
+                    </div>
+                </div>
+
+                <div class="h2-vault-card">
+                    <div class="h2-vault-img">
+                        <img src="images/h2_opening_qgd.jpg" alt="Queens Gambit Declined Position">
+                        <span class="h2-win-badge">62% Win Rate</span>
+                    </div>
+                    <div class="h2-vault-body">
+                        <h4>Queen's Gambit Tartakower</h4>
+                        <p>Classical solidity for White. Controls the d4-e5 center, launches kingside piece batteries, and clamps space.</p>
+                    </div>
+                </div>
+
+                <div class="h2-vault-card">
+                    <div class="h2-vault-img">
+                        <img src="images/h2_opening_kid.jpg" alt="Kings Indian Defense Position">
+                        <span class="h2-win-badge">54% Win Rate</span>
+                    </div>
+                    <div class="h2-vault-body">
+                        <h4>King's Indian Mar del Plata</h4>
+                        <p>Fianchetto defense for Black. Concedes central space to launch crushing kingside pawn storms with ...f5 and ...g5.</p>
+                    </div>
+                </div>
+
+                <div class="h2-vault-card">
+                    <div class="h2-vault-img">
+                        <img src="images/h2_opening_catalan.jpg" alt="Catalan Opening Position">
+                        <span class="h2-win-badge">65% Win Rate</span>
+                    </div>
+                    <div class="h2-vault-body">
+                        <h4>Catalan Fianchetto (g3-Bg2)</h4>
+                        <p>Surgical positional pressure for White. The g2-bishop radiates long diagonal control across the entire board.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: ENDGAME MASTERCLASS STUDIO -->
+        <section class="h2-endgame-sec" id="h2EndgameStudio" data-framer-section="h2-endgame-studio">
+            <div class="h2-center-head">
+                <div class="h2-badge"><i class="fas fa-chess-rook"></i> Tablebase Precision</div>
+                <h2 class="h2-sec-title">Endgame Precision &amp; Tablebase Mastery</h2>
+                <p class="h2-sec-sub">
+                    Converting winning advantages into full points. Eradicate technical errors in 5-piece and 7-piece positions.
+                </p>
+            </div>
+
+            <div class="h2-endgame-grid">
+                <div class="h2-endgame-card">
+                    <div>
+                        <h4>Rook Endgames: Lucena Bridge</h4>
+                        <p>The definitive technique to escort a passed pawn to promotion under rook defense.</p>
+                    </div>
+                    <div class="h2-endgame-img">
+                        <img src="images/h2_endgame_lucena.jpg" alt="Lucena Bridge Rook Endgame">
+                    </div>
+                </div>
+
+                <div class="h2-endgame-card">
+                    <div>
+                        <h4>Pawn Endgames: Opposition Keys</h4>
+                        <p>Out-flanking, triangulation, and key square control in pure king and pawn showdowns.</p>
+                    </div>
+                    <div class="h2-endgame-img">
+                        <img src="images/h2_endgame_opposition.jpg" alt="Pawn Endgame Opposition Mechanics">
+                    </div>
+                </div>
+
+                <div class="h2-endgame-card">
+                    <div>
+                        <h4>Bishop vs Knight Imbalance</h4>
+                        <p>Exploiting open board diagonals with the bishop pair against blocked knight outposts.</p>
+                    </div>
+                    <div class="h2-endgame-img">
+                        <img src="images/h2_endgame_bishop_knight.jpg" alt="Bishop vs Knight Imbalance">
+                    </div>
+                </div>
+
+                <div class="h2-endgame-card">
+                    <div>
+                        <h4>Queen Endgame Conversion</h4>
+                        <p>Handling passed pawns while shutting down perpetual check threats from enemy queens.</p>
+                    </div>
+                    <div class="h2-endgame-img">
+                        <img src="images/h2_endgame_queen.jpg" alt="Queen Endgame Conversion Strategy">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: MINDSET & TOURNAMENT CONDITIONING PROTOCOL -->
+        <section class="h2-mindset-sec" id="h2MindsetProtocol" data-framer-section="h2-mindset-protocol">
+            <div class="h2-center-head">
+                <div class="h2-badge"><i class="fas fa-heart-pulse"></i> Human Optimization</div>
+                <h2 class="h2-sec-title">Mindset &amp; Tournament Conditioning Protocol</h2>
+                <p class="h2-sec-sub">
+                    Classical chess matches are physical marathons. We optimize focus, heart rate, and emotional resilience under pressure.
+                </p>
+            </div>
+
+            <div class="h2-mindset-console">
+                <div class="h2-mindset-grid">
+                    <div class="h2-hex-meter">
+                        <div class="h2-hex-num">99.4%</div>
+                        <h5>Tilt Resistance</h5>
+                        <p>Emotional reset protocols after tough game losses.</p>
+                    </div>
+
+                    <div class="h2-hex-meter">
+                        <div class="h2-hex-num">0.08s</div>
+                        <h5>Clock Reflex</h5>
+                        <p>Sub-second pre-move reaction in low time blitz scrambles.</p>
+                    </div>
+
+                    <div class="h2-hex-meter">
+                        <div class="h2-hex-num">6.0 Hrs</div>
+                        <h5>Stamina Plateau</h5>
+                        <p>Cardiovascular endurance for 5-hour classical battles.</p>
+                    </div>
+
+                    <div class="h2-hex-meter">
+                        <div class="h2-hex-num">99.8%</div>
+                        <h5>Blunder Safety</h5>
+                        <p>Anti-blunder safety check before touching pieces.</p>
+                    </div>
+                </div>
+
+                <div class="h2-mindset-media">
+                    <img src="images/h2_mindset_conditioning.jpg" alt="Grandmaster Biometric Focus Visual">
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 6: VIP GRANDMASTER RETREAT & BOOTCAMP SCHEDULE -->
+        <section class="h2-vip-sec" id="h2VipSchedule" data-framer-section="h2-vip-schedule">
+            <div class="h2-center-head">
+                <div class="h2-badge"><i class="fas fa-plane-departure"></i> Luxury Retreats</div>
+                <h2 class="h2-sec-title">Grandmaster VIP Retreats &amp; Camps</h2>
+                <p class="h2-sec-sub">
+                    Exclusive in-person bootcamps at international destinations with titled Grandmaster coaches.
+                </p>
+            </div>
+
+            <div class="h2-vip-board">
+                <div class="h2-vip-media">
+                    <img src="images/h2_vip_retreat.jpg" alt="St Moritz Grandmaster Retreat Location">
+                </div>
+
+                <div class="h2-vip-list">
+                    <div class="h2-vip-row">
+                        <div class="h2-vip-info">
+                            <h5>St. Moritz Alpine Grandmaster Camp</h5>
+                            <span>Jan 15 - 22 • Switzerland • High-Altitude Focus</span>
+                        </div>
+                        <span class="h2-vip-seat-tag">2 Seats Left</span>
+                    </div>
+
+                    <div class="h2-vip-row">
+                        <div class="h2-vip-info">
+                            <h5>Reykjavik Bobby Fischer Memorial Simul</h5>
+                            <span>Mar 10 - 14 • Iceland • Theoretical Novelties</span>
+                        </div>
+                        <span class="h2-vip-seat-tag">Registration Open</span>
+                    </div>
+
+                    <div class="h2-vip-row">
+                        <div class="h2-vip-info">
+                            <h5>Barcelona Classical Olympiad Bootcamp</h5>
+                            <span>May 01 - 08 • Spain • FIDE Norm Preparation</span>
+                        </div>
+                        <span class="h2-vip-seat-tag">Filling Fast</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 7: EXCLUSIVE MASTERCLASS APPLICATION PORTAL -->
+        <section class="h2-portal-sec" id="h2ApplicationPortal" data-framer-section="h2-application-portal">
+            <div class="h2-portal-card">
+                <div class="h2-portal-info">
+                    <div class="h2-badge"><i class="fas fa-id-card"></i> Member Intake</div>
+                    <h3>Apply for the Masterclass Cohort</h3>
+                    <p>
+                        Intake is strictly limited to 20 rated players per quarter. Complete your candidate application below to schedule your Grandmaster interview.
+                    </p>
+                    <div class="h2-portal-img-thumb">
+                        <img src="images/h2_portal_pass.jpg" alt="Masterclass VIP Membership Pass">
+                    </div>
+                </div>
+
+                <form class="h2-portal-form" id="masterclassAppForm">
+                    <div class="h2-form-row">
+                        <label for="appFullName">Candidate Full Name</label>
+                        <input type="text" id="appFullName" class="h2-field" placeholder="Alexander Alekhine" required>
+                    </div>
+
+                    <div class="h2-form-row">
+                        <label for="appEmail">Email Address</label>
+                        <input type="email" id="appEmail" class="h2-field" placeholder="player@chessmaster.com" required>
+                    </div>
+
+                    <div class="h2-form-row">
+                        <label for="appFideRating">FIDE Rating / Lichess ELO</label>
+                        <input type="text" id="appFideRating" class="h2-field" placeholder="e.g. 1850 FIDE or 2100 Lichess" required>
+                    </div>
+
+                    <div class="h2-form-row">
+                        <label for="appCohortTrack">Select Masterclass Track</label>
+                        <select id="appCohortTrack" class="h2-field" required>
+                            <option value="">Select Cohort Program</option>
+                            <option value="expert">Expert Positional Track (1600 - 1900 ELO)</option>
+                            <option value="candidate">Master Candidate Track (1900 - 2200 ELO)</option>
+                            <option value="title">FIDE Title Mentorship (2200+ FIDE)</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="h2-submit-btn">
+                        <i class="fas fa-crown"></i> Submit Masterclass Application
+                    </button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer" id="footer">
+        <div class="footer-container">
+            <!-- Brand Column -->
+            <div class="footer-brand">
+                <a href="index.html" class="logo-area" aria-label="Chess Academy Footer Logo">
+                    <span class="logo-knight">♞</span>
+                    <div class="logo-text-block">
+                        <span class="logo-title">CHESS ACADEMY</span>
+                        <span class="logo-sub">TACTICS &amp; MASTERY</span>
+                    </div>
+                </a>
+                <p class="footer-desc">
+                    World-class chess training academy dedicated to nurturing aspiring prodigies, competitive tournament contenders, and lifelong enthusiasts.
+                </p>
+                <div class="social-links">
+                    <a href="#" class="social-btn" aria-label="Chess.com"><i class="fas fa-chess"></i></a>
+                    <a href="#" class="social-btn" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="social-btn" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-btn" aria-label="Twitch"><i class="fab fa-twitch"></i></a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-col">
+                <h4>Academy Links</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html" class="footer-link"><i class="fas fa-chevron-right"></i> Home 1 (Tactical)</a></li>
+                    <li><a href="home2.html" class="footer-link"><i class="fas fa-chevron-right"></i> Home 2 (Masterclass)</a></li>
+                    <li><a href="programs.html" class="footer-link"><i class="fas fa-chevron-right"></i> Programs</a></li>
+                    <li><a href="coaches.html" class="footer-link"><i class="fas fa-chevron-right"></i> Coaches</a></li>
+                    <li><a href="tournaments.html" class="footer-link"><i class="fas fa-chevron-right"></i> Tournaments</a></li>
+                </ul>
+            </div>
+
+            <!-- Dashboards & Info -->
+            <div class="footer-col">
+                <h4>Portals &amp; Info</h4>
+                <ul class="footer-links">
+                    <li><a href="user dashboard.html" class="footer-link"><i class="fas fa-chevron-right"></i> Student Dashboard</a></li>
+                    <li><a href="admin dashboard.html" class="footer-link"><i class="fas fa-chevron-right"></i> Admin Dashboard</a></li>
+                    <li><a href="about.html" class="footer-link"><i class="fas fa-chevron-right"></i> About Academy</a></li>
+                    <li><a href="contact.html" class="footer-link"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+                    <li><a href="login.html" class="footer-link"><i class="fas fa-chevron-right"></i> Member Portal</a></li>
+                </ul>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="footer-col">
+                <h4>Weekly Newsletter</h4>
+                <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 0.8rem;">
+                    Receive weekly Grandmaster puzzle breakdowns and tournament registration alerts.
+                </p>
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" placeholder="Enter your email" class="newsletter-input" required>
+                    <button type="submit" class="newsletter-btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Chess Academy. All rights reserved.</p>
+            <div style="display: flex; gap: 1.5rem;">
+                <a href="#" class="footer-link" style="font-size: 0.88rem;">Privacy Policy</a>
+                <a href="#" class="footer-link" style="font-size: 0.88rem;">Terms of Service</a>
+                <a href="#" class="footer-link" style="font-size: 0.88rem;">FIDE Fair Play Guidelines</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== LOGIN MODAL ==================== -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="login-card">
+            <button class="modal-close" id="modalCloseBtn"><i class="fas fa-times"></i></button>
+            <h3>Academy Login</h3>
+            <p>Sign in to access your student rating stats and lesson schedule.</p>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="emailInput">Email Address</label>
+                    <input type="email" id="emailInput" class="form-input" placeholder="player@chessacademy.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="passwordInput">Password</label>
+                    <input type="password" id="passwordInput" class="form-input" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="login-submit">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const body = document.body;
+
+            // DOM Elements
+            const darkModeBtn = document.getElementById('darkModeBtn');
+            const mobileDarkBtn = document.getElementById('mobileDarkBtn');
+            const themeIcon = document.getElementById('themeIcon');
+            const mobileThemeIcon = document.getElementById('mobileThemeIcon');
+            const themeLabel = document.getElementById('themeLabel');
+            const mobileThemeLabel = document.getElementById('mobileThemeLabel');
+
+            const rtlBtn = document.getElementById('rtlBtn');
+            const mobileRtlBtn = document.getElementById('mobileRtlBtn');
+            const rtlLabel = document.getElementById('rtlLabel');
+            const mobileRtlLabel = document.getElementById('mobileRtlLabel');
+
+            const mobileToggleBtn = document.getElementById('mobileToggleBtn');
+            const mobileCloseBtn = document.getElementById('mobileCloseBtn');
+            const mobileOverlay = document.getElementById('mobileOverlay');
+            const mobilePanel = document.getElementById('mobilePanel');
+
+            const mobileHomeAcc = document.getElementById('mobileHomeAcc');
+            const mobileHomeContent = document.getElementById('mobileHomeContent');
+            const mobileDashAcc = document.getElementById('mobileDashAcc');
+            const mobileDashContent = document.getElementById('mobileDashContent');
+
+            const loginModalBtn = document.getElementById('loginModalBtn');
+            const mobileLoginModalBtn = document.getElementById('mobileLoginModalBtn');
+            const footerLoginTrigger = document.getElementById('footerLoginTrigger');
+            const loginModal = document.getElementById('loginModal');
+            const modalCloseBtn = document.getElementById('modalCloseBtn');
+            const loginForm = document.getElementById('loginForm');
+            const newsletterForm = document.getElementById('newsletterForm');
+            const masterclassAppForm = document.getElementById('masterclassAppForm');
+
+            // 1. Dark/Light Mode Switcher
+            function updateThemeUI(isDark) {
+                if (isDark) {
+                    body.classList.add('dark-mode');
+                    if (themeIcon) themeIcon.className = 'fas fa-sun';
+                    if (mobileThemeIcon) mobileThemeIcon.className = 'fas fa-sun';
+                    if (themeLabel) themeLabel.textContent = 'Light';
+                    if (mobileThemeLabel) mobileThemeLabel.textContent = 'Light Mode';
+                    localStorage.setItem('chessacademy_theme', 'dark');
+                } else {
+                    body.classList.remove('dark-mode');
+                    if (themeIcon) themeIcon.className = 'fas fa-moon';
+                    if (mobileThemeIcon) mobileThemeIcon.className = 'fas fa-moon';
+                    if (themeLabel) themeLabel.textContent = 'Dark';
+                    if (mobileThemeLabel) mobileThemeLabel.textContent = 'Dark Mode';
+                    localStorage.setItem('chessacademy_theme', 'light');
+                }
+            }
+
+            function toggleTheme() {
+                const isDark = !body.classList.contains('dark-mode');
+                updateThemeUI(isDark);
+            }
+
+            const savedTheme = localStorage.getItem('chessacademy_theme');
+            if (savedTheme === 'light') {
+                updateThemeUI(false);
+            } else {
+                updateThemeUI(true);
+            }
+
+            if (darkModeBtn) darkModeBtn.addEventListener('click', toggleTheme);
+            if (mobileDarkBtn) mobileDarkBtn.addEventListener('click', toggleTheme);
+
+            // 2. RTL / LTR Toggle
+            function updateRTLUI(isRtl) {
+                const dir = isRtl ? 'rtl' : 'ltr';
+                document.body.setAttribute('dir', dir);
+                document.documentElement.setAttribute('dir', dir);
+                if (rtlLabel) rtlLabel.textContent = isRtl ? 'LTR' : 'RTL';
+                if (mobileRtlLabel) mobileRtlLabel.textContent = isRtl ? 'LTR Layout' : 'RTL Layout';
+                localStorage.setItem('chessacademy_rtl', dir);
+            }
+
+            function toggleRTL() {
+                const isRtl = (document.body.getAttribute('dir') || 'ltr') === 'ltr';
+                updateRTLUI(isRtl);
+                closeMobileDrawer();
+            }
+
+            const savedRtl = localStorage.getItem('chessacademy_rtl');
+            if (savedRtl === 'rtl') {
+                updateRTLUI(true);
+            } else {
+                updateRTLUI(false);
+            }
+
+            if (rtlBtn) rtlBtn.addEventListener('click', toggleRTL);
+            if (mobileRtlBtn) mobileRtlBtn.addEventListener('click', toggleRTL);
+
+            // 3. Mobile Drawer Controls
+            function openMobileDrawer() {
+                mobileOverlay.classList.add('active');
+                mobilePanel.classList.add('active');
+                body.style.overflow = 'hidden';
+            }
+
+            function closeMobileDrawer() {
+                mobileOverlay.classList.remove('active');
+                mobilePanel.classList.remove('active');
+                body.style.overflow = '';
+            }
+
+            if (mobileToggleBtn) mobileToggleBtn.addEventListener('click', openMobileDrawer);
+            if (mobileCloseBtn) mobileCloseBtn.addEventListener('click', closeMobileDrawer);
+            if (mobileOverlay) mobileOverlay.addEventListener('click', closeMobileDrawer);
+
+            if (mobileHomeAcc) {
+                mobileHomeAcc.addEventListener('click', () => {
+                    mobileHomeContent.classList.toggle('show');
+                    const chevron = mobileHomeAcc.querySelector('.fa-chevron-down');
+                    if (chevron) chevron.style.transform = mobileHomeContent.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0deg)';
+                });
+            }
+
+            if (mobileDashAcc) {
+                mobileDashAcc.addEventListener('click', () => {
+                    mobileDashContent.classList.toggle('show');
+                    const chevron = mobileDashAcc.querySelector('.fa-chevron-down');
+                    if (chevron) chevron.style.transform = mobileDashContent.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0deg)';
+                });
+            }
+
+            document.querySelectorAll('.mobile-panel a:not(.mobile-link)').forEach(link => {
+                link.addEventListener('click', closeMobileDrawer);
+            });
+
+            // 4. Login Modal
+            function openLoginModal() {
+                loginModal.classList.add('active');
+                closeMobileDrawer();
+            }
+
+            function closeLoginModal() {
+                loginModal.classList.remove('active');
+            }
+
+            if (loginModalBtn) loginModalBtn.addEventListener('click', openLoginModal);
+            if (mobileLoginModalBtn) mobileLoginModalBtn.addEventListener('click', openLoginModal);
+            if (footerLoginTrigger) footerLoginTrigger.addEventListener('click', (e) => { e.preventDefault(); openLoginModal(); });
+            if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeLoginModal);
+            if (loginModal) {
+                loginModal.addEventListener('click', (e) => {
+                    if (e.target === loginModal) closeLoginModal();
+                });
+            }
+
+            if (loginForm) {
+                loginForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    alert('Successfully authenticated into Chess Academy portal!');
+                    closeLoginModal();
+                });
+            }
+
+            // 5. Newsletter Form
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    alert('Thank you for subscribing to Chess Academy weekly updates!');
+                    newsletterForm.reset();
+                });
+            }
+
+            // 6. Live Analysis Engine Move Switcher
+            const engineMoveBtns = document.querySelectorAll('.engine-move-btn');
+            const engineEvalScore = document.getElementById('engineEvalScore');
+            const engineNoteText = document.getElementById('engineNoteText');
+
+            engineMoveBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    engineMoveBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    if (engineEvalScore) engineEvalScore.textContent = btn.getAttribute('data-eval');
+                    if (engineNoteText) engineNoteText.textContent = btn.getAttribute('data-text');
+                });
+            });
+
+            // 7. Masterclass Application Form Handler
+            if (masterclassAppForm) {
+                masterclassAppForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const name = document.getElementById('appFullName').value;
+                    alert(`Congratulations ${name}! Your Grandmaster Masterclass application has been received. Our admissions team will review your rating profile.`);
+                    masterclassAppForm.reset();
+                });
+            }
+
+            // 8. Framer Motion Scroll Trigger for home2.html
+            function checkInViewSectionsH2() {
+                document.querySelectorAll('[data-framer-section]').forEach(sec => {
+                    const rect = sec.getBoundingClientRect();
+                    if (rect.top <= window.innerHeight * 0.9 && rect.bottom >= 0) {
+                        sec.classList.add('framer-animated');
+                    }
+                });
+            }
+
+            const heroSecH2 = document.getElementById('h2Amphitheater');
+            if (heroSecH2) heroSecH2.classList.add('framer-animated');
+
+            checkInViewSectionsH2();
+
+            const observerOptionsH2 = {
+                threshold: 0.08,
+                rootMargin: '0px 0px 40px 0px'
+            };
+
+            const sectionObserverH2 = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('framer-animated');
+                        sectionObserverH2.unobserve(entry.target);
+                    }
+                });
+            }, observerOptionsH2);
+
+            document.querySelectorAll('[data-framer-section]').forEach(sec => {
+                sectionObserverH2.observe(sec);
+            });
+        });
+    </script>
+</body>
+</html>

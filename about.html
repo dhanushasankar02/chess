@@ -1,0 +1,2389 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>About Academy | 28 Years of Chess Mastery</title>
+
+    <!-- Google Fonts & Font Awesome 6 Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ---------- RESET & SYSTEM DESIGN TOKENS ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #f1f5f9;
+            --surface-glass: rgba(255, 255, 255, 0.92);
+            --card-bg: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent: #d4a373;
+            --accent-hover: #b07d4f;
+            --accent-glow: rgba(212, 163, 115, 0.3);
+            --border-light: rgba(15, 23, 42, 0.12);
+            --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 20px 45px -15px rgba(0, 0, 0, 0.12);
+            --transition-smooth: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            --font-main: 'Inter', sans-serif;
+            --font-heading: 'Outfit', sans-serif;
+        }
+
+        body.dark-mode {
+            --bg-primary: #0d1117;
+            --bg-secondary: #131923;
+            --surface-glass: rgba(19, 25, 35, 0.92);
+            --card-bg: #1a2230;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-light: rgba(255, 255, 255, 0.1);
+            --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.35);
+            --shadow-lg: 0 20px 45px -15px rgba(0, 0, 0, 0.65);
+        }
+
+        body {
+            font-family: var(--font-main);
+            font-size: 1rem;
+            line-height: 1.6;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ---------- GLOBAL LINK RESET ---------- */
+        a, button, .action-btn, .btn-login, .nav-link, .dropdown-item, .footer-link, .mobile-link, .mobile-sublink {
+            text-decoration: none !important;
+        }
+
+        /* ---------- RTL ICON FLIPPING ---------- */
+        [dir="rtl"] .fa-angle-right,
+        [dir="rtl"] .fa-arrow-right,
+        [dir="rtl"] .fa-chevron-right,
+        [dir="rtl"] .fa-angle-double-right,
+        [dir="rtl"] .footer-link i.fa-chevron-right {
+            transform: scaleX(-1) !important;
+            display: inline-block !important;
+        }
+
+        [dir="rtl"] {
+            text-align: right;
+        }
+
+        [dir="rtl"] .nav-container,
+        [dir="rtl"] .footer-container,
+        [dir="rtl"] .footer-bottom,
+        [dir="rtl"] .form-group {
+            text-align: right;
+        }
+
+        [dir="rtl"] .dropdown-menu {
+            left: auto !important;
+            right: 0 !important;
+        }
+
+        [dir="rtl"] .dropdown-item:hover,
+        [dir="rtl"] .footer-link:hover {
+            transform: translateX(-4px) !important;
+        }
+
+        /* ---------- STICKY GLASS NAVBAR ---------- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 9999;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            background: var(--surface-glass);
+            border-bottom: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-smooth);
+        }
+
+        .nav-container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0.75rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            white-space: nowrap;
+        }
+
+        .logo-area {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            color: inherit;
+            text-decoration: none !important;
+            line-height: 1;
+        }
+
+        .logo-knight {
+            font-size: 2.3rem;
+            color: var(--accent);
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(0 2px 8px var(--accent-glow));
+            transition: var(--transition-smooth);
+            flex-shrink: 0;
+        }
+
+        .logo-area:hover .logo-knight {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .logo-text-block {
+            display: inline-flex;
+            flex-direction: column;
+            justify-content: center;
+            line-height: 1;
+        }
+
+        .logo-title {
+            font-family: var(--font-heading);
+            font-weight: 900;
+            font-size: 1.35rem;
+            letter-spacing: 1.5px;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #a06834 0%, #d4a373 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+        }
+
+        body.dark-mode .logo-title {
+            font-family: var(--font-heading);
+            font-weight: 900;
+            font-size: 1.35rem;
+            letter-spacing: 1.5px;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #a06834 0%, #d4a373 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+        }
+
+        .logo-sub {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            letter-spacing: 3px;
+            line-height: 1;
+            margin-top: 2px;
+            display: block;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            list-style: none;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            font-weight: 600;
+            font-size: 0.92rem;
+            padding: 0.5rem 0.85rem;
+            color: var(--text-primary);
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(212, 163, 115, 0.15);
+            color: var(--accent);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            margin-top: 8px;
+            min-width: 220px;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 0.6rem;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: var(--transition-smooth);
+            z-index: 1000;
+            list-style: none;
+        }
+
+        .nav-item.dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.65rem 1rem;
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 0.9rem;
+            border-radius: 10px;
+            transition: var(--transition-smooth);
+        }
+
+        .dropdown-item i {
+            color: var(--accent);
+            width: 18px;
+            text-align: center;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(212, 163, 115, 0.15);
+            color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        /* Nav Action Buttons */
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .action-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            color: var(--text-primary);
+            font-size: 0.88rem;
+            font-weight: 600;
+            padding: 0.45rem 0.9rem;
+            border-radius: 50px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            line-height: 1;
+            height: 38px;
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .action-btn i {
+            color: var(--accent);
+        }
+
+        .action-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px var(--accent-glow);
+        }
+
+        .action-btn.btn-login {
+            background: var(--accent);
+            color: #12151c;
+            border-color: var(--accent);
+            font-weight: 700;
+        }
+
+        .action-btn.btn-login i {
+            color: #12151c;
+        }
+
+        .action-btn.btn-login:hover {
+            background: var(--accent-hover);
+            color: #ffffff;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: rgba(212, 163, 115, 0.12);
+            border: 1px solid rgba(212, 163, 115, 0.3);
+            color: var(--accent);
+            font-size: 1.25rem;
+            padding: 0.45rem 0.8rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        /* ---------- MOBILE DRAWER ---------- */
+        .mobile-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 12, 16, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-smooth);
+        }
+
+        .mobile-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-panel {
+            position: fixed;
+            top: 0;
+            right: -380px;
+            width: 340px;
+            max-width: 88vw;
+            height: 100vh;
+            background: var(--card-bg);
+            border-left: 1px solid var(--border-light);
+            box-shadow: var(--shadow-lg);
+            z-index: 10001;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            overflow-y: auto;
+            transition: right 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        body[dir="rtl"] .mobile-panel {
+            right: auto;
+            left: -380px;
+            border-left: none;
+            border-right: 1px solid var(--border-light);
+            transition: left 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        .mobile-panel.active {
+            right: 0;
+        }
+
+        body[dir="rtl"] .mobile-panel.active {
+            left: 0;
+        }
+
+        .mobile-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .mobile-close {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.4rem;
+            cursor: pointer;
+        }
+
+        .mobile-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .mobile-link-item {
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 0.4rem;
+        }
+
+        .mobile-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 1.05rem;
+            padding: 0.75rem 0.85rem;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        .mobile-link:hover, .mobile-link.active {
+            color: var(--accent);
+            background: rgba(212, 163, 115, 0.1);
+        }
+
+        .mobile-accordion-content {
+            display: none;
+            padding-left: 1rem;
+            padding-top: 0.4rem;
+            flex-direction: column;
+            gap: 0.4rem;
+            list-style: none;
+        }
+
+        body[dir="rtl"] .mobile-accordion-content {
+            padding-left: 0;
+            padding-right: 1rem;
+        }
+
+        .mobile-accordion-content.show {
+            display: flex;
+        }
+
+        .mobile-sublink {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: 0.55rem 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-radius: 10px;
+        }
+
+        .mobile-sublink:hover {
+            color: var(--accent);
+            background: rgba(212, 163, 115, 0.1);
+        }
+
+        .mobile-actions {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .mobile-actions .action-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            color: var(--text-primary);
+            font-size: 0.88rem;
+            font-weight: 600;
+            padding: 0.45rem 0.9rem;
+            border-radius: 50px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            line-height: 1;
+            height: 38px;
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* ---------- ABOUT PAGE SPECIFIC STYLES ---------- */
+        .about-sec {
+            padding: 5rem 2rem;
+            max-width: 1440px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .about-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.45rem 1.2rem;
+            border-radius: 50px;
+            background: rgba(212, 163, 115, 0.15);
+            border: 1px solid var(--accent);
+            color: #92400e;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 1.25rem;
+            box-shadow: 0 4px 14px var(--accent-glow);
+        }
+
+        .about-title {
+            font-family: var(--font-heading);
+            font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+            font-weight: 900;
+            line-height: 1.15;
+            margin-bottom: 1.2rem;
+            background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .about-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 780px;
+            margin: 0 auto 3rem auto;
+            line-height: 1.65;
+        }
+
+        /* Section 1: Hero Section (#aboutHero) */
+        #aboutHero {
+            position: relative;
+            min-height: 100vh;
+            width: 100%;
+            padding: 11rem 2rem 6rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(10, 14, 23, 0.88) 0%, rgba(10, 14, 23, 0.94) 100%), url('images/about_hero_monument.jpg') center/cover no-repeat;
+        }
+
+        #aboutHero .about-badge {
+            background: rgba(212, 163, 115, 0.25);
+            border: 1.5px solid var(--accent);
+            color: #faedcd;
+            font-weight: 800;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 4px 15px rgba(212, 163, 115, 0.3);
+        }
+
+        #aboutHero .about-title {
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+            font-size: clamp(2.4rem, 5vw, 3.8rem);
+            font-weight: 900;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);
+            margin-bottom: 1.25rem;
+        }
+
+        #aboutHero .about-subtitle {
+            color: #f1f5f9 !important;
+            font-size: 1.15rem;
+            font-weight: 500;
+            max-width: 820px;
+            line-height: 1.7;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+            margin: 0 auto 2.5rem auto;
+        }
+
+        .hero-quick-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1.5rem auto 2.5rem auto;
+            flex-wrap: wrap;
+        }
+
+        .quick-stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(17, 24, 39, 0.92) !important;
+            backdrop-filter: blur(14px);
+            border: 1.5px solid rgba(212, 163, 115, 0.4) !important;
+            padding: 1.5rem 2.2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
+            min-width: 220px;
+        }
+
+        .quick-stat-num {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #f59e0b !important;
+            line-height: 1;
+            margin-bottom: 0.4rem;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        .quick-stat-lbl {
+            font-size: 0.92rem;
+            color: #ffffff !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.5px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+        }
+
+        #aboutHero .action-btn.btn-login {
+            background: var(--accent) !important;
+            color: #12151c !important;
+            font-weight: 800 !important;
+            border: none !important;
+            box-shadow: 0 6px 20px rgba(212, 163, 115, 0.5) !important;
+        }
+
+        #aboutHero .action-btn.btn-login:hover {
+            background: var(--accent-hover) !important;
+            color: #ffffff !important;
+        }
+
+        #aboutHero .action-btn:not(.btn-login) {
+            background: #ffffff !important;
+            color: #0f172a !important;
+            font-weight: 800 !important;
+            border: 1px solid #ffffff !important;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5) !important;
+        }
+
+        #aboutHero .action-btn:not(.btn-login):hover {
+            background: #f1f5f9 !important;
+            color: #000000 !important;
+        }
+
+        /* Section 2: 4 Core Pillars (#aboutValues) */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .val-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 24px;
+            padding: 2rem;
+            transition: var(--transition-smooth);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .val-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px var(--accent-glow);
+        }
+
+        .val-icon-badge {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: rgba(212, 163, 115, 0.15);
+            border: 1px solid var(--accent);
+            color: #92400e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            margin-bottom: 1.2rem;
+            box-shadow: 0 4px 14px var(--accent-glow);
+        }
+
+        /* Section 3: 28-Year Historical Odyssey (#aboutTimeline) */
+        #aboutTimeline {
+            background: var(--bg-secondary);
+            border-radius: 36px;
+            padding: 5rem 2.5rem;
+        }
+
+        .odyssey-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 1.75rem;
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        .odyssey-node-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 24px;
+            padding: 2rem;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-sm);
+        }
+
+        @media (max-width: 768px) {
+            .odyssey-node-card {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        .odyssey-node-card:hover {
+            border-color: var(--accent);
+            transform: translateX(8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        body[dir="rtl"] .odyssey-node-card:hover {
+            transform: translateX(-8px);
+        }
+
+        .odyssey-year-badge {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--accent);
+            background: rgba(212, 163, 115, 0.15);
+            border: 1.5px solid var(--accent);
+            padding: 0.6rem 1.4rem;
+            border-radius: 16px;
+            flex-shrink: 0;
+        }
+
+        /* Section 4: Global Campuses (#aboutCampus) */
+        .campus-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .campus-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 28px;
+            padding: 2rem;
+            transition: var(--transition-smooth);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .campus-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .campus-img {
+            width: 100%;
+            height: 220px;
+            border-radius: 20px;
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-light);
+        }
+
+        /* Section 5: Neural Engine Lab (#aboutEngineLab) */
+        #aboutEngineLab {
+            background: var(--bg-secondary);
+            border-radius: 36px;
+            padding: 5rem 2.5rem;
+        }
+
+        .lab-card {
+            background: var(--card-bg);
+            border: 2px solid var(--accent);
+            border-radius: 32px;
+            padding: 3.5rem;
+            max-width: 1050px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            box-shadow: var(--shadow-lg);
+        }
+
+        @media (max-width: 992px) {
+            .lab-card {
+                grid-template-columns: 1fr;
+                padding: 2rem;
+            }
+        }
+
+        .lab-img {
+            width: 100%;
+            height: 320px;
+            border-radius: 24px;
+            object-fit: cover;
+            border: 1px solid var(--border-light);
+        }
+
+        /* Section 6: Executive Leadership (#aboutLeadership) */
+        .leader-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .leader-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 28px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: var(--transition-smooth);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .leader-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .leader-img {
+            width: 100%;
+            height: 260px;
+            border-radius: 20px;
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-light);
+        }
+
+        /* Section 7: Alumni Pledge (#aboutJoinMission) */
+        .pledge-card {
+            background: var(--card-bg);
+            border: 2px solid var(--accent);
+            border-radius: 36px;
+            padding: 3.5rem;
+            max-width: 1050px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            gap: 3rem;
+            align-items: center;
+            box-shadow: 0 20px 50px var(--accent-glow);
+        }
+
+        @media (max-width: 992px) {
+            .pledge-card {
+                grid-template-columns: 1fr;
+                padding: 2rem;
+            }
+        }
+
+        .pledge-img {
+            width: 100%;
+            height: 320px;
+            border-radius: 24px;
+            object-fit: cover;
+            border: 1px solid var(--border-light);
+        }
+
+        /* ---------- FOOTER ---------- */
+        .footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-light);
+            padding: 4.5rem 2rem 2rem;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 3.5rem;
+            margin-bottom: 3.5rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .footer-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            max-width: 380px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .social-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(212, 163, 115, 0.15);
+            border: 1px solid rgba(212, 163, 115, 0.3);
+            color: var(--accent) !important;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-smooth);
+            font-size: 1.1rem;
+        }
+
+        .social-btn:hover {
+            background: var(--accent) !important;
+            color: #12151c !important;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        .footer-col h4 {
+            font-family: var(--font-heading);
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition-smooth);
+        }
+
+        .footer-link i {
+            font-size: 0.75rem;
+            color: var(--accent);
+        }
+
+        .footer-link:hover {
+            color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .newsletter-input {
+            width: 100%;
+            padding: 0.85rem 1.4rem;
+            border-radius: 50px;
+            border: 1px solid var(--border-light);
+            background: var(--card-bg);
+            color: var(--text-primary);
+            font-family: inherit;
+            outline: none;
+            font-size: 0.95rem;
+        }
+
+        .newsletter-btn {
+            padding: 0.85rem 1.5rem;
+            border-radius: 50px;
+            border: none;
+            background: var(--accent);
+            color: #12151c;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .newsletter-btn:hover {
+            background: var(--accent-hover);
+            color: #ffffff;
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            border-top: 1px solid var(--border-light);
+            padding-top: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        /* ---------- LOGIN MODAL ---------- */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            z-index: 20000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-smooth);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .login-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 420px;
+            padding: 2.5rem 2rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            transform: scale(0.95);
+            transition: var(--transition-smooth);
+        }
+
+        .modal-overlay.active .login-card {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        body[dir="rtl"] .modal-close {
+            right: auto;
+            left: 1.2rem;
+        }
+
+        .login-card h3 {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+            text-align: left;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-light);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            outline: none;
+        }
+
+        .login-submit {
+            width: 100%;
+            padding: 0.85rem;
+            background: var(--accent);
+            color: #12151c;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            margin-top: 0.5rem;
+        }
+
+        .login-submit:hover {
+            background: var(--accent-hover);
+            color: #ffffff;
+        }
+
+        /* ---------- FRAMER MOTION REVEAL ANIMATIONS ---------- */
+        .about-framer-hidden {
+            opacity: 0;
+            will-change: transform, opacity;
+        }
+
+        .a-engine-1 {
+            transform: perspective(1000px) rotateX(15deg) rotateY(-8deg) translateY(40px);
+            transition: opacity 0.85s ease, transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .a-engine-1.framer-visible {
+            opacity: 1;
+            transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0);
+        }
+
+        .a-engine-2 {
+            transform: perspective(800px) rotateY(-20deg) scale(0.9);
+            transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .a-engine-2.framer-visible {
+            opacity: 1;
+            transform: perspective(800px) rotateY(0deg) scale(1);
+        }
+
+        .a-engine-3 {
+            transform: translateY(-40px);
+            transition: opacity 0.75s ease, transform 0.75s ease;
+        }
+        .a-engine-3.framer-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .a-engine-4 {
+            transform: translateX(-50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .a-engine-4.framer-visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .a-engine-5 {
+            transform: scale(0.85) rotate(-5deg);
+            transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .a-engine-5.framer-visible {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+        }
+
+        .a-engine-6 {
+            transform: translateY(40px) scale(0.95);
+            transition: opacity 0.85s ease, transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .a-engine-6.framer-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .a-engine-7 {
+            transform: scale(0.9);
+            transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .a-engine-7.framer-visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* ---------- RESPONSIVE BREAKPOINTS ---------- */
+        /* ---------- RESPONSIVE HEADER ---------- */
+        @media (max-width: 1100px) {
+            .nav-links {
+                display: none !important;
+            }
+            .nav-actions .action-btn:not(.menu-toggle),
+            .nav-actions #darkModeBtn,
+            .nav-actions #rtlBtn,
+            .nav-actions #loginModalBtn,
+            .nav-actions .btn-login {
+                display: none !important;
+            }
+            .menu-toggle {
+                display: inline-flex !important;
+                align-items: center;
+                justify-content: center;
+                background: rgba(212, 163, 115, 0.15);
+                border: 1px solid rgba(212, 163, 115, 0.35);
+                color: var(--accent);
+                font-size: 1.25rem;
+                padding: 0.45rem 0.8rem;
+                border-radius: 12px;
+                cursor: pointer;
+            }
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0.6rem 1rem !important;
+                gap: 0.5rem !important;
+            }
+            .logo-knight {
+                font-size: 1.8rem !important;
+            }
+            .logo-title {
+                font-size: 1.1rem !important;
+            }
+            .logo-sub {
+                font-size: 0.6rem !important;
+                letter-spacing: 1.5px !important;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .nav-container {
+                padding: 0.5rem 0.65rem !important;
+            }
+            .menu-toggle {
+                padding: 0.35rem 0.65rem !important;
+                font-size: 1.1rem !important;
+            }
+        }
+
+        
+
+        
+
+        @media (max-width: 650px) {
+            .hero-quick-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .quick-stat-item {
+                width: 100%;
+            }
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+<style>
+        /* High Contrast Badge & Banner Overrides for Dark Mode */
+        body.dark-mode .idx-badge,
+        body.dark-mode .about-badge,
+        body.dark-mode .coach-badge,
+        body.dark-mode .cnt-badge,
+        body.dark-mode .h2-badge,
+        body.dark-mode .tourn-badge,
+        body.dark-mode .section-badge,
+        body.dark-mode .val-icon-badge,
+        body.dark-mode .pillar-icon-badge {
+            color: #fbbf24 !important;
+            background: rgba(212, 163, 115, 0.18) !important;
+            border-color: rgba(251, 191, 36, 0.35) !important;
+        }
+</style>
+<style>
+        /* Global Mobile Overflow & Alignment Protection */
+        html, body {
+            overflow-x: hidden !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            position: relative;
+            margin: 0;
+            padding: 0;
+        }
+
+        .mobile-panel {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 340px;
+            max-width: 88vw;
+            height: 100vh;
+            background: var(--card-bg);
+            border-left: 1px solid var(--border-light);
+            box-shadow: var(--shadow-lg);
+            z-index: 10001;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            overflow-y: auto;
+            transform: translateX(100%);
+            transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        .mobile-panel.active {
+            transform: translateX(0);
+        }
+
+        body[dir="rtl"] .mobile-panel {
+            right: auto;
+            left: 0;
+            transform: translateX(-100%);
+            border-left: none;
+            border-right: 1px solid var(--border-light);
+        }
+
+        body[dir="rtl"] .mobile-panel.active {
+            transform: translateX(0);
+        }
+</style>
+<style>
+        /* Responsive Table Container Overflow Protection */
+        .table-wrap, .table-responsive, .history-table-wrap, .board-table-wrap {
+            overflow-x: auto !important;
+            max-width: 100% !important;
+            -webkit-overflow-scrolling: touch;
+        }
+</style>
+<style>
+        /* Global Tournament & VIP Row Alignment Fixes */
+        .idx-match-item, .h2-vip-row, .cal-row, .tourn-row, .league-row {
+            display: flex !important;
+            align-items: flex-start !important;
+            justify-content: space-between !important;
+            gap: 1rem !important;
+        }
+
+        .idx-match-info, .h2-vip-info, .cal-info, .tourn-info {
+            flex: 1 !important;
+            min-width: 0 !important;
+        }
+
+        .idx-match-status, .h2-vip-seat-tag, .cal-tag, .tourn-status {
+            flex-shrink: 0 !important;
+            white-space: nowrap !important;
+            margin-top: 0.1rem !important;
+        }
+
+        @media (max-width: 600px) {
+            .idx-match-item, .h2-vip-row, .cal-row, .tourn-row, .league-row {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 0.75rem !important;
+            }
+            .idx-match-status, .h2-vip-seat-tag, .cal-tag, .tourn-status {
+                align-self: flex-start !important;
+                margin-top: 0 !important;
+            }
+        }
+</style>
+<style>
+        /* Mobile Header & Dossier Alignment Fixes */
+        @media (max-width: 650px) {
+            .nav-container {
+                padding: 0.6rem 0.85rem !important;
+                gap: 0.5rem !important;
+            }
+            .logo-knight {
+            font-size: 2.3rem;
+            color: var(--accent);
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(0 2px 8px var(--accent-glow));
+            transition: var(--transition-smooth);
+            flex-shrink: 0;
+        }
+            .logo-title {
+            font-family: var(--font-heading);
+            font-weight: 900;
+            font-size: 1.35rem;
+            letter-spacing: 1.5px;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #a06834 0%, #d4a373 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+        }
+            .logo-sub {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            letter-spacing: 3px;
+            line-height: 1;
+            margin-top: 2px;
+            display: block;
+        }
+            .nav-actions {
+                gap: 0.4rem !important;
+            }
+            .nav-actions .action-btn.btn-login {
+                padding: 0.4rem 0.75rem !important;
+                font-size: 0.82rem !important;
+            }
+            .menu-toggle {
+                padding: 0.4rem 0.7rem !important;
+                font-size: 1.15rem !important;
+            }
+        }
+</style>
+<style>
+        
+            .menu-toggle {
+                display: inline-flex !important;
+            }
+        }
+</style>
+<style>
+/* ---------- GLOBAL MOBILE GRID & HERO ALIGNMENT FIXES ---------- */
+        @media (max-width: 992px) {
+            .hero-section, #hero, #contactHero, #arenaHero, #idxHero, .layout-sec {
+                padding-top: 110px !important;
+            }
+            .hero-split-grid,
+            .idx-hero-grid,
+            .cnt-hero-card,
+            .bento-col-8,
+            .curriculum-grid,
+            .overview-grid-2col {
+                grid-template-columns: 1fr !important;
+                gap: 2rem !important;
+            }
+            .bento-col-8 {
+                grid-column: span 12 !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-stats,
+            .cnt-stats-bar,
+            .hero-stats-band,
+            .stats-grid-3col,
+            .form-row,
+            .form-row-2 {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+            .cnt-stat-item, .stat-box {
+                width: 100% !important;
+            }
+        }
+</style>
+<style>
+/* ---------- BENTO, CURRICULUM, ENROLLMENT & MOBILE GRID FIXES ---------- */
+        @media (max-width: 992px) {
+            .bento-grid,
+            .curriculum-grid,
+            .bento-card[style*="grid-template-columns"],
+            div[style*="grid-template-columns: 1.4fr 1fr"],
+            div[style*="grid-template-columns: 1fr 1fr"] {
+                grid-template-columns: 1fr !important;
+                gap: 1.5rem !important;
+            }
+            .bento-col-8,
+            .bento-col-4 {
+                grid-column: span 12 !important;
+                width: 100% !important;
+            }
+            .enroll-card {
+                padding: 2rem 1.25rem !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-row,
+            .form-row-2,
+            .form-row-3,
+            .elo-calc-inputs,
+            .elo-result-banner {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+            .enroll-submit-btn {
+                width: 100% !important;
+                padding: 0.9rem 1rem !important;
+                font-size: 0.92rem !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                text-align: center !important;
+                line-height: 1.35 !important;
+                min-height: 50px !important;
+                white-space: normal !important;
+                word-break: break-word !important;
+            }
+        }
+</style>
+<style>
+/* ---------- FULL RESPONSIVE GRID & SUBMIT BUTTON ALIGNMENT FIXES ---------- */
+        .bento-card-split {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        button[type="submit"].action-btn,
+        form .action-btn,
+        .enroll-submit-btn {
+            height: auto !important;
+            min-height: 52px !important;
+            padding: 0.9rem 1.2rem !important;
+            white-space: normal !important;
+            word-break: break-word !important;
+            line-height: 1.35 !important;
+            text-align: center !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+
+        @media (max-width: 992px) {
+            .bento-card-split,
+            .timeline-matrix,
+            .hero-split-grid,
+            .idx-hero-grid,
+            .cnt-hero-card,
+            .curriculum-grid,
+            .overview-grid-2col {
+                grid-template-columns: 1fr !important;
+                gap: 2rem !important;
+            }
+            .bento-col-8,
+            .bento-col-4 {
+                grid-column: span 12 !important;
+                width: 100% !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .deck-form-grid,
+            .form-row,
+            .form-row-2,
+            .form-row-3,
+            .elo-calc-inputs,
+            .elo-result-banner,
+            .hero-stats,
+            .cnt-stats-bar,
+            .hero-stats-band,
+            .stats-grid-3col {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+            .cnt-stat-item, .stat-box {
+                width: 100% !important;
+            }
+        }
+</style>
+<style>
+/* ---------- ABSOLUTE COMPLETE RESPONSIVE GRID & BUTTON FIXES ---------- */
+        @media (max-width: 992px) {
+            .studio-columns,
+            .timeline-matrix,
+            .deck-form-grid,
+            .pathway-cards-grid,
+            .bento-grid,
+            .curriculum-grid,
+            .hero-split-grid,
+            .idx-hero-grid,
+            .cnt-hero-card,
+            .bento-card-split,
+            .overview-grid-2col,
+            .fame-grid,
+            .stadium-hero-card,
+            .reg-portal-wrap,
+            div[style*="grid-template-columns"] {
+                grid-template-columns: 1fr !important;
+                gap: 1.5rem !important;
+            }
+            .bento-col-8,
+            .bento-col-4 {
+                grid-column: span 12 !important;
+                width: 100% !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-stats,
+            .cnt-stats-bar,
+            .hero-stats-band,
+            .stats-grid-3col,
+            .form-row,
+            .form-row-2,
+            .form-row-3,
+            .elo-calc-inputs,
+            .elo-result-banner {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+            .cnt-stat-item, .stat-box {
+                width: 100% !important;
+            }
+            button[type="submit"].action-btn,
+            form .action-btn,
+            .enroll-submit-btn {
+                height: auto !important;
+                min-height: 52px !important;
+                padding: 0.9rem 1rem !important;
+                font-size: 0.92rem !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                text-align: center !important;
+                line-height: 1.35 !important;
+                white-space: normal !important;
+                word-break: break-word !important;
+            }
+        }
+</style>
+<style>
+/* ---------- DASHBOARD & TABLE RESPONSIVE ALIGNMENT FIXES ---------- */
+        .section-title, .section-heading, .banner-headline, .hero-title, h1, h2 {
+            white-space: normal !important;
+            word-break: break-word !important;
+            overflow-wrap: break-word !important;
+        }
+
+        code, pre {
+            white-space: pre-wrap !important;
+            word-break: break-word !important;
+        }
+
+        .history-table-card {
+            width: 100% !important;
+            max-width: 100% !important;
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+            display: block !important;
+        }
+
+        .history-table {
+            min-width: 600px !important;
+            width: 100% !important;
+        }
+
+        @media (max-width: 768px) {
+            .progress-steps-row {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 1.25rem !important;
+            }
+            .dashboard-topbar {
+                flex-wrap: wrap !important;
+                gap: 0.75rem !important;
+                padding: 0.85rem 1rem !important;
+            }
+            .topbar-search {
+                order: 3 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .progress-steps-row {
+                grid-template-columns: 1fr !important;
+            }
+            .section-title {
+                font-size: 1.5rem !important;
+            }
+        }
+</style>
+<style>
+/* ---------- VIEWPORT OVERFLOW & MOBILE ALIGNMENT CONTAINMENT ---------- */
+        html, body {
+            overflow-x: hidden !important;
+            max-width: 100vw !important;
+            width: 100% !important;
+        }
+
+        .dashboard-main-content,
+        .container-fluid,
+        .db-section,
+        main,
+        .navbar,
+        header,
+        footer,
+        section {
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        .history-table-card {
+            width: 100% !important;
+            max-width: 100% !important;
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+            display: block !important;
+            border-radius: 16px !important;
+        }
+
+        .history-table {
+            width: 100% !important;
+            min-width: 550px !important;
+            table-layout: auto !important;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-topbar {
+                display: flex !important;
+                flex-wrap: wrap !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                padding: 0.6rem 0.85rem !important;
+                gap: 0.5rem !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+            }
+            .topbar-search {
+                order: 3 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                margin-top: 0.4rem !important;
+            }
+            .topbar-search input {
+                width: 100% !important;
+                font-size: 0.85rem !important;
+            }
+            .user-top-profile {
+                margin-left: auto !important;
+            }
+            .section-title, .section-heading, .banner-headline, .hero-title, h1, h2 {
+                font-size: clamp(1.4rem, 5vw, 2.2rem) !important;
+                line-height: 1.25 !important;
+                white-space: normal !important;
+                word-break: break-word !important;
+                overflow-wrap: break-word !important;
+            }
+            .section-desc, .section-subtitle, p {
+                font-size: 0.92rem !important;
+                line-height: 1.5 !important;
+                white-space: normal !important;
+                word-break: break-word !important;
+            }
+        }
+</style>
+</head>
+<body class="dark-mode" dir="ltr">
+
+    <!-- ==================== HEADER / NAVBAR ==================== -->
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <!-- Brand Logo -->
+            <a href="index.html" class="logo-area" aria-label="Chess Academy Home">
+                <span class="logo-knight">♞</span>
+                <div class="logo-text-block">
+                    <span class="logo-title">CHESS ACADEMY</span>
+                    <span class="logo-sub">TACTICS &amp; MASTERY</span>
+                </div>
+            </a>
+
+            <!-- Navigation Links -->
+            <ul class="nav-links">
+                <li class="nav-item dropdown">
+                    <a href="index.html" class="nav-link">
+                        Home <i class="fas fa-chevron-down chevron"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="index.html" class="dropdown-item"><i class="fas fa-chess-board"></i> Home 1 (Tactical)</a></li>
+                        <li><a href="home2.html" class="dropdown-item"><i class="fas fa-crown"></i> Home 2 (Masterclass)</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a href="programs.html" class="nav-link">Programs</a></li>
+                <li class="nav-item"><a href="coaches.html" class="nav-link">Coaches</a></li>
+                <li class="nav-item"><a href="tournaments.html" class="nav-link">Tournaments</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link active">About Academy</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                <li class="nav-item dropdown">
+                    <a href="user dashboard.html" class="nav-link">
+                        Dashboard <i class="fas fa-chevron-down chevron"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="user dashboard.html" class="dropdown-item"><i class="fas fa-user-graduate"></i> Student Dashboard</a></li>
+                        <li><a href="admin dashboard.html" class="dropdown-item"><i class="fas fa-shield-alt"></i> Admin Dashboard</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <!-- Controls: Theme, RTL, Login, Mobile Toggle -->
+            <div class="nav-actions">
+                <button class="action-btn" id="darkModeBtn" aria-label="Toggle Theme">
+                    <i class="fas fa-moon" id="themeIcon"></i>
+                    <span id="themeLabel">Dark</span>
+                </button>
+
+                <button class="action-btn" id="rtlBtn" aria-label="Toggle Layout Direction">
+                    <i class="fas fa-right-left" id="rtlIcon"></i>
+                    <span id="rtlLabel">RTL</span>
+                </button>
+
+                <a href="login.html" class="action-btn btn-login" id="loginModalBtn">
+                    <i class="fas fa-arrow-right-to-bracket"></i>
+                    <span>Login</span>
+                </a>
+
+                <button class="menu-toggle" id="mobileToggleBtn" aria-label="Open Mobile Menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== MOBILE DRAWER ==================== -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+    <div class="mobile-panel" id="mobilePanel">
+        <div class="mobile-header">
+            <a href="index.html" class="logo-area">
+                <span class="logo-knight">♞</span>
+                <div class="logo-text-block">
+                    <span class="logo-title">CHESS ACADEMY</span>
+                    <span class="logo-sub">TACTICS &amp; MASTERY</span>
+                </div>
+            </a>
+            <button class="mobile-close" id="mobileCloseBtn"><i class="fas fa-times"></i></button>
+        </div>
+
+        <ul class="mobile-links">
+            <li class="mobile-link-item">
+                <div class="mobile-link" id="mobileHomeAcc">
+                    <span>Home</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <ul class="mobile-accordion-content" id="mobileHomeContent">
+                    <li><a href="index.html" class="mobile-sublink"><i class="fas fa-chess-board"></i> Home 1</a></li>
+                    <li><a href="home2.html" class="mobile-sublink"><i class="fas fa-crown"></i> Home 2</a></li>
+                </ul>
+            </li>
+            <li class="mobile-link-item"><a href="programs.html" class="mobile-link">Programs</a></li>
+            <li class="mobile-link-item"><a href="coaches.html" class="mobile-link">Coaches</a></li>
+            <li class="mobile-link-item"><a href="tournaments.html" class="mobile-link">Tournaments</a></li>
+            <li class="mobile-link-item"><a href="about.html" class="mobile-link active">About Academy</a></li>
+            <li class="mobile-link-item"><a href="contact.html" class="mobile-link">Contact</a></li>
+            <li class="mobile-link-item">
+                <div class="mobile-link" id="mobileDashAcc">
+                    <span>Dashboard</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <ul class="mobile-accordion-content" id="mobileDashContent">
+                    <li><a href="user dashboard.html" class="mobile-sublink"><i class="fas fa-user-graduate"></i> Student Dashboard</a></li>
+                    <li><a href="admin dashboard.html" class="mobile-sublink"><i class="fas fa-shield-alt"></i> Admin Dashboard</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="mobile-actions">
+            <button class="action-btn" id="mobileDarkBtn">
+                <i class="fas fa-moon" id="mobileThemeIcon"></i>
+                <span id="mobileThemeLabel">Dark Mode</span>
+            </button>
+            <button class="action-btn" id="mobileRtlBtn">
+                <i class="fas fa-right-left" id="mobileRtlIcon"></i>
+                <span id="mobileRtlLabel">RTL Layout</span>
+            </button>
+            <a href="login.html" class="action-btn btn-login" id="mobileLoginModalBtn">
+                <i class="fas fa-arrow-right-to-bracket"></i>
+                <span>Login</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <main>
+        <!-- SECTION 1: HERO SPOTLIGHT (#aboutHero) -->
+        <section class="about-sec" id="aboutHero">
+            <div class="about-badge about-framer-hidden a-engine-1">♞ 28-YEAR ACADEMY LEGACY</div>
+            <h1 class="about-title about-framer-hidden a-engine-1" style="transition-delay: 0.1s;">Nurturing Grandmasters &amp; Shaping Chess History</h1>
+            <p class="about-subtitle about-framer-hidden a-engine-1" style="transition-delay: 0.2s;">
+                Founded in 1998 in Zurich, Chess Academy combines classical Russian school methodology with Stockfish neural cloud analysis to empower international champions.
+            </p>
+
+            <div class="hero-quick-stats about-framer-hidden a-engine-1" style="transition-delay: 0.25s;">
+                <div class="quick-stat-item">
+                    <span class="quick-stat-num">28+</span>
+                    <span class="quick-stat-lbl">Years of Legacy</span>
+                </div>
+                <div class="quick-stat-item">
+                    <span class="quick-stat-num">45,000+</span>
+                    <span class="quick-stat-lbl">Students Trained</span>
+                </div>
+                <div class="quick-stat-item">
+                    <span class="quick-stat-num">14</span>
+                    <span class="quick-stat-lbl">Grandmaster Faculty</span>
+                </div>
+                <div class="quick-stat-item">
+                    <span class="quick-stat-num">3</span>
+                    <span class="quick-stat-lbl">Global Campuses</span>
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;" class="about-framer-hidden a-engine-1">
+                <button class="action-btn btn-login" style="padding: 0.85rem 2rem; font-size: 1rem;" onclick="document.getElementById('aboutTimeline').scrollIntoView({behavior:'smooth'})">
+                    <i class="fas fa-monument"></i> Explore Our Legacy
+                </button>
+                <button class="action-btn" style="padding: 0.85rem 1.8rem; font-size: 1rem;" onclick="document.getElementById('aboutCampus').scrollIntoView({behavior:'smooth'})">
+                    <i class="fas fa-globe"></i> Global Campuses
+                </button>
+            </div>
+        </section>
+
+        <!-- SECTION 2: 4 CORE VALUES (#aboutValues) -->
+        <section class="about-sec" id="aboutValues">
+            <div style="text-align: center;">
+                <div class="about-badge about-framer-hidden a-engine-2">♞ ACADEMY PILLARS</div>
+                <h2 class="about-title about-framer-hidden a-engine-2" style="transition-delay: 0.1s;">Our Founding Principles</h2>
+                <p class="about-subtitle about-framer-hidden a-engine-2" style="transition-delay: 0.2s;">Built on timeless competitive values and modern computational rigor.</p>
+            </div>
+
+            <div class="values-grid">
+                <div class="val-card about-framer-hidden a-engine-2" style="transition-delay: 0.2s;">
+                    <div class="val-icon-badge"><i class="fas fa-shield-alt"></i></div>
+                    <h3 style="font-family: var(--font-heading); font-size: 1.35rem; font-weight: 800; margin-bottom: 0.5rem;">Uncompromising Integrity</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6;">Adhering strictly to FIDE Fair Play guidelines and instilling deep sportsmanship across all competitive divisions.</p>
+                </div>
+
+                <div class="val-card about-framer-hidden a-engine-2" style="transition-delay: 0.3s;">
+                    <div class="val-icon-badge"><i class="fas fa-chess-knight"></i></div>
+                    <h3 style="font-family: var(--font-heading); font-size: 1.35rem; font-weight: 800; margin-bottom: 0.5rem;">Prodigy Acceleration</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6;">Tailored fast-track development roadmaps designed to help young talents achieve international norms and titles early.</p>
+                </div>
+
+                <div class="val-card about-framer-hidden a-engine-2" style="transition-delay: 0.4s;">
+                    <div class="val-icon-badge"><i class="fas fa-stopwatch"></i></div>
+                    <h3 style="font-family: var(--font-heading); font-size: 1.35rem; font-weight: 800; margin-bottom: 0.5rem;">Tournament Stamina</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6;">Physical and psychological conditioning routines engineered for 5-hour classical round-robin games under pressure.</p>
+                </div>
+
+                <div class="val-card about-framer-hidden a-engine-2" style="transition-delay: 0.5s;">
+                    <div class="val-icon-badge"><i class="fas fa-microchip"></i></div>
+                    <h3 style="font-family: var(--font-heading); font-size: 1.35rem; font-weight: 800; margin-bottom: 0.5rem;">Empirical Truth</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6;">Leveraging Stockfish 16 neural engines to analyze every student game and eliminate recurring positional errors.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: 28-YEAR ODYSSEY TIMELINE (#aboutTimeline) -->
+        <section class="about-sec" id="aboutTimeline">
+            <div style="text-align: center;">
+                <div class="about-badge about-framer-hidden a-engine-3">♞ HISTORICAL TIMELINE</div>
+                <h2 class="about-title about-framer-hidden a-engine-3" style="transition-delay: 0.1s;">28 Years of Innovation &amp; Excellence</h2>
+                <p class="about-subtitle about-framer-hidden a-engine-3" style="transition-delay: 0.2s;">Key milestones that defined our trajectory from a local Swiss club to a world-famous academy.</p>
+            </div>
+
+            <div class="odyssey-timeline">
+                <div class="odyssey-node-card about-framer-hidden a-engine-3" style="transition-delay: 0.3s;">
+                    <div class="odyssey-year-badge">1998</div>
+                    <div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 800; margin-bottom: 0.35rem;">Academy Founded in Zurich</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">
+                            GM Alexander Volkov establishes Apex Chess Academy with a focus on classical endgame mastery and candidate move calculation.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="odyssey-node-card about-framer-hidden a-engine-3" style="transition-delay: 0.4s;">
+                    <div class="odyssey-year-badge">2008</div>
+                    <div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 800; margin-bottom: 0.35rem;">FIDE International Accreditation</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">
+                            Certified as an official Senior FIDE Training Center, launching our international youth prodigy grant program.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="odyssey-node-card about-framer-hidden a-engine-3" style="transition-delay: 0.5s;">
+                    <div class="odyssey-year-badge">2018</div>
+                    <div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 800; margin-bottom: 0.35rem;">Stockfish Neural Engine Integration</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">
+                            Pioneered cloud automated PGN game analysis, providing instant candidate move diagnostics for over 10,000 active students.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="odyssey-node-card about-framer-hidden a-engine-3" style="transition-delay: 0.6s;">
+                    <div class="odyssey-year-badge">2026</div>
+                    <div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 800; margin-bottom: 0.35rem;">Global Hybrid Masterclass Expansion</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">
+                            Operating physical centers in Zurich &amp; Prague alongside a global virtual masterclass platform serving students in 40+ nations.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: GLOBAL CAMPUSES (#aboutCampus) -->
+        <section class="about-sec" id="aboutCampus">
+            <div style="text-align: center;">
+                <div class="about-badge about-framer-hidden a-engine-4">♞ GLOBAL LOCATIONS</div>
+                <h2 class="about-title about-framer-hidden a-engine-4" style="transition-delay: 0.1s;">Physical &amp; Virtual Campuses</h2>
+                <p class="about-subtitle about-framer-hidden a-engine-4" style="transition-delay: 0.2s;">State-of-the-art training facilities designed for deep concentration and rated classical play.</p>
+            </div>
+
+            <div class="campus-grid">
+                <div class="campus-card about-framer-hidden a-engine-4" style="transition-delay: 0.3s;">
+                    <img src="images/about_campus_zurich.jpg" alt="Zurich Campus" class="campus-img">
+                    <h3 style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 800; margin-bottom: 0.4rem;">Zurich Headquarter Campus</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6;">Our flagship facility featuring a 50-table FIDE rated tournament hall and digital analysis rooms.</p>
+                </div>
+
+                <div class="campus-card about-framer-hidden a-engine-4" style="transition-delay: 0.4s;">
+                    <img src="images/about_campus_prague.jpg" alt="Prague Campus" class="campus-img">
+                    <h3 style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 800; margin-bottom: 0.4rem;">Prague Performance Center</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6;">Specialized bootcamp campus for junior prodigies preparing for European and World championships.</p>
+                </div>
+
+                <div class="campus-card about-framer-hidden a-engine-4" style="transition-delay: 0.5s;">
+                    <img src="images/about_campus_cloud.jpg" alt="Virtual Arena" class="campus-img">
+                    <h3 style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 800; margin-bottom: 0.4rem;">Global Virtual Masterclass Hub</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6;">24/7 online interactive masterclass arena with live GM video commentary and Stockfish cloud audits.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: NEURAL ENGINE LAB (#aboutEngineLab) -->
+        <section class="about-sec" id="aboutEngineLab">
+            <div class="lab-card about-framer-hidden a-engine-5">
+                <div>
+                    <span class="about-badge">♞ AI &amp; COMPUTATIONAL LAB</span>
+                    <h2 style="font-family: var(--font-heading); font-size: 2.2rem; font-weight: 900; margin-bottom: 1rem; line-height: 1.2;">Neural Stockfish 16 Analysis Lab</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.98rem; margin-bottom: 1.5rem; line-height: 1.65;">
+                        We combine human Grandmaster intuition with neural net calculation servers to analyze over 45,000 PGN games daily, revealing hidden tactical motives and candidate moves.
+                    </p>
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <button class="action-btn btn-login" style="padding: 0.75rem 1.6rem;" onclick="document.getElementById('aboutJoinMission').scrollIntoView({behavior:'smooth'})">
+                            <i class="fas fa-microchip"></i> Access Engine Audits
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <img src="images/about_lab_stockfish.jpg" alt="Neural Stockfish Lab" class="lab-img">
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 6: EXECUTIVE LEADERSHIP (#aboutLeadership) -->
+        <section class="about-sec" id="aboutLeadership">
+            <div style="text-align: center;">
+                <div class="about-badge about-framer-hidden a-engine-6">♞ ACADEMY LEADERSHIP</div>
+                <h2 class="about-title about-framer-hidden a-engine-6" style="transition-delay: 0.1s;">Executive Directorate</h2>
+                <p class="about-subtitle about-framer-hidden a-engine-6" style="transition-delay: 0.2s;">Leading our global academic mission and Grandmaster training initiatives.</p>
+            </div>
+
+            <div class="leader-grid">
+                <div class="leader-card about-framer-hidden a-engine-6" style="transition-delay: 0.3s;">
+                    <img src="images/about_leader_president.jpg" alt="GM Volkov - Founder" class="leader-img">
+                    <span class="about-badge" style="font-size: 0.75rem;">FOUNDER &amp; PRESIDENT</span>
+                    <h3 style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; margin-top: 0.4rem; margin-bottom: 0.25rem;">GM Alexander Volkov</h3>
+                    <p style="color: var(--accent); font-weight: 800; font-size: 0.95rem; margin-bottom: 0.8rem;">Peak FIDE 2740 | Senior FIDE Trainer</p>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6;">Over 28 years directing Grandmaster development programs and authoring endgame calculation manuals.</p>
+                </div>
+
+                <div class="leader-card about-framer-hidden a-engine-6" style="transition-delay: 0.4s;">
+                    <img src="images/about_leader_academic.jpg" alt="Dr. Rostova - VP Education" class="leader-img">
+                    <span class="about-badge" style="font-size: 0.75rem;">VP OF CURRICULUM</span>
+                    <h3 style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; margin-top: 0.4rem; margin-bottom: 0.25rem;">Dr. Elena Rostova</h3>
+                    <p style="color: var(--accent); font-weight: 800; font-size: 0.95rem; margin-bottom: 0.8rem;">WGM | Ph.D. Cognitive Psychology</p>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6;">Specialist in youthful cognitive pattern recognition, time pressure psychology, and FIDE youth training syllabi.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 7: JOIN MISSION PLEDGE (#aboutJoinMission) -->
+        <section class="about-sec" id="aboutJoinMission">
+            <div class="pledge-card about-framer-hidden a-engine-7">
+                <div>
+                    <span class="about-badge">♞ ACADEMY ENROLLMENT</span>
+                    <h2 style="font-family: var(--font-heading); font-size: 2.2rem; font-weight: 900; margin-bottom: 1rem; line-height: 1.2;">Begin Your Journey to Mastery</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.75rem; line-height: 1.6;">
+                        Join thousands of aspiring players elevating their rating under international Grandmaster guidance.
+                    </p>
+
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <a href="programs.html" class="action-btn btn-login" style="padding: 0.9rem 1.8rem; font-size: 1rem;">
+                            <i class="fas fa-trophy"></i> Explore Programs
+                        </a>
+                        <a href="contact.html" class="action-btn" style="padding: 0.9rem 1.6rem; font-size: 1rem;">
+                            <i class="fas fa-envelope"></i> Contact Academy
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <img src="images/about_join_pledge.jpg" alt="Join Chess Academy Mission" class="pledge-img">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer" id="footer">
+        <div class="footer-container">
+            <!-- Brand Column -->
+            <div class="footer-brand">
+                <a href="index.html" class="logo-area" aria-label="Chess Academy Footer Logo">
+                    <span class="logo-knight">♞</span>
+                    <div class="logo-text-block">
+                        <span class="logo-title">CHESS ACADEMY</span>
+                        <span class="logo-sub">TACTICS &amp; MASTERY</span>
+                    </div>
+                </a>
+                <p class="footer-desc">
+                    World-class chess training academy dedicated to nurturing aspiring prodigies, competitive tournament contenders, and lifelong enthusiasts under FIDE Grandmasters.
+                </p>
+                <div class="social-links">
+                    <a href="#" class="social-btn" aria-label="Chess.com"><i class="fas fa-chess"></i></a>
+                    <a href="#" class="social-btn" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="social-btn" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-btn" aria-label="Twitch"><i class="fab fa-twitch"></i></a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-col">
+                <h4>Academy Links</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html" class="footer-link"><i class="fas fa-chevron-right"></i> Home 1 (Tactical)</a></li>
+                    <li><a href="home2.html" class="footer-link"><i class="fas fa-chevron-right"></i> Home 2 (Masterclass)</a></li>
+                    <li><a href="programs.html" class="footer-link"><i class="fas fa-chevron-right"></i> Programs</a></li>
+                    <li><a href="coaches.html" class="footer-link"><i class="fas fa-chevron-right"></i> Coaches</a></li>
+                    <li><a href="tournaments.html" class="footer-link"><i class="fas fa-chevron-right"></i> Tournaments</a></li>
+                </ul>
+            </div>
+
+            <!-- Dashboards & Info -->
+            <div class="footer-col">
+                <h4>Portals &amp; Info</h4>
+                <ul class="footer-links">
+                    <li><a href="user dashboard.html" class="footer-link"><i class="fas fa-chevron-right"></i> Student Dashboard</a></li>
+                    <li><a href="admin dashboard.html" class="footer-link"><i class="fas fa-chevron-right"></i> Admin Dashboard</a></li>
+                    <li><a href="about.html" class="footer-link"><i class="fas fa-chevron-right"></i> About Academy</a></li>
+                    <li><a href="contact.html" class="footer-link"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+                    <li><a href="login.html" class="footer-link"><i class="fas fa-chevron-right"></i> Member Portal</a></li>
+                </ul>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="footer-col">
+                <h4>Weekly Newsletter</h4>
+                <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 0.8rem;">
+                    Receive weekly Grandmaster puzzle breakdowns and tournament registration alerts.
+                </p>
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" placeholder="Enter your email" class="newsletter-input" required>
+                    <button type="submit" class="newsletter-btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Chess Academy. All rights reserved.</p>
+            <div style="display: flex; gap: 1.5rem;">
+                <a href="#" class="footer-link" style="font-size: 0.88rem;">Privacy Policy</a>
+                <a href="#" class="footer-link" style="font-size: 0.88rem;">Terms of Service</a>
+                <a href="#" class="footer-link" style="font-size: 0.88rem;">FIDE Fair Play Guidelines</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== LOGIN MODAL ==================== -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="login-card">
+            <button class="modal-close" id="modalCloseBtn"><i class="fas fa-times"></i></button>
+            <h3>Academy Login</h3>
+            <p>Sign in to access your student rating stats and lesson schedule.</p>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="emailInput">Email Address</label>
+                    <input type="email" id="emailInput" class="form-input" placeholder="player@chessacademy.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="passwordInput">Password</label>
+                    <input type="password" id="passwordInput" class="form-input" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="login-submit">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const body = document.body;
+
+            // Theme Switcher Elements
+            const darkModeBtn = document.getElementById('darkModeBtn');
+            const mobileDarkBtn = document.getElementById('mobileDarkBtn');
+            const themeIcon = document.getElementById('themeIcon');
+            const mobileThemeIcon = document.getElementById('mobileThemeIcon');
+            const themeLabel = document.getElementById('themeLabel');
+            const mobileThemeLabel = document.getElementById('mobileThemeLabel');
+
+            // RTL Elements
+            const rtlBtn = document.getElementById('rtlBtn');
+            const mobileRtlBtn = document.getElementById('mobileRtlBtn');
+            const rtlLabel = document.getElementById('rtlLabel');
+            const mobileRtlLabel = document.getElementById('mobileRtlLabel');
+
+            // Mobile Drawer Elements
+            const mobileToggleBtn = document.getElementById('mobileToggleBtn');
+            const mobileCloseBtn = document.getElementById('mobileCloseBtn');
+            const mobileOverlay = document.getElementById('mobileOverlay');
+            const mobilePanel = document.getElementById('mobilePanel');
+
+            const mobileHomeAcc = document.getElementById('mobileHomeAcc');
+            const mobileHomeContent = document.getElementById('mobileHomeContent');
+            const mobileDashAcc = document.getElementById('mobileDashAcc');
+            const mobileDashContent = document.getElementById('mobileDashContent');
+
+            // Modal Elements
+            const loginModalBtn = document.getElementById('loginModalBtn');
+            const mobileLoginModalBtn = document.getElementById('mobileLoginModalBtn');
+            const footerLoginTrigger = document.getElementById('footerLoginTrigger');
+            const loginModal = document.getElementById('loginModal');
+            const modalCloseBtn = document.getElementById('modalCloseBtn');
+            const loginForm = document.getElementById('loginForm');
+            const newsletterForm = document.getElementById('newsletterForm');
+
+            // 1. Dark / Light Mode Toggle
+            function updateThemeUI(isDark) {
+                if (isDark) {
+                    body.classList.add('dark-mode');
+                    if (themeIcon) themeIcon.className = 'fas fa-sun';
+                    if (mobileThemeIcon) mobileThemeIcon.className = 'fas fa-sun';
+                    if (themeLabel) themeLabel.textContent = 'Light';
+                    if (mobileThemeLabel) mobileThemeLabel.textContent = 'Light Mode';
+                    localStorage.setItem('chessacademy_theme', 'dark');
+                } else {
+                    body.classList.remove('dark-mode');
+                    if (themeIcon) themeIcon.className = 'fas fa-moon';
+                    if (mobileThemeIcon) mobileThemeIcon.className = 'fas fa-moon';
+                    if (themeLabel) themeLabel.textContent = 'Dark';
+                    if (mobileThemeLabel) mobileThemeLabel.textContent = 'Dark Mode';
+                    localStorage.setItem('chessacademy_theme', 'light');
+                }
+            }
+
+            function toggleTheme() {
+                const isDark = !body.classList.contains('dark-mode');
+                updateThemeUI(isDark);
+            }
+
+            const savedTheme = localStorage.getItem('chessacademy_theme');
+            if (savedTheme === 'light') {
+                updateThemeUI(false);
+            } else {
+                updateThemeUI(true);
+            }
+
+            if (darkModeBtn) darkModeBtn.addEventListener('click', toggleTheme);
+            if (mobileDarkBtn) mobileDarkBtn.addEventListener('click', toggleTheme);
+
+            // 2. RTL / LTR Direction Toggle
+            function updateRTLUI(isRtl) {
+                const dir = isRtl ? 'rtl' : 'ltr';
+                document.body.setAttribute('dir', dir);
+                document.documentElement.setAttribute('dir', dir);
+                if (rtlLabel) rtlLabel.textContent = isRtl ? 'LTR' : 'RTL';
+                if (mobileRtlLabel) mobileRtlLabel.textContent = isRtl ? 'LTR Layout' : 'RTL Layout';
+                localStorage.setItem('chessacademy_rtl', dir);
+            }
+
+            function toggleRTL() {
+                const isRtl = (document.body.getAttribute('dir') || 'ltr') === 'ltr';
+                updateRTLUI(isRtl);
+                closeMobileDrawer();
+            }
+
+            const savedRtl = localStorage.getItem('chessacademy_rtl');
+            if (savedRtl === 'rtl') {
+                updateRTLUI(true);
+            } else {
+                updateRTLUI(false);
+            }
+
+            if (rtlBtn) rtlBtn.addEventListener('click', toggleRTL);
+            if (mobileRtlBtn) mobileRtlBtn.addEventListener('click', toggleRTL);
+
+            // 3. Mobile Drawer Controls
+            function openMobileDrawer() {
+                mobileOverlay.classList.add('active');
+                mobilePanel.classList.add('active');
+                body.style.overflow = 'hidden';
+            }
+
+            function closeMobileDrawer() {
+                mobileOverlay.classList.remove('active');
+                mobilePanel.classList.remove('active');
+                body.style.overflow = '';
+            }
+
+            if (mobileToggleBtn) mobileToggleBtn.addEventListener('click', openMobileDrawer);
+            if (mobileCloseBtn) mobileCloseBtn.addEventListener('click', closeMobileDrawer);
+            if (mobileOverlay) mobileOverlay.addEventListener('click', closeMobileDrawer);
+
+            if (mobileHomeAcc) {
+                mobileHomeAcc.addEventListener('click', () => {
+                    mobileHomeContent.classList.toggle('show');
+                    const chevron = mobileHomeAcc.querySelector('.fa-chevron-down');
+                    if (chevron) chevron.style.transform = mobileHomeContent.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0deg)';
+                });
+            }
+
+            if (mobileDashAcc) {
+                mobileDashAcc.addEventListener('click', () => {
+                    mobileDashContent.classList.toggle('show');
+                    const chevron = mobileDashAcc.querySelector('.fa-chevron-down');
+                    if (chevron) chevron.style.transform = mobileDashContent.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0deg)';
+                });
+            }
+
+            document.querySelectorAll('.mobile-panel a:not(.mobile-link)').forEach(link => {
+                link.addEventListener('click', closeMobileDrawer);
+            });
+
+            // 4. Modal Interactions
+            function openLoginModal() {
+                loginModal.classList.add('active');
+                closeMobileDrawer();
+            }
+
+            function closeLoginModal() {
+                loginModal.classList.remove('active');
+            }
+
+            if (loginModalBtn) loginModalBtn.addEventListener('click', openLoginModal);
+            if (mobileLoginModalBtn) mobileLoginModalBtn.addEventListener('click', openLoginModal);
+            if (footerLoginTrigger) footerLoginTrigger.addEventListener('click', (e) => { e.preventDefault(); openLoginModal(); });
+            if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeLoginModal);
+            if (loginModal) {
+                loginModal.addEventListener('click', (e) => {
+                    if (e.target === loginModal) closeLoginModal();
+                });
+            }
+
+            // 5. Forms Handling
+            if (loginForm) {
+                loginForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    alert('Successfully logged into Chess Academy portal!');
+                    closeLoginModal();
+                });
+            }
+
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    alert('Thank you for subscribing to Chess Academy newsletter!');
+                    newsletterForm.reset();
+                });
+            }
+
+            // 6. Scroll Reveal Animation Engine (Framer-Motion Style)
+            const framerElements = document.querySelectorAll('.about-framer-hidden');
+            const observerOptions = {
+                root: null,
+                threshold: 0.12,
+                rootMargin: '0px 0px -40px 0px'
+            };
+
+            const framerObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('framer-visible');
+                    }
+                });
+            }, observerOptions);
+
+            framerElements.forEach(el => framerObserver.observe(el));
+        });
+    </script>
+</body>
+</html>

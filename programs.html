@@ -1,0 +1,2406 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Chess Academy | Grandmaster Training & Tournament Platform</title>
+
+    <!-- Google Fonts & Font Awesome 6 Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ---------- RESET & SYSTEM DESIGN TOKENS ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #f1f5f9;
+            --surface-glass: rgba(255, 255, 255, 0.92);
+            --card-bg: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent: #d4a373;
+            --accent-hover: #b07d4f;
+            --accent-glow: rgba(212, 163, 115, 0.3);
+            --border-light: rgba(15, 23, 42, 0.12);
+            --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 20px 45px -15px rgba(0, 0, 0, 0.12);
+            --transition-smooth: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            --font-main: 'Inter', sans-serif;
+            --font-heading: 'Outfit', sans-serif;
+        }
+
+        body.dark-mode {
+            --bg-primary: #0d1117;
+            --bg-secondary: #131923;
+            --surface-glass: rgba(19, 25, 35, 0.92);
+            --card-bg: #1a2230;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-light: rgba(255, 255, 255, 0.1);
+            --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.35);
+            --shadow-lg: 0 20px 45px -15px rgba(0, 0, 0, 0.65);
+        }
+
+        body {
+            font-family: var(--font-main);
+            font-size: 1rem;
+            line-height: 1.6;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ---------- GLOBAL LINK RESET ---------- */
+        a, button, .action-btn, .btn-login, .nav-link, .dropdown-item, .footer-link, .mobile-link, .mobile-sublink {
+            text-decoration: none !important;
+        }
+
+        /* ---------- RTL ICON FLIPPING ---------- */
+        [dir="rtl"] .fa-angle-right,
+        [dir="rtl"] .fa-arrow-right,
+        [dir="rtl"] .fa-chevron-right,
+        [dir="rtl"] .fa-angle-double-right,
+        [dir="rtl"] .footer-link i.fa-chevron-right {
+            transform: scaleX(-1) !important;
+            display: inline-block !important;
+        }
+
+        [dir="rtl"] {
+            text-align: right;
+        }
+
+        [dir="rtl"] .nav-container,
+        [dir="rtl"] .footer-container,
+        [dir="rtl"] .footer-bottom,
+        [dir="rtl"] .form-group {
+            text-align: right;
+        }
+
+        [dir="rtl"] .dropdown-menu {
+            left: auto !important;
+            right: 0 !important;
+        }
+
+        [dir="rtl"] .dropdown-item:hover,
+        [dir="rtl"] .footer-link:hover {
+            transform: translateX(-4px) !important;
+        }
+
+        /* ---------- STICKY GLASS NAVBAR ---------- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 9999;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            background: var(--surface-glass);
+            border-bottom: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-smooth);
+        }
+
+        .nav-container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0.75rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            white-space: nowrap;
+        }
+
+        .logo-area {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            color: inherit;
+            text-decoration: none !important;
+            line-height: 1;
+        }
+
+        .logo-knight {
+            font-size: 2.3rem;
+            color: var(--accent);
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(0 2px 8px var(--accent-glow));
+            transition: var(--transition-smooth);
+            flex-shrink: 0;
+        }
+
+        .logo-area:hover .logo-knight {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .logo-text-block {
+            display: inline-flex;
+            flex-direction: column;
+            justify-content: center;
+            line-height: 1;
+        }
+
+        .logo-title {
+            font-family: var(--font-heading);
+            font-weight: 900;
+            font-size: 1.35rem;
+            letter-spacing: 1.5px;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #a06834 0%, #d4a373 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+        }
+
+        body.dark-mode .logo-title {
+            font-family: var(--font-heading);
+            font-weight: 900;
+            font-size: 1.35rem;
+            letter-spacing: 1.5px;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #a06834 0%, #d4a373 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+        }
+
+        .logo-sub {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            letter-spacing: 3px;
+            line-height: 1;
+            margin-top: 2px;
+            display: block;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            list-style: none;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            font-weight: 600;
+            font-size: 0.92rem;
+            padding: 0.5rem 0.85rem;
+            color: var(--text-primary);
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(212, 163, 115, 0.15);
+            color: var(--accent);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            margin-top: 8px;
+            min-width: 220px;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 0.6rem;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: var(--transition-smooth);
+            z-index: 1000;
+            list-style: none;
+        }
+
+        .nav-item.dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.65rem 1rem;
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 0.9rem;
+            border-radius: 10px;
+            transition: var(--transition-smooth);
+        }
+
+        .dropdown-item i {
+            color: var(--accent);
+            width: 18px;
+            text-align: center;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(212, 163, 115, 0.15);
+            color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .action-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            color: var(--text-primary);
+            font-size: 0.88rem;
+            font-weight: 600;
+            padding: 0.45rem 0.9rem;
+            border-radius: 50px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            line-height: 1;
+            height: 38px;
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .action-btn i {
+            color: var(--accent);
+        }
+
+        .action-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px var(--accent-glow);
+        }
+
+        .action-btn.btn-login {
+            background: var(--accent);
+            color: #12151c;
+            border-color: var(--accent);
+            font-weight: 700;
+        }
+
+        .action-btn.btn-login i {
+            color: #12151c;
+        }
+
+        .action-btn.btn-login:hover {
+            background: var(--accent-hover);
+            color: #ffffff;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: rgba(212, 163, 115, 0.12);
+            border: 1px solid rgba(212, 163, 115, 0.3);
+            color: var(--accent);
+            font-size: 1.25rem;
+            padding: 0.45rem 0.8rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        /* ---------- MOBILE DRAWER ---------- */
+        .mobile-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 12, 16, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-smooth);
+        }
+
+        .mobile-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-panel {
+            position: fixed;
+            top: 0;
+            right: -380px;
+            width: 340px;
+            max-width: 88vw;
+            height: 100vh;
+            background: var(--card-bg);
+            border-left: 1px solid var(--border-light);
+            box-shadow: var(--shadow-lg);
+            z-index: 10001;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            overflow-y: auto;
+            transition: right 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        body[dir="rtl"] .mobile-panel {
+            right: auto;
+            left: -380px;
+            border-left: none;
+            border-right: 1px solid var(--border-light);
+            transition: left 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        .mobile-panel.active {
+            right: 0;
+        }
+
+        body[dir="rtl"] .mobile-panel.active {
+            left: 0;
+        }
+
+        .mobile-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .mobile-close {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.4rem;
+            cursor: pointer;
+        }
+
+        .mobile-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .mobile-link-item {
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 0.4rem;
+        }
+
+        .mobile-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 1.05rem;
+            padding: 0.75rem 0.85rem;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        .mobile-link:hover, .mobile-link.active {
+            color: var(--accent);
+            background: rgba(212, 163, 115, 0.1);
+        }
+
+        .mobile-accordion-content {
+            display: none;
+            padding-left: 1rem;
+            padding-top: 0.4rem;
+            flex-direction: column;
+            gap: 0.4rem;
+            list-style: none;
+        }
+
+        body[dir="rtl"] .mobile-accordion-content {
+            padding-left: 0;
+            padding-right: 1rem;
+        }
+
+        .mobile-accordion-content.show {
+            display: flex;
+        }
+
+        .mobile-sublink {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: 0.55rem 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-radius: 10px;
+        }
+
+        .mobile-sublink:hover {
+            color: var(--accent);
+            background: rgba(212, 163, 115, 0.1);
+        }
+
+        .mobile-actions {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .mobile-actions .action-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            color: var(--text-primary);
+            font-size: 0.88rem;
+            font-weight: 600;
+            padding: 0.45rem 0.9rem;
+            border-radius: 50px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            line-height: 1;
+            height: 38px;
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* ---------- REENGINEERED EDITORIAL LAYOUT SYSTEM ---------- */
+        .layout-sec {
+            padding: 5.5rem 2rem;
+            max-width: 1440px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .sec-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.4rem 1.1rem;
+            border-radius: 50px;
+            background: rgba(212, 163, 115, 0.14);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .sec-heading {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 3.8vw, 3rem);
+            font-weight: 900;
+            line-height: 1.18;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sec-subtext {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 760px;
+            line-height: 1.7;
+        }
+
+        /* Hero Split Screen */
+        #arenaHero {
+            padding-top: 9.5rem;
+            padding-bottom: 4rem;
+        }
+
+        .hero-split-grid {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 3.5rem;
+            align-items: center;
+        }
+
+        .hero-stats-band {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+            margin: 2.5rem 0;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .band-num {
+            font-family: var(--font-heading);
+            font-size: 2.1rem;
+            font-weight: 900;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+
+        .band-txt {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .tactical-tactics-hud {
+            background: var(--card-bg);
+            border: 2px solid var(--border-light);
+            border-radius: 28px;
+            padding: 2.2rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+        }
+
+        .hud-status-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0.35rem 0.9rem;
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+            border-radius: 50px;
+            font-size: 0.82rem;
+            font-weight: 800;
+            margin-bottom: 1.2rem;
+        }
+
+        /* 8x8 Tactical SVG Styled Board */
+        .board-8x8 {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            grid-template-rows: repeat(8, 1fr);
+            width: 100%;
+            max-width: 360px;
+            aspect-ratio: 1/1;
+            margin: 1.2rem auto;
+            border: 6px solid #2d3748;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .b-sq {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(1rem, 2.5vw, 1.8rem);
+            user-select: none;
+        }
+
+        .b-sq.l { background: #f7eed8; color: #1a202c; }
+        .b-sq.d { background: #c59b6d; color: #1a202c; }
+        .b-sq.piece-white { color: #ffffff; filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.7)); }
+
+        /* Program Staggered Pathway (Replaces Bento Grid) */
+        .pathway-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 3.5rem;
+        }
+
+        .pathway-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 22px;
+            padding: 2.2rem 1.7rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pathway-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: transparent;
+            transition: var(--transition-smooth);
+        }
+
+        .pathway-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .pathway-card:hover::before {
+            background: var(--accent);
+        }
+
+        .pathway-icon-bubble {
+            width: 58px;
+            height: 58px;
+            border-radius: 16px;
+            background: rgba(212, 163, 115, 0.15);
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.7rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* 3-Column Studio Methodology */
+        .studio-columns {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3.5rem;
+        }
+
+        .studio-col-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 24px;
+            padding: 2.5rem 2rem;
+            position: relative;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-smooth);
+        }
+
+        .studio-col-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .studio-step-tag {
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            font-weight: 900;
+            color: rgba(212, 163, 115, 0.25);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Interactive Masterclass Timeline */
+        .timeline-matrix {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3.5rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+
+        .timeline-track {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            position: relative;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+            padding: 1.4rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 18px;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+        }
+
+        .timeline-item.active, .timeline-item:hover {
+            border-color: var(--accent);
+            background: rgba(212, 163, 115, 0.08);
+            transform: translateX(6px);
+        }
+
+        body[dir="rtl"] .timeline-item.active,
+        body[dir="rtl"] .timeline-item:hover {
+            transform: translateX(-6px);
+        }
+
+        .timeline-badge {
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+            border-radius: 14px;
+            background: var(--accent);
+            color: #12151c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+        }
+
+        .evaluation-terminal-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 28px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .eval-output-bar {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-light);
+            border-radius: 14px;
+            padding: 1rem 1.4rem;
+            font-family: monospace;
+            font-size: 0.95rem;
+            margin: 1.25rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Full Width Enrollment Command Deck */
+        .enroll-command-deck {
+            background: var(--card-bg);
+            border: 2px solid var(--accent);
+            border-radius: 32px;
+            padding: 4rem 3.5rem;
+            box-shadow: 0 25px 60px var(--accent-glow);
+            max-width: 1080px;
+            margin: 0 auto;
+        }
+
+        .deck-form-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .deck-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            text-align: left;
+        }
+
+        body[dir="rtl"] .deck-input-group {
+            text-align: right;
+        }
+
+        .deck-input-group label {
+            font-size: 0.88rem;
+            font-weight: 700;
+        }
+
+        .deck-input-group input, .deck-input-group select {
+            width: 100%;
+            padding: 0.85rem 1.1rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-light);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            outline: none;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: var(--transition-smooth);
+        }
+
+        .deck-input-group input:focus, .deck-input-group select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        /* ---------- FOOTER ---------- */
+        .footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-light);
+            padding: 4.5rem 2rem 2rem;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 3.5rem;
+            margin-bottom: 3.5rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .footer-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            max-width: 380px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .social-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(212, 163, 115, 0.15);
+            border: 1px solid rgba(212, 163, 115, 0.3);
+            color: var(--accent) !important;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-smooth);
+            font-size: 1.1rem;
+        }
+
+        .social-btn:hover {
+            background: var(--accent) !important;
+            color: #12151c !important;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        .footer-col h4 {
+            font-family: var(--font-heading);
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition-smooth);
+        }
+
+        .footer-link i {
+            font-size: 0.75rem;
+            color: var(--accent);
+        }
+
+        .footer-link:hover {
+            color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .newsletter-input {
+            width: 100%;
+            padding: 0.85rem 1.4rem;
+            border-radius: 50px;
+            border: 1px solid var(--border-light);
+            background: var(--card-bg);
+            color: var(--text-primary);
+            font-family: inherit;
+            outline: none;
+            font-size: 0.95rem;
+        }
+
+        .newsletter-btn {
+            padding: 0.85rem 1.5rem;
+            border-radius: 50px;
+            border: none;
+            background: var(--accent);
+            color: #12151c;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .newsletter-btn:hover {
+            background: var(--accent-hover);
+            color: #ffffff;
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            border-top: 1px solid var(--border-light);
+            padding-top: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        /* ---------- LOGIN MODAL ---------- */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            z-index: 20000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-smooth);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .login-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 420px;
+            padding: 2.5rem 2rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            transform: scale(0.95);
+            transition: var(--transition-smooth);
+        }
+
+        .modal-overlay.active .login-card {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        body[dir="rtl"] .modal-close {
+            right: auto;
+            left: 1.2rem;
+        }
+
+        .login-card h3 {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.88rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-light);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            outline: none;
+        }
+
+        .login-submit {
+            width: 100%;
+            padding: 0.85rem;
+            background: var(--accent);
+            color: #12151c;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            margin-top: 0.5rem;
+        }
+
+        .login-submit:hover {
+            background: var(--accent-hover);
+            color: #ffffff;
+        }
+
+        /* ---------- RESPONSIVE BREAKPOINTS ---------- */
+        /* ---------- RESPONSIVE HEADER ---------- */
+        @media (max-width: 1100px) {
+            .nav-links {
+                display: none !important;
+            }
+            .nav-actions .action-btn:not(.menu-toggle),
+            .nav-actions #darkModeBtn,
+            .nav-actions #rtlBtn,
+            .nav-actions #loginModalBtn,
+            .nav-actions .btn-login {
+                display: none !important;
+            }
+            .menu-toggle {
+                display: inline-flex !important;
+                align-items: center;
+                justify-content: center;
+                background: rgba(212, 163, 115, 0.15);
+                border: 1px solid rgba(212, 163, 115, 0.35);
+                color: var(--accent);
+                font-size: 1.25rem;
+                padding: 0.45rem 0.8rem;
+                border-radius: 12px;
+                cursor: pointer;
+            }
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0.6rem 1rem !important;
+                gap: 0.5rem !important;
+            }
+            .logo-knight {
+                font-size: 1.8rem !important;
+            }
+            .logo-title {
+                font-size: 1.1rem !important;
+            }
+            .logo-sub {
+                font-size: 0.6rem !important;
+                letter-spacing: 1.5px !important;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .nav-container {
+                padding: 0.5rem 0.65rem !important;
+            }
+            .menu-toggle {
+                padding: 0.35rem 0.65rem !important;
+                font-size: 1.1rem !important;
+            }
+        }
+
+        
+
+        
+
+        @media (max-width: 650px) {
+            .pathway-cards-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero-stats-band {
+                grid-template-columns: 1fr;
+            }
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+            .enroll-command-deck {
+                padding: 2.5rem 1.5rem;
+            }
+        }
+    </style>
+<style>
+        /* High Contrast Badge & Banner Overrides for Dark Mode */
+        body.dark-mode .idx-badge,
+        body.dark-mode .about-badge,
+        body.dark-mode .coach-badge,
+        body.dark-mode .cnt-badge,
+        body.dark-mode .h2-badge,
+        body.dark-mode .tourn-badge,
+        body.dark-mode .section-badge,
+        body.dark-mode .val-icon-badge,
+        body.dark-mode .pillar-icon-badge {
+            color: #fbbf24 !important;
+            background: rgba(212, 163, 115, 0.18) !important;
+            border-color: rgba(251, 191, 36, 0.35) !important;
+        }
+</style>
+<style>
+        /* Global Mobile Overflow & Alignment Protection */
+        html, body {
+            overflow-x: hidden !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            position: relative;
+            margin: 0;
+            padding: 0;
+        }
+
+        .mobile-panel {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 340px;
+            max-width: 88vw;
+            height: 100vh;
+            background: var(--card-bg);
+            border-left: 1px solid var(--border-light);
+            box-shadow: var(--shadow-lg);
+            z-index: 10001;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            overflow-y: auto;
+            transform: translateX(100%);
+            transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        .mobile-panel.active {
+            transform: translateX(0);
+        }
+
+        body[dir="rtl"] .mobile-panel {
+            right: auto;
+            left: 0;
+            transform: translateX(-100%);
+            border-left: none;
+            border-right: 1px solid var(--border-light);
+        }
+
+        body[dir="rtl"] .mobile-panel.active {
+            transform: translateX(0);
+        }
+</style>
+<style>
+        /* Responsive Table Container Overflow Protection */
+        .table-wrap, .table-responsive, .history-table-wrap, .board-table-wrap {
+            overflow-x: auto !important;
+            max-width: 100% !important;
+            -webkit-overflow-scrolling: touch;
+        }
+</style>
+<style>
+        /* Global Tournament & VIP Row Alignment Fixes */
+        .idx-match-item, .h2-vip-row, .cal-row, .tourn-row, .league-row {
+            display: flex !important;
+            align-items: flex-start !important;
+            justify-content: space-between !important;
+            gap: 1rem !important;
+        }
+
+        .idx-match-info, .h2-vip-info, .cal-info, .tourn-info {
+            flex: 1 !important;
+            min-width: 0 !important;
+        }
+
+        .idx-match-status, .h2-vip-seat-tag, .cal-tag, .tourn-status {
+            flex-shrink: 0 !important;
+            white-space: nowrap !important;
+            margin-top: 0.1rem !important;
+        }
+
+        @media (max-width: 600px) {
+            .idx-match-item, .h2-vip-row, .cal-row, .tourn-row, .league-row {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 0.75rem !important;
+            }
+            .idx-match-status, .h2-vip-seat-tag, .cal-tag, .tourn-status {
+                align-self: flex-start !important;
+                margin-top: 0 !important;
+            }
+        }
+</style>
+<style>
+        /* Mobile Header & Dossier Alignment Fixes */
+        @media (max-width: 650px) {
+            .nav-container {
+                padding: 0.6rem 0.85rem !important;
+                gap: 0.5rem !important;
+            }
+            .logo-knight {
+            font-size: 2.3rem;
+            color: var(--accent);
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(0 2px 8px var(--accent-glow));
+            transition: var(--transition-smooth);
+            flex-shrink: 0;
+        }
+            .logo-title {
+            font-family: var(--font-heading);
+            font-weight: 900;
+            font-size: 1.35rem;
+            letter-spacing: 1.5px;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #a06834 0%, #d4a373 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+        }
+            .logo-sub {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            letter-spacing: 3px;
+            line-height: 1;
+            margin-top: 2px;
+            display: block;
+        }
+            .nav-actions {
+                gap: 0.4rem !important;
+            }
+            .nav-actions .action-btn.btn-login {
+                padding: 0.4rem 0.75rem !important;
+                font-size: 0.82rem !important;
+            }
+            .menu-toggle {
+                padding: 0.4rem 0.7rem !important;
+                font-size: 1.15rem !important;
+            }
+        }
+</style>
+<style>
+        
+            .menu-toggle {
+                display: inline-flex !important;
+            }
+        }
+</style>
+<style>
+/* ---------- GLOBAL MOBILE GRID & HERO ALIGNMENT FIXES ---------- */
+        @media (max-width: 992px) {
+            .hero-section, #hero, #contactHero, #arenaHero, #idxHero, .layout-sec {
+                padding-top: 110px !important;
+            }
+            .hero-split-grid,
+            .idx-hero-grid,
+            .cnt-hero-card,
+            .bento-col-8,
+            .curriculum-grid,
+            .overview-grid-2col {
+                grid-template-columns: 1fr !important;
+                gap: 2rem !important;
+            }
+            .bento-col-8 {
+                grid-column: span 12 !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-stats,
+            .cnt-stats-bar,
+            .hero-stats-band,
+            .stats-grid-3col,
+            .form-row,
+            .form-row-2 {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+            .cnt-stat-item, .stat-box {
+                width: 100% !important;
+            }
+        }
+</style>
+<style>
+/* ---------- BENTO, CURRICULUM, ENROLLMENT & MOBILE GRID FIXES ---------- */
+        @media (max-width: 992px) {
+            .bento-grid,
+            .curriculum-grid,
+            .bento-card[style*="grid-template-columns"],
+            div[style*="grid-template-columns: 1.4fr 1fr"],
+            div[style*="grid-template-columns: 1fr 1fr"] {
+                grid-template-columns: 1fr !important;
+                gap: 1.5rem !important;
+            }
+            .bento-col-8,
+            .bento-col-4 {
+                grid-column: span 12 !important;
+                width: 100% !important;
+            }
+            .enroll-card {
+                padding: 2rem 1.25rem !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-row,
+            .form-row-2,
+            .form-row-3,
+            .elo-calc-inputs,
+            .elo-result-banner {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+            .enroll-submit-btn {
+                width: 100% !important;
+                padding: 0.9rem 1rem !important;
+                font-size: 0.92rem !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                text-align: center !important;
+                line-height: 1.35 !important;
+                min-height: 50px !important;
+                white-space: normal !important;
+                word-break: break-word !important;
+            }
+        }
+</style>
+<style>
+/* ---------- FULL RESPONSIVE GRID & SUBMIT BUTTON ALIGNMENT FIXES ---------- */
+        .bento-card-split {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        button[type="submit"].action-btn,
+        form .action-btn,
+        .enroll-submit-btn {
+            height: auto !important;
+            min-height: 52px !important;
+            padding: 0.9rem 1.2rem !important;
+            white-space: normal !important;
+            word-break: break-word !important;
+            line-height: 1.35 !important;
+            text-align: center !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+
+        @media (max-width: 992px) {
+            .bento-card-split,
+            .timeline-matrix,
+            .hero-split-grid,
+            .idx-hero-grid,
+            .cnt-hero-card,
+            .curriculum-grid,
+            .overview-grid-2col {
+                grid-template-columns: 1fr !important;
+                gap: 2rem !important;
+            }
+            .bento-col-8,
+            .bento-col-4 {
+                grid-column: span 12 !important;
+                width: 100% !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .deck-form-grid,
+            .form-row,
+            .form-row-2,
+            .form-row-3,
+            .elo-calc-inputs,
+            .elo-result-banner,
+            .hero-stats,
+            .cnt-stats-bar,
+            .hero-stats-band,
+            .stats-grid-3col {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+            .cnt-stat-item, .stat-box {
+                width: 100% !important;
+            }
+        }
+</style>
+<style>
+/* ---------- ABSOLUTE COMPLETE RESPONSIVE GRID & BUTTON FIXES ---------- */
+        @media (max-width: 992px) {
+            .studio-columns,
+            .timeline-matrix,
+            .deck-form-grid,
+            .pathway-cards-grid,
+            .bento-grid,
+            .curriculum-grid,
+            .hero-split-grid,
+            .idx-hero-grid,
+            .cnt-hero-card,
+            .bento-card-split,
+            .overview-grid-2col,
+            .fame-grid,
+            .stadium-hero-card,
+            .reg-portal-wrap,
+            div[style*="grid-template-columns"] {
+                grid-template-columns: 1fr !important;
+                gap: 1.5rem !important;
+            }
+            .bento-col-8,
+            .bento-col-4 {
+                grid-column: span 12 !important;
+                width: 100% !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-stats,
+            .cnt-stats-bar,
+            .hero-stats-band,
+            .stats-grid-3col,
+            .form-row,
+            .form-row-2,
+            .form-row-3,
+            .elo-calc-inputs,
+            .elo-result-banner {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+            .cnt-stat-item, .stat-box {
+                width: 100% !important;
+            }
+            button[type="submit"].action-btn,
+            form .action-btn,
+            .enroll-submit-btn {
+                height: auto !important;
+                min-height: 52px !important;
+                padding: 0.9rem 1rem !important;
+                font-size: 0.92rem !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                text-align: center !important;
+                line-height: 1.35 !important;
+                white-space: normal !important;
+                word-break: break-word !important;
+            }
+        }
+</style>
+<style>
+/* ---------- DASHBOARD & TABLE RESPONSIVE ALIGNMENT FIXES ---------- */
+        .section-title, .section-heading, .banner-headline, .hero-title, h1, h2 {
+            white-space: normal !important;
+            word-break: break-word !important;
+            overflow-wrap: break-word !important;
+        }
+
+        code, pre {
+            white-space: pre-wrap !important;
+            word-break: break-word !important;
+        }
+
+        .history-table-card {
+            width: 100% !important;
+            max-width: 100% !important;
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+            display: block !important;
+        }
+
+        .history-table {
+            min-width: 600px !important;
+            width: 100% !important;
+        }
+
+        @media (max-width: 768px) {
+            .progress-steps-row {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 1.25rem !important;
+            }
+            .dashboard-topbar {
+                flex-wrap: wrap !important;
+                gap: 0.75rem !important;
+                padding: 0.85rem 1rem !important;
+            }
+            .topbar-search {
+                order: 3 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .progress-steps-row {
+                grid-template-columns: 1fr !important;
+            }
+            .section-title {
+                font-size: 1.5rem !important;
+            }
+        }
+</style>
+<style>
+/* ---------- VIEWPORT OVERFLOW & MOBILE ALIGNMENT CONTAINMENT ---------- */
+        html, body {
+            overflow-x: hidden !important;
+            max-width: 100vw !important;
+            width: 100% !important;
+        }
+
+        .dashboard-main-content,
+        .container-fluid,
+        .db-section,
+        main,
+        .navbar,
+        header,
+        footer,
+        section {
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        .history-table-card {
+            width: 100% !important;
+            max-width: 100% !important;
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+            display: block !important;
+            border-radius: 16px !important;
+        }
+
+        .history-table {
+            width: 100% !important;
+            min-width: 550px !important;
+            table-layout: auto !important;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-topbar {
+                display: flex !important;
+                flex-wrap: wrap !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                padding: 0.6rem 0.85rem !important;
+                gap: 0.5rem !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+            }
+            .topbar-search {
+                order: 3 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                margin-top: 0.4rem !important;
+            }
+            .topbar-search input {
+                width: 100% !important;
+                font-size: 0.85rem !important;
+            }
+            .user-top-profile {
+                margin-left: auto !important;
+            }
+            .section-title, .section-heading, .banner-headline, .hero-title, h1, h2 {
+                font-size: clamp(1.4rem, 5vw, 2.2rem) !important;
+                line-height: 1.25 !important;
+                white-space: normal !important;
+                word-break: break-word !important;
+                overflow-wrap: break-word !important;
+            }
+            .section-desc, .section-subtitle, p {
+                font-size: 0.92rem !important;
+                line-height: 1.5 !important;
+                white-space: normal !important;
+                word-break: break-word !important;
+            }
+        }
+</style>
+</head>
+<body class="dark-mode" dir="ltr">
+
+    <!-- ==================== HEADER / NAVBAR ==================== -->
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <!-- Brand Logo -->
+            <a href="index.html" class="logo-area" aria-label="Chess Academy Home">
+                <span class="logo-knight">♞</span>
+                <div class="logo-text-block">
+                    <span class="logo-title">CHESS ACADEMY</span>
+                    <span class="logo-sub">TACTICS &amp; MASTERY</span>
+                </div>
+            </a>
+
+            <!-- Navigation Links -->
+            <ul class="nav-links">
+                <li class="nav-item dropdown">
+                    <a href="index.html" class="nav-link">
+                        Home <i class="fas fa-chevron-down chevron"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="index.html" class="dropdown-item"><i class="fas fa-chess-board"></i> Home 1 (Tactical)</a></li>
+                        <li><a href="home2.html" class="dropdown-item"><i class="fas fa-crown"></i> Home 2 (Masterclass)</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a href="programs.html" class="nav-link active">Programs</a></li>
+                <li class="nav-item"><a href="coaches.html" class="nav-link">Coaches</a></li>
+                <li class="nav-item"><a href="tournaments.html" class="nav-link">Tournaments</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About Academy</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                <li class="nav-item dropdown">
+                    <a href="user dashboard.html" class="nav-link">
+                        Dashboard <i class="fas fa-chevron-down chevron"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="user dashboard.html" class="dropdown-item"><i class="fas fa-user-graduate"></i> Student Dashboard</a></li>
+                        <li><a href="admin dashboard.html" class="dropdown-item"><i class="fas fa-shield-alt"></i> Admin Dashboard</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <!-- Controls: Theme, RTL, Login, Mobile Toggle -->
+            <div class="nav-actions">
+                <button class="action-btn" id="darkModeBtn" aria-label="Toggle Theme">
+                    <i class="fas fa-moon" id="themeIcon"></i>
+                    <span id="themeLabel">Dark</span>
+                </button>
+
+                <button class="action-btn" id="rtlBtn" aria-label="Toggle Layout Direction">
+                    <i class="fas fa-right-left" id="rtlIcon"></i>
+                    <span id="rtlLabel">RTL</span>
+                </button>
+
+                <a href="login.html" class="action-btn btn-login" id="loginModalBtn">
+                    <i class="fas fa-arrow-right-to-bracket"></i>
+                    <span>Login</span>
+                </a>
+
+                <button class="menu-toggle" id="mobileToggleBtn" aria-label="Open Mobile Menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== MOBILE DRAWER ==================== -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+    <div class="mobile-panel" id="mobilePanel">
+        <div class="mobile-header">
+            <a href="index.html" class="logo-area">
+                <span class="logo-knight">♞</span>
+                <div class="logo-text-block">
+                    <span class="logo-title">CHESS ACADEMY</span>
+                    <span class="logo-sub">TACTICS &amp; MASTERY</span>
+                </div>
+            </a>
+            <button class="mobile-close" id="mobileCloseBtn"><i class="fas fa-times"></i></button>
+        </div>
+
+        <ul class="mobile-links">
+            <li class="mobile-link-item">
+                <div class="mobile-link" id="mobileHomeAcc">
+                    <span>Home</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <ul class="mobile-accordion-content" id="mobileHomeContent">
+                    <li><a href="index.html" class="mobile-sublink"><i class="fas fa-chess-board"></i> Home 1</a></li>
+                    <li><a href="home2.html" class="mobile-sublink"><i class="fas fa-crown"></i> Home 2</a></li>
+                </ul>
+            </li>
+            <li class="mobile-link-item"><a href="programs.html" class="mobile-link">Programs</a></li>
+            <li class="mobile-link-item"><a href="coaches.html" class="mobile-link">Coaches</a></li>
+            <li class="mobile-link-item"><a href="tournaments.html" class="mobile-link">Tournaments</a></li>
+            <li class="mobile-link-item"><a href="about.html" class="mobile-link">About Academy</a></li>
+            <li class="mobile-link-item"><a href="contact.html" class="mobile-link">Contact</a></li>
+            <li class="mobile-link-item">
+                <div class="mobile-link" id="mobileDashAcc">
+                    <span>Dashboard</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <ul class="mobile-accordion-content" id="mobileDashContent">
+                    <li><a href="user dashboard.html" class="mobile-sublink"><i class="fas fa-user-graduate"></i> Student Dashboard</a></li>
+                    <li><a href="admin dashboard.html" class="mobile-sublink"><i class="fas fa-shield-alt"></i> Admin Dashboard</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="mobile-actions">
+            <button class="action-btn" id="mobileDarkBtn">
+                <i class="fas fa-moon" id="mobileThemeIcon"></i>
+                <span id="mobileThemeLabel">Dark Mode</span>
+            </button>
+            <button class="action-btn" id="mobileRtlBtn">
+                <i class="fas fa-right-left" id="mobileRtlIcon"></i>
+                <span id="mobileRtlLabel">RTL Layout</span>
+            </button>
+            <a href="login.html" class="action-btn btn-login" id="mobileLoginModalBtn">
+                <i class="fas fa-arrow-right-to-bracket"></i>
+                <span>Login</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- ==================== MAIN CONTENT: REDESIGNED LAYOUT & CONTENT ==================== -->
+    <main>
+
+        <!-- LAYOUT COMPONENT 1: ASYMMETRICAL ARENA SPLIT HERO -->
+        <section class="layout-sec" id="arenaHero">
+            <div class="hero-split-grid">
+                <div>
+                    <span class="sec-tag"><i class="fas fa-award"></i> Premier FIDE Grandmaster Institute</span>
+                    <h1 class="sec-heading">Engineered for Victory. Trained for the Crown.</h1>
+                    <p class="sec-subtext">
+                        Welcome to a dedicated chess incubator where tournament calculations, neural-engine preparation, and psychological resilience meet under title-winning Grandmaster supervision.
+                    </p>
+
+                    <div class="hero-stats-band">
+                        <div>
+                            <div class="band-num">2780</div>
+                            <div class="band-txt">Peak Faculty FIDE ELO</div>
+                        </div>
+                        <div>
+                            <div class="band-num">124</div>
+                            <div class="band-txt">International Titles Earned</div>
+                        </div>
+                        <div>
+                            <div class="band-num">38ms</div>
+                            <div class="band-txt">Cloud Engine Calculation Latency</div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <a href="#enrollmentDeck" class="action-btn btn-login" style="padding: 0.9rem 2.2rem; font-size: 1rem;">
+                            <i class="fas fa-chess-king"></i> Secure Academy Seat
+                        </a>
+                        <a href="#masteryPathway" class="action-btn" style="padding: 0.9rem 2.2rem; font-size: 1rem;">
+                            <i class="fas fa-sitemap"></i> View 4-Tier Syllabus
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Interactive Chess HUD Terminal -->
+                <div class="tactical-tactics-hud">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span class="hud-status-chip"><i class="fas fa-satellite"></i> Live Cleanroom Analysis Bay</span>
+                        <span style="font-size: 0.85rem; font-weight: 700; color: var(--accent);">FEN: Modern Classical</span>
+                    </div>
+
+                    <div class="board-8x8">
+                        <!-- Rank 8 -->
+                        <div class="b-sq l">♜</div><div class="b-sq d">♞</div><div class="b-sq l">♝</div><div class="b-sq d">♛</div><div class="b-sq l">♚</div><div class="b-sq d">♝</div><div class="b-sq l">♞</div><div class="b-sq d">♜</div>
+                        <!-- Rank 7 -->
+                        <div class="b-sq d">♟</div><div class="b-sq l">♟</div><div class="b-sq d">♟</div><div class="b-sq l">♟</div><div class="b-sq d">♟</div><div class="b-sq l">♟</div><div class="b-sq d">♟</div><div class="b-sq l">♟</div>
+                        <!-- Rank 6 -->
+                        <div class="b-sq l"></div><div class="b-sq d"></div><div class="b-sq l"></div><div class="b-sq d"></div><div class="b-sq l"></div><div class="b-sq d"></div><div class="b-sq l"></div><div class="b-sq d"></div>
+                        <!-- Rank 5 -->
+                        <div class="b-sq d"></div><div class="b-sq l"></div><div class="b-sq d"></div><div class="b-sq l piece-white">♙</div><div class="b-sq d"></div><div class="b-sq l"></div><div class="b-sq d"></div><div class="b-sq l"></div>
+                        <!-- Rank 4 -->
+                        <div class="b-sq l"></div><div class="b-sq d"></div><div class="b-sq l piece-white">♘</div><div class="b-sq d"></div><div class="b-sq l"></div><div class="b-sq d"></div><div class="b-sq l"></div><div class="b-sq d"></div>
+                        <!-- Rank 3 -->
+                        <div class="b-sq d"></div><div class="b-sq l"></div><div class="b-sq d"></div><div class="b-sq l"></div><div class="b-sq d"></div><div class="b-sq l"></div><div class="b-sq d"></div><div class="b-sq l"></div>
+                        <!-- Rank 2 -->
+                        <div class="b-sq l piece-white">♙</div><div class="b-sq d piece-white">♙</div><div class="b-sq l piece-white">♙</div><div class="b-sq d"></div><div class="b-sq l piece-white">♙</div><div class="b-sq d piece-white">♙</div><div class="b-sq l piece-white">♙</div><div class="b-sq d piece-white">♙</div>
+                        <!-- Rank 1 -->
+                        <div class="b-sq d piece-white">♖</div><div class="b-sq l"></div><div class="b-sq d piece-white">♗</div><div class="b-sq l piece-white">♕</div><div class="b-sq d piece-white">♔</div><div class="b-sq l piece-white">♗</div><div class="b-sq d"></div><div class="b-sq l piece-white">♖</div>
+                    </div>
+
+                    <div style="background: var(--bg-primary); border: 1px solid var(--border-light); border-radius: 12px; padding: 1rem; font-size: 0.88rem;">
+                        <div style="display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 0.35rem;">
+                            <span>Engine Evaluation: +1.48</span>
+                            <span style="color: #10b981;">Stockfish 16.1 (Depth 42)</span>
+                        </div>
+                        <div style="color: var(--text-secondary); font-family: monospace;">Line: 14. d5 exd5 15. Nxd5 Nxd5 16. Qxd5 Be6</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LAYOUT COMPONENT 2: STAGGERED PATHWAY CARDS -->
+        <section class="layout-sec" id="masteryPathway" style="background: var(--bg-secondary); border-radius: 36px;">
+            <div style="text-align: center; max-width: 780px; margin: 0 auto;">
+                <span class="sec-tag"><i class="fas fa-stairs"></i> Continuous Rating Progression</span>
+                <h2 class="sec-heading">The 4-Stage Grandmaster Pathway</h2>
+                <p class="sec-subtext" style="margin: 0 auto;">Structured semester curriculums tailored specifically to break rating plateaus and deliver verified ELO gains.</p>
+            </div>
+
+            <div class="pathway-cards-grid">
+                <!-- Tier 1 -->
+                <div class="pathway-card">
+                    <div>
+                        <div class="pathway-icon-bubble"><i class="fas fa-chess-pawn"></i></div>
+                        <span style="font-size: 0.8rem; font-weight: 800; color: var(--accent);">800 - 1200 ELO</span>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.35rem; font-weight: 800; margin: 0.4rem 0 0.8rem;">Tactical Fundamentals</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6;">Eliminate unforced blunders, drill 1-to-2 move motifs, and master standard opening principles.</p>
+                    </div>
+                    <div style="margin-top: 1.8rem; padding-top: 1rem; border-top: 1px solid var(--border-light); font-weight: 700; font-size: 0.85rem; color: var(--text-primary);">
+                        Weekly 4 Hrs Live • Group Size: 10
+                    </div>
+                </div>
+
+                <!-- Tier 2 -->
+                <div class="pathway-card">
+                    <div>
+                        <div class="pathway-icon-bubble"><i class="fas fa-chess-knight"></i></div>
+                        <span style="font-size: 0.8rem; font-weight: 800; color: var(--accent);">1200 - 1600 ELO</span>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.35rem; font-weight: 800; margin: 0.4rem 0 0.8rem;">Positional Architecture</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6;">Pawn structure skeletons, open-file control, knight outpost creation, and basic king and pawn endgames.</p>
+                    </div>
+                    <div style="margin-top: 1.8rem; padding-top: 1rem; border-top: 1px solid var(--border-light); font-weight: 700; font-size: 0.85rem; color: var(--text-primary);">
+                        Weekly 6 Hrs Live • Group Size: 8
+                    </div>
+                </div>
+
+                <!-- Tier 3 -->
+                <div class="pathway-card">
+                    <div>
+                        <div class="pathway-icon-bubble"><i class="fas fa-chess-rook"></i></div>
+                        <span style="font-size: 0.8rem; font-weight: 800; color: var(--accent);">1600 - 2000 ELO</span>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.35rem; font-weight: 800; margin: 0.4rem 0 0.8rem;">Candidate Master Lab</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6;">Complex 7+ move calculation trees, prophylaxis maneuvers, Lucena/Philidor conversions, and clock psychology.</p>
+                    </div>
+                    <div style="margin-top: 1.8rem; padding-top: 1rem; border-top: 1px solid var(--border-light); font-weight: 700; font-size: 0.85rem; color: var(--text-primary);">
+                        Weekly 8 Hrs Live • Group Size: 6
+                    </div>
+                </div>
+
+                <!-- Tier 4 -->
+                <div class="pathway-card">
+                    <div>
+                        <div class="pathway-icon-bubble"><i class="fas fa-crown"></i></div>
+                        <span style="font-size: 0.8rem; font-weight: 800; color: var(--accent);">2000+ ELO</span>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.35rem; font-weight: 800; margin: 0.4rem 0 0.8rem;">FIDE Title Norm Circle</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6;">1-on-1 Grandmaster coaching, custom theoretical novelty creation, and high-stakes tournament preparation.</p>
+                    </div>
+                    <div style="margin-top: 1.8rem; padding-top: 1rem; border-top: 1px solid var(--border-light); font-weight: 700; font-size: 0.85rem; color: var(--text-primary);">
+                        Weekly 12 Hrs Live • Private 1-on-1
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LAYOUT COMPONENT 3: 3-COLUMN COGNITIVE METHODOLOGY -->
+        <section class="layout-sec" id="methodology">
+            <div style="text-align: center; max-width: 780px; margin: 0 auto;">
+                <span class="sec-tag"><i class="fas fa-brain"></i> Scientific Training Model</span>
+                <h2 class="sec-heading">The Tri-Pillar Cognitive Protocol</h2>
+                <p class="sec-subtext" style="margin: 0 auto;">How Grandmasters build subconscious tactical vision and calculate variations without touching a piece.</p>
+            </div>
+
+            <div class="studio-columns">
+                <div class="studio-col-card">
+                    <div class="studio-step-tag">01</div>
+                    <h3 style="font-family: var(--font-heading); font-size: 1.45rem; font-weight: 800; margin-bottom: 0.75rem;">Neural Engine Audits</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.65; margin-bottom: 1.5rem;">
+                        Every tournament game played is ingested into our automated cloud Stockfish cluster. We map exact centipawn loss graphs and flag chronic evaluation dips to target recurring blindspots.
+                    </p>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <span class="action-btn" style="font-size: 0.78rem;">Blunder Heatmaps</span>
+                        <span class="action-btn" style="font-size: 0.78rem;">ACPL Telemetry</span>
+                    </div>
+                </div>
+
+                <div class="studio-col-card">
+                    <div class="studio-step-tag">02</div>
+                    <h3 style="font-family: var(--font-heading); font-size: 1.45rem; font-weight: 800; margin-bottom: 0.75rem;">Blindfold Visualization</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.65; margin-bottom: 1.5rem;">
+                        Students build high-resolution mental coordinates through sensory isolation calculation drills. Calculate 6 to 10 half-moves ahead with crisp clarity without board physical references.
+                    </p>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <span class="action-btn" style="font-size: 0.78rem;">Spatial Geometry</span>
+                        <span class="action-btn" style="font-size: 0.78rem;">Memory Registers</span>
+                    </div>
+                </div>
+
+                <div class="studio-col-card">
+                    <div class="studio-step-tag">03</div>
+                    <h3 style="font-family: var(--font-heading); font-size: 1.45rem; font-weight: 800; margin-bottom: 0.75rem;">Simulated GM Pressure</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.65; margin-bottom: 1.5rem;">
+                        Real title play requires iron nerves when low on the clock. Our Swiss arenas simulate classical time controls with unexpected novelty tests, increment scrambles, and arbiter supervision.
+                    </p>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <span class="action-btn" style="font-size: 0.78rem;">Time Crunch Drills</span>
+                        <span class="action-btn" style="font-size: 0.78rem;">Swiss Match Arenas</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LAYOUT COMPONENT 4: TIMELINE SYLLABUS & EVALUATION TERMINAL -->
+        <section class="layout-sec" id="curriculumTimeline" style="background: var(--bg-secondary); border-radius: 36px;">
+            <div class="timeline-matrix">
+                <div>
+                    <span class="sec-tag"><i class="fas fa-calendar-check"></i> 52-Week Master Periodization</span>
+                    <h2 class="sec-heading">Quarterly Advancement Roadmap</h2>
+                    <p class="sec-subtext" style="margin-bottom: 2rem;">Click any phase below to inspect curriculum deliverables and tactical test benchmarks.</p>
+
+                    <div class="timeline-track">
+                        <div class="timeline-item active" onclick="selectQuarter(1)">
+                            <div class="timeline-badge">Q1</div>
+                            <div>
+                                <h4 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 800;">Tactical Motifs &amp; Calculation Velocity</h4>
+                                <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 0.25rem;">Weeks 1-13: Deflections, clearance sacrifices, double attacks, and checkmate matrices.</p>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item" onclick="selectQuarter(2)">
+                            <div class="timeline-badge">Q2</div>
+                            <div>
+                                <h4 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 800;">Pawn Skeletons &amp; Carlsbad Minority Attacks</h4>
+                                <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 0.25rem;">Weeks 14-26: Isolated queen pawn plans, hedgehog setups, and space-advantage containment.</p>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item" onclick="selectQuarter(3)">
+                            <div class="timeline-badge">Q3</div>
+                            <div>
+                                <h4 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 800;">Endgame Conversion &amp; Tablebase Precision</h4>
+                                <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 0.25rem;">Weeks 27-39: Rook &amp; pawn endings, king opposition geometry, and bishop-knight technique.</p>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item" onclick="selectQuarter(4)">
+                            <div class="timeline-badge">Q4</div>
+                            <div>
+                                <h4 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 800;">FIDE Classical Tournament Conditioning</h4>
+                                <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 0.25rem;">Weeks 40-52: Bespoke opening tree rehearsals, psychological stamina, and post-match evaluation.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Module Focus Card -->
+                <div class="evaluation-terminal-card">
+                    <span class="sec-tag" id="moduleBadge"><i class="fas fa-check-circle"></i> Quarter 1 Focus</span>
+                    <h3 style="font-family: var(--font-heading); font-size: 1.7rem; font-weight: 800; margin: 0.5rem 0;" id="moduleTitle">Tactics &amp; Pattern Subconscious</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;" id="moduleDesc">
+                        Students drill over 1,500 curated tactical puzzles sorted by motif frequency in tournament play. Weekly timed tests ensure puzzle solving time drops below 30 seconds per position.
+                    </p>
+
+                    <div class="eval-output-bar">
+                        <span>Tactical Accuracy Target:</span>
+                        <strong style="color: var(--accent);">95.4% Verified</strong>
+                    </div>
+
+                    <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.92rem; color: var(--text-secondary);">
+                        <li><i class="fas fa-circle-check" style="color: var(--accent); margin-right: 8px;"></i> Weekly live master review of personal blitz &amp; rapid games</li>
+                        <li><i class="fas fa-circle-check" style="color: var(--accent); margin-right: 8px;"></i> Direct PGN study databases downloadable straight to ChessBase</li>
+                        <li><i class="fas fa-circle-check" style="color: var(--accent); margin-right: 8px;"></i> Automated AI puzzle generator matching student's opening choices</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- LAYOUT COMPONENT 5: FULL-WIDTH ENROLLMENT COMMAND DECK -->
+        <section class="layout-sec" id="enrollmentDeck">
+            <div class="enroll-command-deck">
+                <div style="text-align: center;">
+                    <span class="sec-tag"><i class="fas fa-id-badge"></i> Admissions Open</span>
+                    <h2 class="sec-heading" style="font-size: clamp(2rem, 4vw, 3.2rem);">Enroll in Grandmaster Training</h2>
+                    <p class="sec-subtext" style="margin: 0 auto;">Reserve your evaluation bay with a FIDE Certified Coach and unlock your tailored tactical roadmaps.</p>
+                </div>
+
+                <form id="deckEnrollmentForm" onsubmit="handleDeckSubmit(event)">
+                    <div class="deck-form-grid">
+                        <div class="deck-input-group">
+                            <label for="deckName">Student Full Name</label>
+                            <input type="text" id="deckName" placeholder="e.g. Alexander Mercer" required>
+                        </div>
+                        <div class="deck-input-group">
+                            <label for="deckEmail">Email Address</label>
+                            <input type="email" id="deckEmail" placeholder="player@apexchess.com" required>
+                        </div>
+                        <div class="deck-input-group">
+                            <label for="deckElo">Current FIDE / Chess.com ELO</label>
+                            <input type="text" id="deckElo" placeholder="e.g. 1550 or Unrated" required>
+                        </div>
+                        <div class="deck-input-group">
+                            <label for="deckTrack">Select Training Track</label>
+                            <select id="deckTrack" required>
+                                <option value="">Choose Pathway</option>
+                                <option value="novice">Tactical Foundations (800 - 1200 ELO)</option>
+                                <option value="intermediate">Positional Strategy (1200 - 1600 ELO)</option>
+                                <option value="candidate">Candidate Master Lab (1600 - 2000 ELO)</option>
+                                <option value="elite">Elite GM Circle (2000+ ELO)</option>
+                            </select>
+                        </div>
+                        <div class="deck-input-group">
+                            <label for="deckBatch">Preferred Live Cohort</label>
+                            <select id="deckBatch" required>
+                                <option value="weekday">Weekday Evening (Mon/Wed 6:00 PM EST)</option>
+                                <option value="weekend">Weekend Intensive (Sat/Sun 10:00 AM EST)</option>
+                                <option value="eu">European Timezone (Tue/Thu 7:00 PM CET)</option>
+                            </select>
+                        </div>
+                        <div class="deck-input-group">
+                            <label for="deckGoal">Primary Target Goal</label>
+                            <select id="deckGoal">
+                                <option value="rating">+300 ELO Rating Boost</option>
+                                <option value="fide">FIDE Title (CM / FM / IM)</option>
+                                <option value="tournament">Tournament Podium Finish</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="action-btn btn-login" style="width: 100%; justify-content: center; padding: 1.1rem; border-radius: 14px; font-size: 1.05rem; margin-top: 2rem;">
+                        <i class="fas fa-chess-knight"></i> Submit Application &amp; Schedule Diagnostic Evaluation
+                    </button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer" id="footer">
+        <div class="footer-container">
+            <!-- Brand Column -->
+            <div class="footer-brand">
+                <a href="index.html" class="logo-area" aria-label="Chess Academy Footer Logo">
+                    <span class="logo-knight">♞</span>
+                    <div class="logo-text-block">
+                        <span class="logo-title">CHESS ACADEMY</span>
+                        <span class="logo-sub">TACTICS &amp; MASTERY</span>
+                    </div>
+                </a>
+                <p class="footer-desc">
+                    World-class chess training academy dedicated to nurturing aspiring prodigies, competitive tournament contenders, and lifelong enthusiasts.
+                </p>
+                <div class="social-links">
+                    <a href="#" class="social-btn" aria-label="Chess.com"><i class="fas fa-chess"></i></a>
+                    <a href="#" class="social-btn" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="social-btn" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-btn" aria-label="Twitch"><i class="fab fa-twitch"></i></a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-col">
+                <h4>Academy Links</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html" class="footer-link"><i class="fas fa-chevron-right"></i> Home 1 (Tactical)</a></li>
+                    <li><a href="home2.html" class="footer-link"><i class="fas fa-chevron-right"></i> Home 2 (Masterclass)</a></li>
+                    <li><a href="programs.html" class="footer-link"><i class="fas fa-chevron-right"></i> Programs</a></li>
+                    <li><a href="coaches.html" class="footer-link"><i class="fas fa-chevron-right"></i> Coaches</a></li>
+                    <li><a href="tournaments.html" class="footer-link"><i class="fas fa-chevron-right"></i> Tournaments</a></li>
+                </ul>
+            </div>
+
+            <!-- Dashboards & Info -->
+            <div class="footer-col">
+                <h4>Portals &amp; Info</h4>
+                <ul class="footer-links">
+                    <li><a href="user dashboard.html" class="footer-link"><i class="fas fa-chevron-right"></i> Student Dashboard</a></li>
+                    <li><a href="admin dashboard.html" class="footer-link"><i class="fas fa-chevron-right"></i> Admin Dashboard</a></li>
+                    <li><a href="about.html" class="footer-link"><i class="fas fa-chevron-right"></i> About Academy</a></li>
+                    <li><a href="contact.html" class="footer-link"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+                    <li><a href="login.html" class="footer-link"><i class="fas fa-chevron-right"></i> Member Portal</a></li>
+                </ul>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="footer-col">
+                <h4>Weekly Newsletter</h4>
+                <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 0.8rem;">
+                    Receive weekly Grandmaster puzzle breakdowns and tournament registration alerts.
+                </p>
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" placeholder="Enter your email" class="newsletter-input" required>
+                    <button type="submit" class="newsletter-btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Chess Academy. All rights reserved.</p>
+            <div style="display: flex; gap: 1.5rem;">
+                <a href="#" class="footer-link" style="font-size: 0.88rem;">Privacy Policy</a>
+                <a href="#" class="footer-link" style="font-size: 0.88rem;">Terms of Service</a>
+                <a href="#" class="footer-link" style="font-size: 0.88rem;">FIDE Fair Play Guidelines</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== LOGIN MODAL ==================== -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="login-card">
+            <button class="modal-close" id="modalCloseBtn"><i class="fas fa-times"></i></button>
+            <h3>Academy Login</h3>
+            <p>Sign in to access your student rating stats and lesson schedule.</p>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="emailInput">Email Address</label>
+                    <input type="email" id="emailInput" class="form-input" placeholder="player@chessacademy.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="passwordInput">Password</label>
+                    <input type="password" id="passwordInput" class="form-input" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="login-submit">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== JAVASCRIPT CONTROLLERS ==================== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const body = document.body;
+
+            // Theme Switcher Elements
+            const darkModeBtn = document.getElementById('darkModeBtn');
+            const mobileDarkBtn = document.getElementById('mobileDarkBtn');
+            const themeIcon = document.getElementById('themeIcon');
+            const mobileThemeIcon = document.getElementById('mobileThemeIcon');
+            const themeLabel = document.getElementById('themeLabel');
+            const mobileThemeLabel = document.getElementById('mobileThemeLabel');
+
+            // RTL Elements
+            const rtlBtn = document.getElementById('rtlBtn');
+            const mobileRtlBtn = document.getElementById('mobileRtlBtn');
+            const rtlLabel = document.getElementById('rtlLabel');
+            const mobileRtlLabel = document.getElementById('mobileRtlLabel');
+
+            // Mobile Drawer Elements
+            const mobileToggleBtn = document.getElementById('mobileToggleBtn');
+            const mobileCloseBtn = document.getElementById('mobileCloseBtn');
+            const mobileOverlay = document.getElementById('mobileOverlay');
+            const mobilePanel = document.getElementById('mobilePanel');
+
+            const mobileHomeAcc = document.getElementById('mobileHomeAcc');
+            const mobileHomeContent = document.getElementById('mobileHomeContent');
+
+            const mobileDashAcc = document.getElementById('mobileDashAcc');
+            const mobileDashContent = document.getElementById('mobileDashContent');
+
+            // Modal Elements
+            const loginModalBtn = document.getElementById('loginModalBtn');
+            const mobileLoginModalBtn = document.getElementById('mobileLoginModalBtn');
+            const footerLoginTrigger = document.getElementById('footerLoginTrigger');
+            const loginModal = document.getElementById('loginModal');
+            const modalCloseBtn = document.getElementById('modalCloseBtn');
+            const loginForm = document.getElementById('loginForm');
+            const newsletterForm = document.getElementById('newsletterForm');
+
+            // 1. Dark / Light Mode Toggle
+            function updateThemeUI(isDark) {
+                if (isDark) {
+                    body.classList.add('dark-mode');
+                    if (themeIcon) themeIcon.className = 'fas fa-sun';
+                    if (mobileThemeIcon) mobileThemeIcon.className = 'fas fa-sun';
+                    if (themeLabel) themeLabel.textContent = 'Light';
+                    if (mobileThemeLabel) mobileThemeLabel.textContent = 'Light Mode';
+                    localStorage.setItem('chessacademy_theme', 'dark');
+                } else {
+                    body.classList.remove('dark-mode');
+                    if (themeIcon) themeIcon.className = 'fas fa-moon';
+                    if (mobileThemeIcon) mobileThemeIcon.className = 'fas fa-moon';
+                    if (themeLabel) themeLabel.textContent = 'Dark';
+                    if (mobileThemeLabel) mobileThemeLabel.textContent = 'Dark Mode';
+                    localStorage.setItem('chessacademy_theme', 'light');
+                }
+            }
+
+            function toggleTheme() {
+                const isDark = !body.classList.contains('dark-mode');
+                updateThemeUI(isDark);
+            }
+
+            const savedTheme = localStorage.getItem('chessacademy_theme');
+            if (savedTheme === 'light') {
+                updateThemeUI(false);
+            } else {
+                updateThemeUI(true);
+            }
+
+            if (darkModeBtn) darkModeBtn.addEventListener('click', toggleTheme);
+            if (mobileDarkBtn) mobileDarkBtn.addEventListener('click', toggleTheme);
+
+            // 2. RTL / LTR Direction Toggle
+            function updateRTLUI(isRtl) {
+                const dir = isRtl ? 'rtl' : 'ltr';
+                body.setAttribute('dir', dir);
+                document.documentElement.setAttribute('dir', dir);
+                if (rtlLabel) rtlLabel.textContent = isRtl ? 'LTR' : 'RTL';
+                if (mobileRtlLabel) mobileRtlLabel.textContent = isRtl ? 'LTR Layout' : 'RTL Layout';
+                localStorage.setItem('chessacademy_rtl', dir);
+            }
+
+            function toggleRTL() {
+                const isRtl = (document.body.getAttribute('dir') || 'ltr') === 'ltr';
+                updateRTLUI(isRtl);
+                closeMobileDrawer();
+            }
+
+            const savedRtl = localStorage.getItem('chessacademy_rtl');
+            if (savedRtl === 'rtl') {
+                updateRTLUI(true);
+            } else {
+                updateRTLUI(false);
+            }
+
+            if (rtlBtn) rtlBtn.addEventListener('click', toggleRTL);
+            if (mobileRtlBtn) mobileRtlBtn.addEventListener('click', toggleRTL);
+
+            // 3. Mobile Drawer Controls
+            function openMobileDrawer() {
+                mobileOverlay.classList.add('active');
+                mobilePanel.classList.add('active');
+                body.style.overflow = 'hidden';
+            }
+
+            function closeMobileDrawer() {
+                mobileOverlay.classList.remove('active');
+                mobilePanel.classList.remove('active');
+                body.style.overflow = '';
+            }
+
+            if (mobileToggleBtn) mobileToggleBtn.addEventListener('click', openMobileDrawer);
+            if (mobileCloseBtn) mobileCloseBtn.addEventListener('click', closeMobileDrawer);
+            if (mobileOverlay) mobileOverlay.addEventListener('click', closeMobileDrawer);
+
+            if (mobileHomeAcc) {
+                mobileHomeAcc.addEventListener('click', () => {
+                    mobileHomeContent.classList.toggle('show');
+                    const chevron = mobileHomeAcc.querySelector('.fa-chevron-down');
+                    if (chevron) chevron.style.transform = mobileHomeContent.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0deg)';
+                });
+            }
+
+            if (mobileDashAcc) {
+                mobileDashAcc.addEventListener('click', () => {
+                    mobileDashContent.classList.toggle('show');
+                    const chevron = mobileDashAcc.querySelector('.fa-chevron-down');
+                    if (chevron) chevron.style.transform = mobileDashContent.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0deg)';
+                });
+            }
+
+            document.querySelectorAll('.mobile-panel a:not(.mobile-link)').forEach(link => {
+                link.addEventListener('click', closeMobileDrawer);
+            });
+
+            // 4. Modal Interactions
+            function openLoginModal() {
+                loginModal.classList.add('active');
+                closeMobileDrawer();
+            }
+
+            function closeLoginModal() {
+                loginModal.classList.remove('active');
+            }
+
+            if (loginModalBtn) loginModalBtn.addEventListener('click', openLoginModal);
+            if (mobileLoginModalBtn) mobileLoginModalBtn.addEventListener('click', openLoginModal);
+            if (footerLoginTrigger) footerLoginTrigger.addEventListener('click', (e) => { e.preventDefault(); openLoginModal(); });
+            if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeLoginModal);
+            if (loginModal) {
+                loginModal.addEventListener('click', (e) => {
+                    if (e.target === loginModal) closeLoginModal();
+                });
+            }
+
+            if (loginForm) {
+                loginForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    alert('Successfully logged into Chess Academy portal!');
+                    closeLoginModal();
+                });
+            }
+
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    alert('Thank you for subscribing to Chess Academy newsletter!');
+                    newsletterForm.reset();
+                });
+            }
+        });
+
+        // 5. Timeline Syllabus Switcher
+        const quarterData = {
+            1: {
+                badge: '<i class="fas fa-check-circle"></i> Quarter 1 Focus',
+                title: 'Tactics & Pattern Subconscious',
+                desc: "Students drill over 1,500 curated tactical puzzles sorted by motif frequency in tournament play. Weekly timed tests ensure puzzle solving time drops below 30 seconds per position."
+            },
+            2: {
+                badge: '<i class="fas fa-check-circle"></i> Quarter 2 Focus',
+                title: 'Positional Levers & Structure',
+                desc: "Deep dive into pawn structures including the Carlsbad formation, isolated queen pawns, and open-file doubling. Learn to create persistent weaknesses without overextending."
+            },
+            3: {
+                badge: '<i class="fas fa-check-circle"></i> Quarter 3 Focus',
+                title: 'Theoretical Endgame Conversion',
+                desc: "Master key rook endgames (Lucena and Philidor techniques), queen vs pawn on 7th rank, and knight versus bishop imbalances with tablebase accuracy."
+            },
+            4: {
+                badge: '<i class="fas fa-check-circle"></i> Quarter 4 Focus',
+                title: 'Tournament Psychological Conditioning',
+                desc: "Full tournament simulation: time management drills under increment pressure, game dossier preparation against specific opponent repertoires, and post-match audit workflows."
+            }
+        };
+
+        function selectQuarter(qNum) {
+            document.querySelectorAll('.timeline-item').forEach((item, idx) => {
+                if (idx + 1 === qNum) item.classList.add('active');
+                else item.classList.remove('active');
+            });
+
+            const data = quarterData[qNum];
+            if (data) {
+                document.getElementById('moduleBadge').innerHTML = data.badge;
+                document.getElementById('moduleTitle').textContent = data.title;
+                document.getElementById('moduleDesc').textContent = data.desc;
+            }
+        }
+
+        // 6. Form Submission
+        function handleDeckSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('deckName').value;
+            alert(`Application confirmed for ${name}! Your diagnostic evaluation booking details have been sent to your email.`);
+            e.target.reset();
+        }
+    </script>
+</body>
+</html>
