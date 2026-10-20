@@ -331,6 +331,10 @@
             color: #ffffff;
         }
 
+        .action-btn.btn-login:hover i {
+            color: #ffffff !important;
+        }
+
         .menu-toggle {
             display: none;
             background: rgba(212, 163, 115, 0.12);
@@ -973,7 +977,7 @@
         .idx-title {
             font-family: var(--font-heading);
             font-size: clamp(2.2rem, 4.5vw, 3.2rem);
-            font-weight: 900;
+            font-weight: 600;
             line-height: 1.15;
             margin-bottom: 0.85rem;
         }
@@ -1793,6 +1797,39 @@
                 grid-template-columns: 1fr !important;
             }
         }
+    
+        /* Section Heading Consistency Fix */
+        h2, .idx-title, .section-title, .section-heading {
+            font-weight: 600 !important;
+        }
+    
+    /* Primary CTA Button Icon Hover Consistency Rule */
+    .action-btn.btn-login i,
+    .btn-login i,
+    .btn-action-primary i,
+    .btn-primary i,
+    .enroll-submit-btn i,
+    button[type="submit"].action-btn i,
+    button[type="submit"] i {
+        transition: var(--transition-smooth, all 0.25s ease);
+    }
+
+    .action-btn.btn-login:hover i,
+    .btn-login:hover i,
+    .btn-action-primary:hover i,
+    .btn-primary:hover i,
+    .enroll-submit-btn:hover i,
+    button[type="submit"].action-btn:hover i,
+    button[type="submit"]:hover i,
+    .action-btn.btn-login:focus i,
+    .btn-login:focus i {
+        color: #ffffff !important;
+    }
+
+    .action-btn:not(.btn-login):hover i {
+        color: var(--accent) !important;
+    }
+
     </style>
 <style>
         /* High Contrast Badge & Banner Overrides for Dark Mode */
@@ -2305,10 +2342,10 @@
                         <li><a href="home2.html" class="dropdown-item"><i class="fas fa-crown"></i> Home 2 (Masterclass)</a></li>
                     </ul>
                 </li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
                 <li class="nav-item"><a href="programs.html" class="nav-link">Programs</a></li>
                 <li class="nav-item"><a href="coaches.html" class="nav-link">Coaches</a></li>
                 <li class="nav-item"><a href="tournaments.html" class="nav-link">Tournaments</a></li>
-                <li class="nav-item"><a href="about.html" class="nav-link">About Academy</a></li>
                 <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
                 <li class="nav-item dropdown">
                     <a href="user dashboard.html" class="nav-link">
@@ -2370,10 +2407,10 @@
                     <li><a href="home2.html" class="mobile-sublink"><i class="fas fa-crown"></i> Home 2</a></li>
                 </ul>
             </li>
+            <li class="mobile-link-item"><a href="about.html" class="mobile-link">About</a></li>
             <li class="mobile-link-item"><a href="programs.html" class="mobile-link">Programs</a></li>
             <li class="mobile-link-item"><a href="coaches.html" class="mobile-link">Coaches</a></li>
             <li class="mobile-link-item"><a href="tournaments.html" class="mobile-link">Tournaments</a></li>
-            <li class="mobile-link-item"><a href="about.html" class="mobile-link">About Academy</a></li>
             <li class="mobile-link-item"><a href="contact.html" class="mobile-link">Contact</a></li>
             <li class="mobile-link-item">
                 <div class="mobile-link" id="mobileDashAcc">

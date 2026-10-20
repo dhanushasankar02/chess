@@ -63,6 +63,12 @@
             flex-direction: column;
         }
 
+        
+        main {
+            flex: 1;
+            padding-top: 75px;
+        }
+
         /* ---------- GLOBAL LINK RESET ---------- */
         a, button, .action-btn, .btn-login, .nav-link, .dropdown-item, .footer-link, .mobile-link, .mobile-sublink {
             text-decoration: none !important;
@@ -572,7 +578,7 @@
         .cnt-title {
             font-family: var(--font-heading);
             font-size: clamp(2.2rem, 4.5vw, 3.5rem);
-            font-weight: 900;
+            font-weight: 600;
             line-height: 1.15;
             margin-bottom: 1.2rem;
             background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent) 100%);
@@ -613,7 +619,7 @@
         #contactHero .cnt-title {
             font-family: var(--font-heading);
             font-size: clamp(2.5rem, 5.5vw, 4.2rem);
-            font-weight: 900;
+            font-weight: 600;
             line-height: 1.15;
             margin-bottom: 1.2rem;
             color: #ffffff !important;
@@ -1233,6 +1239,173 @@
             opacity: 1;
             transform: scale(1);
         }
+    
+        /* Section Heading Consistency Fix */
+        h2, .cnt-title, .section-title, .section-heading {
+            font-weight: 600 !important;
+        }
+    
+    /* Primary CTA Button Icon Hover Consistency Rule */
+    .action-btn.btn-login i,
+    .btn-login i,
+    .btn-action-primary i,
+    .btn-primary i,
+    .enroll-submit-btn i,
+    button[type="submit"].action-btn i,
+    button[type="submit"] i {
+        transition: var(--transition-smooth, all 0.25s ease);
+    }
+
+    .action-btn.btn-login:hover i,
+    .btn-login:hover i,
+    .btn-action-primary:hover i,
+    .btn-primary:hover i,
+    .enroll-submit-btn:hover i,
+    button[type="submit"].action-btn:hover i,
+    button[type="submit"]:hover i,
+    .action-btn.btn-login:focus i,
+    .btn-login:focus i {
+        color: #ffffff !important;
+    }
+
+    .action-btn:not(.btn-login):hover i {
+        color: var(--accent) !important;
+    }
+
+
+
+        /* Contact Hero Top Padding & Direct Channels Container Fix (360px - 768px - 992px) */
+        @media (max-width: 992px) {
+            main {
+                padding-top: 75px !important;
+            }
+            #contactHero {
+                padding-top: 3.5rem !important;
+                padding-bottom: 2.5rem !important;
+                padding-left: 1.5rem !important;
+                padding-right: 1.5rem !important;
+                min-height: auto !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            main {
+                padding-top: 75px !important;
+            }
+            #contactHero {
+                padding-top: 3.25rem !important;
+                padding-bottom: 2rem !important;
+                padding-left: 1.25rem !important;
+                padding-right: 1.25rem !important;
+            }
+        }
+
+        /* Direct Channels Card & Email Word-Break Rules */
+        .chan-card {
+            background: var(--card-bg) !important;
+            border: 1px solid var(--border-light) !important;
+            border-radius: 24px !important;
+            padding: 1.75rem 1.5rem !important;
+            box-sizing: border-box !important;
+            overflow: hidden !important;
+            min-width: 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-between !important;
+        }
+
+        .chan-card > div:first-child {
+            min-width: 0 !important;
+            overflow: hidden !important;
+            width: 100% !important;
+        }
+
+        .chan-card .chan-email {
+            font-weight: 700 !important;
+            color: var(--accent) !important;
+            margin-top: 1.25rem !important;
+            display: flex !important;
+            align-items: flex-start !important;
+            gap: 0.5rem !important;
+            font-size: 0.85rem !important;
+            text-decoration: none !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        .chan-card .chan-email i {
+            flex-shrink: 0 !important;
+            margin-top: 4px !important;
+            font-size: 0.95rem !important;
+        }
+
+        .chan-card .chan-email span {
+            overflow-wrap: anywhere !important;
+            word-break: break-all !important;
+            word-wrap: break-word !important;
+            min-width: 0 !important;
+            flex: 1 1 auto !important;
+            white-space: normal !important;
+            display: inline-block !important;
+        }
+
+        @media (max-width: 480px) {
+            main {
+                padding-top: 72px !important;
+            }
+            #contactHero {
+                padding-top: 2.75rem !important;
+                padding-bottom: 2rem !important;
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+            #contactHero .cnt-title {
+                font-size: 1.85rem !important;
+                line-height: 1.2 !important;
+            }
+            #contactHero .cnt-subtitle {
+                font-size: 0.95rem !important;
+                line-height: 1.55 !important;
+                margin-bottom: 1.5rem !important;
+            }
+            .cnt-hero-card {
+                padding: 1.5rem 1.1rem !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+            .chan-grid {
+                grid-template-columns: 1fr !important;
+                gap: 1.25rem !important;
+                width: 100% !important;
+            }
+            .chan-card {
+                padding: 1.4rem 1.15rem !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+            .chan-card .chan-email {
+                font-size: 0.82rem !important;
+            }
+            .cnt-sec {
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+                overflow-x: hidden !important;
+            }
+            html, body {
+                overflow-x: hidden !important;
+                max-width: 100vw !important;
+                width: 100% !important;
+            }
+        }
+
     </style>
 <style>
         /* High Contrast Badge & Banner Overrides for Dark Mode */
@@ -1731,10 +1904,10 @@
                         <li><a href="home2.html" class="dropdown-item"><i class="fas fa-crown"></i> Home 2 (Masterclass)</a></li>
                     </ul>
                 </li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
                 <li class="nav-item"><a href="programs.html" class="nav-link">Programs</a></li>
                 <li class="nav-item"><a href="coaches.html" class="nav-link">Coaches</a></li>
                 <li class="nav-item"><a href="tournaments.html" class="nav-link">Tournaments</a></li>
-                <li class="nav-item"><a href="about.html" class="nav-link">About Academy</a></li>
                 <li class="nav-item"><a href="contact.html" class="nav-link active">Contact</a></li>
                 <li class="nav-item dropdown">
                     <a href="user dashboard.html" class="nav-link">
@@ -1796,10 +1969,10 @@
                     <li><a href="home2.html" class="mobile-sublink"><i class="fas fa-crown"></i> Home 2</a></li>
                 </ul>
             </li>
+            <li class="mobile-link-item"><a href="about.html" class="mobile-link">About</a></li>
             <li class="mobile-link-item"><a href="programs.html" class="mobile-link">Programs</a></li>
             <li class="mobile-link-item"><a href="coaches.html" class="mobile-link">Coaches</a></li>
             <li class="mobile-link-item"><a href="tournaments.html" class="mobile-link">Tournaments</a></li>
-            <li class="mobile-link-item"><a href="about.html" class="mobile-link">About Academy</a></li>
             <li class="mobile-link-item"><a href="contact.html" class="mobile-link active">Contact</a></li>
             <li class="mobile-link-item">
                 <div class="mobile-link" id="mobileDashAcc">
@@ -1887,7 +2060,7 @@
                         <h3 style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem;">1. Batch Enrollment Desk</h3>
                         <p style="color: var(--text-secondary); font-size: 0.9rem;">Class schedule inquiries, tier placements, seat reservations, and tuition billing.</p>
                     </div>
-                    <div style="font-weight: 700; color: var(--accent); margin-top: 1.25rem;"><i class="fas fa-envelope"></i> enrollment@chessacademy.com</div>
+                    <a href="mailto:enrollment@chessacademy.com" class="chan-email"><i class="fas fa-envelope"></i> <span>enrollment@chessacademy.com</span></a>
                 </div>
 
                 <div class="chan-card cnt-framer-hidden ct-engine-2" style="transition-delay: 0.3s;">
@@ -1896,7 +2069,7 @@
                         <h3 style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem;">2. GM Consultation Desk</h3>
                         <p style="color: var(--text-secondary); font-size: 0.9rem;">1-on-1 Grandmaster mentorship scheduling, opening tree reviews, and PGN game audits.</p>
                     </div>
-                    <div style="font-weight: 700; color: var(--accent); margin-top: 1.25rem;"><i class="fas fa-envelope"></i> mentors@chessacademy.com</div>
+                    <a href="mailto:mentors@chessacademy.com" class="chan-email"><i class="fas fa-envelope"></i> <span>mentors@chessacademy.com</span></a>
                 </div>
 
                 <div class="chan-card cnt-framer-hidden ct-engine-2" style="transition-delay: 0.4s;">
@@ -1905,7 +2078,7 @@
                         <h3 style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem;">3. FIDE Tournament Desk</h3>
                         <p style="color: var(--text-secondary); font-size: 0.9rem;">Classical &amp; Rapid registrations, pairings, norm verification, and FIDE certificates.</p>
                     </div>
-                    <div style="font-weight: 700; color: var(--accent); margin-top: 1.25rem;"><i class="fas fa-envelope"></i> tournaments@chessacademy.com</div>
+                    <a href="mailto:tournaments@chessacademy.com" class="chan-email"><i class="fas fa-envelope"></i> <span>tournaments@chessacademy.com</span></a>
                 </div>
 
                 <div class="chan-card cnt-framer-hidden ct-engine-2" style="transition-delay: 0.5s;">
@@ -1914,7 +2087,7 @@
                         <h3 style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem;">4. Corporate &amp; School Desk</h3>
                         <p style="color: var(--text-secondary); font-size: 0.9rem;">Institutional licensing, school chess clubs, university leagues, and fellowship grants.</p>
                     </div>
-                    <div style="font-weight: 700; color: var(--accent); margin-top: 1.25rem;"><i class="fas fa-envelope"></i> partnerships@chessacademy.com</div>
+                    <a href="mailto:partnerships@chessacademy.com" class="chan-email"><i class="fas fa-envelope"></i> <span>partnerships@chessacademy.com</span></a>
                 </div>
             </div>
         </section>
@@ -2097,7 +2270,7 @@
             <div class="chat-desk-card cnt-framer-hidden ct-engine-6">
                 <div>
                     <span class="cnt-badge">⚡ LIVE ARBITER CHAT</span>
-                    <h2 style="font-family: var(--font-heading); font-size: 2.2rem; font-weight: 900; margin-bottom: 0.75rem; color: var(--text-primary);">Live Arbiter Desk Online</h2>
+                    <h2 style="font-family: var(--font-heading); font-size: 2.2rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text-primary);">Live Arbiter Desk Online</h2>
                     <p style="color: var(--accent); font-weight: 800; font-size: 1.1rem; margin-bottom: 1rem;">Active Duty Arbiters Standing By</p>
                     <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem; line-height: 1.6;">
                         Need immediate assistance with active tournament pairings, rules clarification, or urgent batch transfers? Initiate a live chat session now.

@@ -300,7 +300,7 @@
         .form-title {
             font-family: var(--font-heading);
             font-size: 2rem;
-            font-weight: 900;
+            font-weight: 600;
             margin-bottom: 0.4rem;
             color: var(--text-primary);
         }
@@ -519,6 +519,39 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+    
+        /* Section Heading Consistency Fix */
+        h2, .form-title, .section-title, .section-heading {
+            font-weight: 600 !important;
+        }
+    
+    /* Primary CTA Button Icon Hover Consistency Rule */
+    .action-btn.btn-login i,
+    .btn-login i,
+    .btn-action-primary i,
+    .btn-primary i,
+    .enroll-submit-btn i,
+    button[type="submit"].action-btn i,
+    button[type="submit"] i {
+        transition: var(--transition-smooth, all 0.25s ease);
+    }
+
+    .action-btn.btn-login:hover i,
+    .btn-login:hover i,
+    .btn-action-primary:hover i,
+    .btn-primary:hover i,
+    .enroll-submit-btn:hover i,
+    button[type="submit"].action-btn:hover i,
+    button[type="submit"]:hover i,
+    .action-btn.btn-login:focus i,
+    .btn-login:focus i {
+        color: #ffffff !important;
+    }
+
+    .action-btn:not(.btn-login):hover i {
+        color: var(--accent) !important;
+    }
+
     </style>
 <style>
         /* High Contrast Badge & Banner Overrides for Dark Mode */
@@ -1039,7 +1072,7 @@
             </div>
 
             <div class="form-header" style="margin-bottom: 1.8rem; text-align: center;">
-                <h2 class="form-title" style="font-size: 1.8rem; font-weight: 800; margin-bottom: 0.3rem;">Welcome Back</h2>
+                <h2 class="form-title" style="font-size: 1.8rem; font-weight: 600; margin-bottom: 0.3rem;">Welcome Back</h2>
                 <p class="form-subtitle" style="color: var(--text-secondary); font-size: 0.92rem;">Enter your credentials to access your Academy account</p>
             </div>
 

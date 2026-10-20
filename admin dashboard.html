@@ -395,7 +395,7 @@
         .section-title {
             font-family: var(--font-heading);
             font-size: 2.2rem;
-            font-weight: 800;
+            font-weight: 600;
             color: var(--text-primary);
             margin-bottom: 0.5rem;
         }
@@ -698,6 +698,195 @@
                 padding: 0.5rem 0.75rem !important;
             }
         }
+    
+        /* Section Heading Consistency Fix */
+        h2, .section-title, .section-heading {
+            font-weight: 600 !important;
+        }
+    
+    /* Primary CTA Button Icon Hover Consistency Rule */
+    .action-btn.btn-login i,
+    .btn-login i,
+    .btn-action-primary i,
+    .btn-primary i,
+    .enroll-submit-btn i,
+    button[type="submit"].action-btn i,
+    button[type="submit"] i {
+        transition: var(--transition-smooth, all 0.25s ease);
+    }
+
+    .action-btn.btn-login:hover i,
+    .btn-login:hover i,
+    .btn-action-primary:hover i,
+    .btn-primary:hover i,
+    .enroll-submit-btn:hover i,
+    button[type="submit"].action-btn:hover i,
+    button[type="submit"]:hover i,
+    .action-btn.btn-login:focus i,
+    .btn-login:focus i {
+        color: #ffffff !important;
+    }
+
+    .action-btn:not(.btn-login):hover i {
+        color: var(--accent) !important;
+    }
+
+    
+        /* Spacing Fix: Logo to Sidebar Navigation Links */
+        .dashboard-sidebar .logo-area {
+            margin-bottom: 2.25rem !important;
+            display: inline-flex !important;
+            padding-bottom: 0.25rem;
+        }
+
+        /* Topbar Right Controls & Top-Right RTL/Theme Placement */
+        .topbar-right-zone {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+
+        body[dir="rtl"] .topbar-right-zone {
+            margin-left: 0;
+            margin-right: auto;
+        }
+
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding-left: 0.75rem;
+            border-left: 1px solid var(--border-light);
+            flex-shrink: 0;
+        }
+
+        body[dir="rtl"] .topbar-actions {
+            border-left: none;
+            border-right: 1px solid var(--border-light);
+            padding-left: 0;
+            padding-right: 0.75rem;
+        }
+
+        .topbar-ctrl-btn {
+            background: var(--bg-primary) !important;
+            border: 1px solid var(--border-light) !important;
+            color: var(--text-primary) !important;
+            font-weight: 600 !important;
+            font-size: 0.82rem !important;
+            padding: 0 0.85rem !important;
+            border-radius: 50px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 6px !important;
+            height: 36px !important;
+            width: auto !important;
+            cursor: pointer !important;
+            transition: var(--transition-smooth) !important;
+            box-shadow: var(--shadow-sm) !important;
+            white-space: nowrap !important;
+            text-decoration: none !important;
+        }
+
+        .topbar-ctrl-btn:hover {
+            border-color: var(--accent) !important;
+            color: var(--accent) !important;
+            background: var(--card-bg) !important;
+            transform: translateY(-1px);
+        }
+
+        #systemSettings {
+            padding-top: 1rem;
+            padding-bottom: 3.5rem;
+            margin-bottom: 2rem;
+        }
+
+        #systemSettings .card-box {
+            padding: 2.5rem;
+            margin-top: 1.5rem;
+            border-radius: 24px;
+        }
+
+        #systemSettings .settings-grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3.5rem;
+            align-items: start !important;
+        }
+
+        #systemSettings .form-group {
+            margin-bottom: 1.35rem;
+        }
+
+    
+        /* Consistent Padding Across Dashboard (Items 12 & 13) */
+        .dashboard-topbar {
+            padding: 0.75rem 2.5rem !important;
+        }
+
+        .container-fluid {
+            padding: 2.5rem !important;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Sidebar Spacing for Academy Security Section */
+        .sidebar-item-security {
+            margin-top: 1.75rem !important;
+            padding-top: 1.25rem !important;
+            border-top: 1px solid var(--border-light) !important;
+        }
+
+        /* Consistent Card Padding & Table Embeds */
+        .card-box {
+            padding: 2.5rem !important;
+            box-sizing: border-box;
+        }
+
+        .card-box .history-table-card {
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            border-radius: 0 !important;
+            margin-top: 1rem !important;
+            padding: 0 !important;
+        }
+
+        .card-box .history-table {
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+            width: 100%;
+        }
+
+        @media (max-width: 992px) {
+            .dashboard-topbar {
+                padding: 0.75rem 1.5rem !important;
+            }
+            .container-fluid {
+                padding: 1.75rem 1.5rem !important;
+            }
+            .card-box {
+                padding: 1.75rem 1.5rem !important;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .dashboard-topbar {
+                padding: 0.65rem 1rem !important;
+            }
+            .container-fluid {
+                padding: 1.25rem 1rem !important;
+            }
+            .card-box {
+                padding: 1.25rem 1rem !important;
+            }
+        }
+
     </style>
 <style>
         /* High Contrast Badge & Banner Overrides for Dark Mode */
@@ -1207,18 +1396,10 @@
                 <li><a href="#tournaments" class="menu-item-link"><i class="fas fa-trophy"></i> <span>Arbiter Desk</span></a></li>
                 <li><a href="#curriculum" class="menu-item-link"><i class="fas fa-book-atlas"></i> <span>Curriculum & PGNs</span></a></li>
                 <li><a href="#finance" class="menu-item-link"><i class="fas fa-file-invoice-dollar"></i> <span>Financial Ledger</span></a></li>
-                <li><a href="#systemSettings" class="menu-item-link"><i class="fas fa-sliders"></i> <span>Academy Security</span></a></li>
+                <li class="sidebar-item-security"><a href="#systemSettings" class="menu-item-link"><i class="fas fa-sliders"></i> <span>Academy Security</span></a></li>
             </ul>
         </div>
         <div class="sidebar-footer">
-            <button class="ctrl-btn" id="rtlBtn">
-                <i class="fas fa-right-left" id="rtlIcon"></i>
-                <span id="rtlLabel">RTL Layout</span>
-            </button>
-            <button class="ctrl-btn" id="dbThemeToggle">
-                <i class="fas fa-sun" id="dbThemeIcon"></i>
-                <span>Theme Mode</span>
-            </button>
             <a href="index.html" class="ctrl-btn" style="text-decoration: none; color: #ef4444;">
                 <i class="fas fa-shield-halved"></i>
                 <span>Admin Logout</span>
@@ -1238,12 +1419,24 @@
                 <i class="fas fa-magnifying-glass" style="color: var(--text-secondary);"></i>
                 <input type="text" placeholder="Search student records, trainer schedules, or pairings...">
             </div>
-            <div class="user-top-profile">
-                <div class="user-top-info" style="text-align: right; white-space: nowrap;">
-                    <div style="font-weight: 700; font-size: 0.9rem; line-height: 1.25; white-space: nowrap;">Dean of Studies</div>
-                    <div style="color: #10b981; font-size: 0.78rem; font-weight: 700; line-height: 1.25; white-space: nowrap;"><i class="fas fa-shield-check"></i> International Arbiter (IA)</div>
+            <div class="topbar-right-zone">
+                <div class="user-top-profile">
+                    <div class="user-top-info" style="text-align: right; white-space: nowrap;">
+                        <div style="font-weight: 700; font-size: 0.9rem; line-height: 1.25; white-space: nowrap;">Dean of Studies</div>
+                        <div style="color: #10b981; font-size: 0.78rem; font-weight: 700; line-height: 1.25; white-space: nowrap;"><i class="fas fa-shield-check"></i> International Arbiter (IA)</div>
+                    </div>
+                    <div class="user-avatar-mini" style="flex-shrink: 0;">AD</div>
                 </div>
-                <div class="user-avatar-mini" style="flex-shrink: 0;">AD</div>
+                <div class="topbar-actions">
+                    <button class="topbar-ctrl-btn" id="rtlBtn" title="Toggle RTL/LTR" aria-label="Toggle Layout Direction">
+                        <i class="fas fa-right-left" id="rtlIcon"></i>
+                        <span id="rtlLabel">RTL Layout</span>
+                    </button>
+                    <button class="topbar-ctrl-btn" id="dbThemeToggle" title="Toggle Theme" aria-label="Toggle Theme Mode">
+                        <i class="fas fa-sun" id="dbThemeIcon"></i>
+                        <span id="dbThemeLabel">Theme Mode</span>
+                    </button>
+                </div>
             </div>
         </header>
 
@@ -1339,7 +1532,10 @@
                     </button>
                 </div>
                 
-                <div class="history-table-card" style="margin-top: 1.5rem;">
+                
+                <div class="card-box" style="margin-top: 1.5rem; padding: 2.5rem;">
+                    <div class="history-table-card">
+                        
                     <table class="history-table">
                         <thead>
                             <tr>
@@ -1382,6 +1578,7 @@
                             </tr>
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </section>
 
@@ -1546,7 +1743,10 @@
                 <div class="section-badge"><i class="fas fa-credit-card"></i> Revenue Operations</div>
                 <h2 class="section-title">Financial Ledger & Billing</h2>
                 <p class="section-desc">Audit masterclass retainers, tournament entry dues, and coach honorarium disbursements.</p>
-                <div class="history-table-card">
+                
+                <div class="card-box" style="margin-top: 1.5rem; padding: 2.5rem;">
+                    <div class="history-table-card">
+                        
                     <table class="history-table">
                         <thead>
                             <tr>
@@ -1589,6 +1789,7 @@
                             </tr>
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </section>
 

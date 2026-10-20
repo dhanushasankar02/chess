@@ -312,6 +312,34 @@
                 font-size: 2rem;
             }
         }
+    
+    /* Primary CTA Button Icon Hover Consistency Rule */
+    .action-btn.btn-login i,
+    .btn-login i,
+    .btn-action-primary i,
+    .btn-primary i,
+    .enroll-submit-btn i,
+    button[type="submit"].action-btn i,
+    button[type="submit"] i {
+        transition: var(--transition-smooth, all 0.25s ease);
+    }
+
+    .action-btn.btn-login:hover i,
+    .btn-login:hover i,
+    .btn-action-primary:hover i,
+    .btn-primary:hover i,
+    .enroll-submit-btn:hover i,
+    button[type="submit"].action-btn:hover i,
+    button[type="submit"]:hover i,
+    .action-btn.btn-login:focus i,
+    .btn-login:focus i {
+        color: #ffffff !important;
+    }
+
+    .action-btn:not(.btn-login):hover i {
+        color: var(--accent) !important;
+    }
+
     </style>
 </head>
 <body class="dark-mode">

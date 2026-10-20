@@ -331,6 +331,10 @@
             color: #ffffff;
         }
 
+        .action-btn.btn-login:hover i {
+            color: #ffffff !important;
+        }
+
         .menu-toggle {
             display: none;
             background: rgba(212, 163, 115, 0.12);
@@ -953,7 +957,7 @@
         .h2-sec-title {
             font-family: var(--font-heading);
             font-size: clamp(2.2rem, 4.8vw, 3.3rem);
-            font-weight: 900;
+            font-weight: 600;
             line-height: 1.12;
             margin-bottom: 0.85rem;
         }
@@ -1011,7 +1015,7 @@
             padding: 1.6rem;
             box-shadow: var(--shadow-sm);
             margin-bottom: 2.2rem;
-            max-width: 500px;
+            max-width: 520px;
         }
 
         .engine-hud-top {
@@ -1625,6 +1629,258 @@
                 gap: 0.5rem;
             }
         }
+    
+        /* Section Heading Consistency Fix */
+        h2, .h2-sec-title, .section-title, .section-heading {
+            font-weight: 600 !important;
+        }
+    
+    /* Primary CTA Button Icon Hover Consistency Rule */
+    .action-btn.btn-login i,
+    .btn-login i,
+    .btn-action-primary i,
+    .btn-primary i,
+    .enroll-submit-btn i,
+    button[type="submit"].action-btn i,
+    button[type="submit"] i {
+        transition: var(--transition-smooth, all 0.25s ease);
+    }
+
+    .action-btn.btn-login:hover i,
+    .btn-login:hover i,
+    .btn-action-primary:hover i,
+    .btn-primary:hover i,
+    .enroll-submit-btn:hover i,
+    button[type="submit"].action-btn:hover i,
+    button[type="submit"]:hover i,
+    .action-btn.btn-login:focus i,
+    .btn-login:focus i {
+        color: #ffffff !important;
+    }
+
+    .action-btn:not(.btn-login):hover i {
+        color: var(--accent) !important;
+    }
+
+    
+        /* Item 14: Workspace Details Section & Close State Styling */
+        .workspace-details-wrapper {
+            max-width: 1400px;
+            margin: 0 auto 3rem;
+            padding: 0 1rem;
+        }
+
+        .workspace-details-container {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            padding: 1.75rem 2rem;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .workspace-details-container.is-closed {
+            padding: 1.1rem 1.6rem;
+            background: rgba(217, 119, 6, 0.05);
+            border-color: rgba(217, 119, 6, 0.3);
+            box-shadow: none;
+        }
+
+        .workspace-details-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.25rem;
+            transition: margin 0.3s ease;
+        }
+
+        .workspace-details-container.is-closed .workspace-details-header {
+            margin-bottom: 0;
+        }
+
+        .workspace-header-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .workspace-dot-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #10b981;
+            box-shadow: 0 0 8px #10b981;
+            animation: pulseDot 2s infinite ease-in-out;
+            flex-shrink: 0;
+        }
+
+        @keyframes pulseDot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+        }
+
+        .workspace-header-title h4 {
+            font-family: var(--font-heading);
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .workspace-toggle-btn {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-light);
+            color: var(--text-secondary);
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 0.45rem 1.1rem;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .workspace-toggle-btn:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+            background: var(--card-bg);
+            transform: translateY(-1px);
+        }
+
+        .workspace-details-container.is-closed .workspace-toggle-btn {
+            display: none;
+        }
+
+        .workspace-details-content {
+            opacity: 1;
+            max-height: 800px;
+            transition: all 0.4s ease;
+        }
+
+        .workspace-details-container.is-closed .workspace-details-content {
+            display: none;
+            opacity: 0;
+            max-height: 0;
+        }
+
+        .workspace-lead-text {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .workspace-meta-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.25rem;
+        }
+
+        @media (max-width: 992px) {
+            .workspace-meta-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 580px) {
+            .workspace-meta-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .workspace-meta-item {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 0.9rem 1.1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .workspace-meta-label {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .workspace-meta-val {
+            font-size: 0.92rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        /* Close State Presentation */
+        .workspace-closed-state {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .workspace-details-container.is-closed .workspace-closed-state {
+            display: block !important;
+        }
+
+        .closed-state-banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .closed-state-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .closed-badge {
+            background: rgba(217, 119, 6, 0.15);
+            color: var(--accent);
+            font-weight: 800;
+            font-size: 0.85rem;
+            padding: 0.35rem 0.9rem;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .closed-subtext {
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+        }
+
+        .workspace-reopen-btn {
+            background: var(--accent);
+            color: #ffffff;
+            border: none;
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 0.45rem 1.1rem;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            box-shadow: 0 4px 12px var(--accent-glow);
+        }
+
+        .workspace-reopen-btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
     </style>
 <style>
         /* High Contrast Badge & Banner Overrides for Dark Mode */
@@ -1784,11 +2040,13 @@
 <style>
 /* ---------- GLOBAL MOBILE GRID & HERO ALIGNMENT FIXES ---------- */
         @media (max-width: 992px) {
-            .hero-section, #hero, #contactHero, #arenaHero, #idxHero, .layout-sec {
+            .hero-section, #hero, #contactHero, #arenaHero, #idxHero,
+            #h2Amphitheater, .layout-sec {
                 padding-top: 1.5rem !important;
             }
             .hero-split-grid,
             .idx-hero-grid,
+            .h2-hero-grid,
             .cnt-hero-card,
             .bento-col-8,
             .curriculum-grid,
@@ -1890,6 +2148,7 @@
             .timeline-matrix,
             .hero-split-grid,
             .idx-hero-grid,
+            .h2-hero-grid,
             .cnt-hero-card,
             .curriculum-grid,
             .overview-grid-2col {
@@ -1933,6 +2192,7 @@
             .curriculum-grid,
             .hero-split-grid,
             .idx-hero-grid,
+            .h2-hero-grid,
             .cnt-hero-card,
             .bento-card-split,
             .overview-grid-2col,
@@ -2137,10 +2397,10 @@
                         <li><a href="home2.html" class="dropdown-item"><i class="fas fa-crown"></i> Home 2 (Masterclass)</a></li>
                     </ul>
                 </li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
                 <li class="nav-item"><a href="programs.html" class="nav-link">Programs</a></li>
                 <li class="nav-item"><a href="coaches.html" class="nav-link">Coaches</a></li>
                 <li class="nav-item"><a href="tournaments.html" class="nav-link">Tournaments</a></li>
-                <li class="nav-item"><a href="about.html" class="nav-link">About Academy</a></li>
                 <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
                 <li class="nav-item dropdown">
                     <a href="user dashboard.html" class="nav-link">
@@ -2202,10 +2462,10 @@
                     <li><a href="home2.html" class="mobile-sublink"><i class="fas fa-crown"></i> Home 2</a></li>
                 </ul>
             </li>
+            <li class="mobile-link-item"><a href="about.html" class="mobile-link">About</a></li>
             <li class="mobile-link-item"><a href="programs.html" class="mobile-link">Programs</a></li>
             <li class="mobile-link-item"><a href="coaches.html" class="mobile-link">Coaches</a></li>
             <li class="mobile-link-item"><a href="tournaments.html" class="mobile-link">Tournaments</a></li>
-            <li class="mobile-link-item"><a href="about.html" class="mobile-link">About Academy</a></li>
             <li class="mobile-link-item"><a href="contact.html" class="mobile-link">Contact</a></li>
             <li class="mobile-link-item">
                 <div class="mobile-link" id="mobileDashAcc">
@@ -2239,8 +2499,8 @@
     <main>
 
         <!-- SECTION 1: MASTERCLASS AMPHITHEATER & LIVE ENGINE BOARD -->
-        <section class="h2-hero-wrap" id="h2Amphitheater" data-framer-section="h2-amphitheater">
-            <div class="h2-hero-grid">
+        <section class="h2-hero-wrap idx-hero-wrap" id="h2Amphitheater" data-framer-section="h2-amphitheater">
+            <div class="h2-hero-grid idx-hero-grid">
                 <div>
                     <div class="h2-badge"><i class="fas fa-crown"></i> Grandmaster Studio</div>
                     <h1 class="h2-hero-h1">The Masterclass Amphitheater.<br>Deep Positional Artistry.</h1>
@@ -2275,7 +2535,7 @@
                     </div>
                 </div>
 
-                <div class="h2-hero-media">
+                <div class="h2-hero-media idx-hero-media">
                     <img src="images/h2_masterclass_hero.jpg" alt="Luxury Grandmaster Masterclass Studio Visual">
                 </div>
             </div>
@@ -2409,7 +2669,66 @@
         <!-- SECTION 4: ENDGAME MASTERCLASS STUDIO -->
         <section class="h2-endgame-sec" id="h2EndgameStudio" data-framer-section="h2-endgame-studio">
             <div class="h2-center-head">
-                <div class="h2-badge"><i class="fas fa-chess-rook"></i> Tablebase Precision</div>
+                <div class="h2-badge"><i class="fas fa-chess-rook"></i> Workspace Details &amp; Tablebase Precision</div>
+                <h2 class="h2-sec-title">Endgame Precision &amp; Tablebase Mastery</h2>
+                <p class="h2-sec-sub">
+                    Converting winning advantages into full points. Eradicate technical errors in 5-piece and 7-piece positions.
+                </p>
+            </div>
+
+            <!-- Interactive Workspace Details Container Supporting Close State (Item 14) -->
+            <div class="workspace-details-wrapper" id="workspaceDetailsSection">
+                <div class="workspace-details-container" id="workspaceTextContainer">
+                    <div class="workspace-details-header">
+                        <div class="workspace-header-title">
+                            <span class="workspace-dot-indicator"></span>
+                            <h4><i class="fas fa-microchip"></i> Active Masterclass Workspace Details</h4>
+                        </div>
+                        <button class="workspace-toggle-btn" id="workspaceCloseToggle" aria-expanded="true" aria-label="Toggle Workspace Details">
+                            <i class="fas fa-times-circle" id="workspaceToggleIcon"></i>
+                            <span id="workspaceToggleText">Close Details</span>
+                        </button>
+                    </div>
+
+                    <!-- Open State Content -->
+                    <div class="workspace-details-content" id="workspaceDetailsContent">
+                        <p class="workspace-lead-text">
+                            Our Grandmaster workspace integrates 7-man Lomonosov tablebase neural clusters, telemetry loss logs, and interactive board coordinates. Students simulate 60-move technical conversions without time-trouble calculation degradation.
+                        </p>
+                        <div class="workspace-meta-grid">
+                            <div class="workspace-meta-item">
+                                <span class="workspace-meta-label">Calculation Engine</span>
+                                <span class="workspace-meta-val">Stockfish 16.1 NNUE (Multi-PV 4)</span>
+                            </div>
+                            <div class="workspace-meta-item">
+                                <span class="workspace-meta-label">Accuracy Threshold</span>
+                                <span class="workspace-meta-val">99.8% Precision Required</span>
+                            </div>
+                            <div class="workspace-meta-item">
+                                <span class="workspace-meta-label">Tablebase Coverage</span>
+                                <span class="workspace-meta-val">Up to 7 Pieces Exhaustive</span>
+                            </div>
+                            <div class="workspace-meta-item">
+                                <span class="workspace-meta-label">Session Status</span>
+                                <span class="workspace-meta-val" style="color: #10b981;"><i class="fas fa-circle-check"></i> Live Bay Ready</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Close State Preview (Displayed Appropriately when closed) -->
+                    <div class="workspace-closed-state" id="workspaceClosedState" style="display: none;">
+                        <div class="closed-state-banner">
+                            <div class="closed-state-info">
+                                <span class="closed-badge"><i class="fas fa-eye-slash"></i> Workspace Details Closed</span>
+                                <span class="closed-subtext">Click "View Details" to reopen the Grandmaster technical workspace telemetry dossier.</span>
+                            </div>
+                            <button class="workspace-reopen-btn" id="workspaceReopenBtn">
+                                <i class="fas fa-chevron-down"></i> View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
                 <h2 class="h2-sec-title">Endgame Precision &amp; Tablebase Mastery</h2>
                 <p class="h2-sec-sub">
                     Converting winning advantages into full points. Eradicate technical errors in 5-piece and 7-piece positions.
@@ -2892,6 +3211,44 @@
 
             const heroSecH2 = document.getElementById('h2Amphitheater');
             if (heroSecH2) heroSecH2.classList.add('framer-animated');
+
+            
+            // 9. Workspace Details Section Close/Open State Handler (Item 14)
+            const workspaceContainer = document.getElementById('workspaceTextContainer');
+            const workspaceCloseToggle = document.getElementById('workspaceCloseToggle');
+            const workspaceReopenBtn = document.getElementById('workspaceReopenBtn');
+
+            function closeWorkspaceDetails() {
+                if (workspaceContainer) {
+                    workspaceContainer.classList.add('is-closed');
+                    if (workspaceCloseToggle) {
+                        workspaceCloseToggle.setAttribute('aria-expanded', 'false');
+                    }
+                }
+            }
+
+            function openWorkspaceDetails() {
+                if (workspaceContainer) {
+                    workspaceContainer.classList.remove('is-closed');
+                    if (workspaceCloseToggle) {
+                        workspaceCloseToggle.setAttribute('aria-expanded', 'true');
+                    }
+                }
+            }
+
+            if (workspaceCloseToggle) {
+                workspaceCloseToggle.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    closeWorkspaceDetails();
+                });
+            }
+
+            if (workspaceReopenBtn) {
+                workspaceReopenBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openWorkspaceDetails();
+                });
+            }
 
             checkInViewSectionsH2();
 

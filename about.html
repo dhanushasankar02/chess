@@ -330,6 +330,10 @@
             color: #ffffff;
         }
 
+        .action-btn.btn-login:hover i {
+            color: #ffffff !important;
+        }
+
         .menu-toggle {
             display: none;
             background: rgba(212, 163, 115, 0.12);
@@ -529,7 +533,7 @@
         .about-title {
             font-family: var(--font-heading);
             font-size: clamp(2.2rem, 4.5vw, 3.2rem);
-            font-weight: 900;
+            font-weight: 600;
             line-height: 1.15;
             margin-bottom: 1.2rem;
             background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent) 100%);
@@ -572,7 +576,7 @@
             color: #ffffff !important;
             -webkit-text-fill-color: #ffffff !important;
             font-size: clamp(2.4rem, 5vw, 3.8rem);
-            font-weight: 900;
+            font-weight: 600;
             text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);
             margin-bottom: 1.25rem;
         }
@@ -1278,6 +1282,39 @@
                 text-align: center;
             }
         }
+    
+        /* Section Heading Consistency Fix */
+        h2, .about-title, .section-title, .section-heading {
+            font-weight: 600 !important;
+        }
+    
+    /* Primary CTA Button Icon Hover Consistency Rule */
+    .action-btn.btn-login i,
+    .btn-login i,
+    .btn-action-primary i,
+    .btn-primary i,
+    .enroll-submit-btn i,
+    button[type="submit"].action-btn i,
+    button[type="submit"] i {
+        transition: var(--transition-smooth, all 0.25s ease);
+    }
+
+    .action-btn.btn-login:hover i,
+    .btn-login:hover i,
+    .btn-action-primary:hover i,
+    .btn-primary:hover i,
+    .enroll-submit-btn:hover i,
+    button[type="submit"].action-btn:hover i,
+    button[type="submit"]:hover i,
+    .action-btn.btn-login:focus i,
+    .btn-login:focus i {
+        color: #ffffff !important;
+    }
+
+    .action-btn:not(.btn-login):hover i {
+        color: var(--accent) !important;
+    }
+
     </style>
 <style>
         /* High Contrast Badge & Banner Overrides for Dark Mode */
@@ -1790,10 +1827,10 @@
                         <li><a href="home2.html" class="dropdown-item"><i class="fas fa-crown"></i> Home 2 (Masterclass)</a></li>
                     </ul>
                 </li>
+                <li class="nav-item"><a href="about.html" class="nav-link active">About</a></li>
                 <li class="nav-item"><a href="programs.html" class="nav-link">Programs</a></li>
                 <li class="nav-item"><a href="coaches.html" class="nav-link">Coaches</a></li>
                 <li class="nav-item"><a href="tournaments.html" class="nav-link">Tournaments</a></li>
-                <li class="nav-item"><a href="about.html" class="nav-link active">About Academy</a></li>
                 <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
                 <li class="nav-item dropdown">
                     <a href="user dashboard.html" class="nav-link">
@@ -1855,10 +1892,10 @@
                     <li><a href="home2.html" class="mobile-sublink"><i class="fas fa-crown"></i> Home 2</a></li>
                 </ul>
             </li>
+            <li class="mobile-link-item"><a href="about.html" class="mobile-link active">About</a></li>
             <li class="mobile-link-item"><a href="programs.html" class="mobile-link">Programs</a></li>
             <li class="mobile-link-item"><a href="coaches.html" class="mobile-link">Coaches</a></li>
             <li class="mobile-link-item"><a href="tournaments.html" class="mobile-link">Tournaments</a></li>
-            <li class="mobile-link-item"><a href="about.html" class="mobile-link active">About Academy</a></li>
             <li class="mobile-link-item"><a href="contact.html" class="mobile-link">Contact</a></li>
             <li class="mobile-link-item">
                 <div class="mobile-link" id="mobileDashAcc">
@@ -2047,7 +2084,7 @@
             <div class="lab-card about-framer-hidden a-engine-5">
                 <div>
                     <span class="about-badge">♞ AI &amp; COMPUTATIONAL LAB</span>
-                    <h2 style="font-family: var(--font-heading); font-size: 2.2rem; font-weight: 900; margin-bottom: 1rem; line-height: 1.2;">Neural Stockfish 16 Analysis Lab</h2>
+                    <h2 style="font-family: var(--font-heading); font-size: 2.2rem; font-weight: 600; margin-bottom: 1rem; line-height: 1.2;">Neural Stockfish 16 Analysis Lab</h2>
                     <p style="color: var(--text-secondary); font-size: 0.98rem; margin-bottom: 1.5rem; line-height: 1.65;">
                         We combine human Grandmaster intuition with neural net calculation servers to analyze over 45,000 PGN games daily, revealing hidden tactical motives and candidate moves.
                     </p>
@@ -2096,7 +2133,7 @@
             <div class="pledge-card about-framer-hidden a-engine-7">
                 <div>
                     <span class="about-badge">♞ ACADEMY ENROLLMENT</span>
-                    <h2 style="font-family: var(--font-heading); font-size: 2.2rem; font-weight: 900; margin-bottom: 1rem; line-height: 1.2;">Begin Your Journey to Mastery</h2>
+                    <h2 style="font-family: var(--font-heading); font-size: 2.2rem; font-weight: 600; margin-bottom: 1rem; line-height: 1.2;">Begin Your Journey to Mastery</h2>
                     <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.75rem; line-height: 1.6;">
                         Join thousands of aspiring players elevating their rating under international Grandmaster guidance.
                     </p>

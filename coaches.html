@@ -323,11 +323,16 @@
 
         .action-btn.btn-login i {
             color: #12151c;
+            transition: var(--transition-smooth);
         }
 
         .action-btn.btn-login:hover {
             background: var(--accent-hover);
             color: #ffffff;
+        }
+
+        .action-btn.btn-login:hover i {
+            color: #ffffff !important;
         }
 
         .menu-toggle {
@@ -529,7 +534,7 @@
         .coach-title {
             font-family: var(--font-heading);
             font-size: clamp(2.2rem, 4.5vw, 3.2rem);
-            font-weight: 900;
+            font-weight: 600;
             line-height: 1.15;
             margin-bottom: 1.2rem;
             background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent) 100%);
@@ -572,7 +577,7 @@
             color: #ffffff !important;
             -webkit-text-fill-color: #ffffff !important;
             font-size: clamp(2.4rem, 5vw, 3.8rem);
-            font-weight: 900;
+            font-weight: 600;
             text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);
             margin-bottom: 1.25rem;
         }
@@ -983,6 +988,18 @@
         }
 
         /* Booking Portal (#coachBooking) */
+        
+        /* 1-on-1 Consultation CTA button icon hover */
+        .booking-portal-wrap .action-btn i,
+        #coachBooking .action-btn i {
+            transition: var(--transition-smooth);
+        }
+
+        .booking-portal-wrap .action-btn:hover i,
+        #coachBooking .action-btn:hover i,
+        #coachBookingForm .action-btn:hover i {
+            color: #ffffff !important;
+        }
         .booking-portal-wrap {
             background: var(--card-bg);
             border: 2px solid var(--accent);
@@ -1430,6 +1447,39 @@
                 text-align: center;
             }
         }
+    
+        /* Section Heading Consistency Fix */
+        h2, .coach-title, .section-title, .section-heading {
+            font-weight: 600 !important;
+        }
+    
+    /* Primary CTA Button Icon Hover Consistency Rule */
+    .action-btn.btn-login i,
+    .btn-login i,
+    .btn-action-primary i,
+    .btn-primary i,
+    .enroll-submit-btn i,
+    button[type="submit"].action-btn i,
+    button[type="submit"] i {
+        transition: var(--transition-smooth, all 0.25s ease);
+    }
+
+    .action-btn.btn-login:hover i,
+    .btn-login:hover i,
+    .btn-action-primary:hover i,
+    .btn-primary:hover i,
+    .enroll-submit-btn:hover i,
+    button[type="submit"].action-btn:hover i,
+    button[type="submit"]:hover i,
+    .action-btn.btn-login:focus i,
+    .btn-login:focus i {
+        color: #ffffff !important;
+    }
+
+    .action-btn:not(.btn-login):hover i {
+        color: var(--accent) !important;
+    }
+
     </style>
 <style>
         /* High Contrast Badge & Banner Overrides for Dark Mode */
@@ -1942,10 +1992,10 @@
                         <li><a href="home2.html" class="dropdown-item"><i class="fas fa-crown"></i> Home 2 (Masterclass)</a></li>
                     </ul>
                 </li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
                 <li class="nav-item"><a href="programs.html" class="nav-link">Programs</a></li>
                 <li class="nav-item"><a href="coaches.html" class="nav-link active">Coaches</a></li>
                 <li class="nav-item"><a href="tournaments.html" class="nav-link">Tournaments</a></li>
-                <li class="nav-item"><a href="about.html" class="nav-link">About Academy</a></li>
                 <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
                 <li class="nav-item dropdown">
                     <a href="user dashboard.html" class="nav-link">
@@ -2007,10 +2057,10 @@
                     <li><a href="home2.html" class="mobile-sublink"><i class="fas fa-crown"></i> Home 2</a></li>
                 </ul>
             </li>
+            <li class="mobile-link-item"><a href="about.html" class="mobile-link">About</a></li>
             <li class="mobile-link-item"><a href="programs.html" class="mobile-link">Programs</a></li>
             <li class="mobile-link-item"><a href="coaches.html" class="mobile-link active">Coaches</a></li>
             <li class="mobile-link-item"><a href="tournaments.html" class="mobile-link">Tournaments</a></li>
-            <li class="mobile-link-item"><a href="about.html" class="mobile-link">About Academy</a></li>
             <li class="mobile-link-item"><a href="contact.html" class="mobile-link">Contact</a></li>
             <li class="mobile-link-item">
                 <div class="mobile-link" id="mobileDashAcc">
@@ -2281,7 +2331,7 @@
             <div class="booking-portal-wrap coach-framer-hidden c-engine-7">
                 <div>
                     <span class="coach-badge">♞ 1-ON-1 CONSULTATION</span>
-                    <h2 style="font-family: var(--font-heading); font-size: 2.2rem; font-weight: 900; margin-bottom: 1rem; line-height: 1.2;">Book Your Grandmaster Audit</h2>
+                    <h2 style="font-family: var(--font-heading); font-size: 2.2rem; font-weight: 600; margin-bottom: 1rem; line-height: 1.2;">Book Your Grandmaster Audit</h2>
                     <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.75rem; line-height: 1.6;">
                         Reserve a 60-minute live diagnostic session with a Grandmaster and get your 20-game PGN audit report.
                     </p>
