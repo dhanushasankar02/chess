@@ -1263,6 +1263,43 @@
             border: 1px solid var(--border-light);
             display: block;
         }
+
+        .prog-hero-img {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+            border-radius: 18px;
+            margin-bottom: 1.25rem;
+            border: 1px solid var(--border-light);
+            display: block;
+        }
+
+        .timeline-module-img {
+            width: 100%;
+            height: 210px;
+            object-fit: cover;
+            border-radius: 18px;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-light);
+            display: block;
+            transition: var(--transition-smooth, all 0.3s ease);
+        }
+
+        .timeline-thumb-img {
+            width: 72px;
+            height: 56px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid var(--border-light);
+            flex-shrink: 0;
+            display: block;
+            margin-left: auto;
+        }
+
+        body[dir="rtl"] .timeline-thumb-img {
+            margin-left: 0;
+            margin-right: auto;
+        }
     
     
         /* Responsive Hero Top Padding Fix for Mobile & Tablet (360px - 768px - 992px) */
@@ -1978,6 +2015,7 @@
 
                 <!-- Interactive Chess HUD Terminal -->
                 <div class="tactical-tactics-hud">
+                    <img src="images/prog_hero_path.jpg" alt="4-Tier Chess Mastery Pathway Architecture" class="prog-hero-img">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <span class="hud-status-chip"><i class="fas fa-satellite"></i> Live Cleanroom Analysis Bay</span>
                         <span style="font-size: 0.85rem; font-weight: 700; color: var(--accent);">FEN: Modern Classical</span>
@@ -2141,40 +2179,45 @@
                     <div class="timeline-track">
                         <div class="timeline-item active" onclick="selectQuarter(1)">
                             <div class="timeline-badge">Q1</div>
-                            <div>
+                            <div style="flex: 1;">
                                 <h4 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 800;">Tactical Motifs &amp; Calculation Velocity</h4>
                                 <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 0.25rem;">Weeks 1-13: Deflections, clearance sacrifices, double attacks, and checkmate matrices.</p>
                             </div>
+                            <img src="images/prog_syllabus_tactics.jpg" alt="Quarter 1 Tactics Syllabus" class="timeline-thumb-img">
                         </div>
 
                         <div class="timeline-item" onclick="selectQuarter(2)">
                             <div class="timeline-badge">Q2</div>
-                            <div>
+                            <div style="flex: 1;">
                                 <h4 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 800;">Pawn Skeletons &amp; Carlsbad Minority Attacks</h4>
                                 <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 0.25rem;">Weeks 14-26: Isolated queen pawn plans, hedgehog setups, and space-advantage containment.</p>
                             </div>
+                            <img src="images/prog_syllabus_positional.jpg" alt="Quarter 2 Positional Syllabus" class="timeline-thumb-img">
                         </div>
 
                         <div class="timeline-item" onclick="selectQuarter(3)">
                             <div class="timeline-badge">Q3</div>
-                            <div>
+                            <div style="flex: 1;">
                                 <h4 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 800;">Endgame Conversion &amp; Tablebase Precision</h4>
                                 <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 0.25rem;">Weeks 27-39: Rook &amp; pawn endings, king opposition geometry, and bishop-knight technique.</p>
                             </div>
+                            <img src="images/prog_syllabus_endgame.jpg" alt="Quarter 3 Endgame Syllabus" class="timeline-thumb-img">
                         </div>
 
                         <div class="timeline-item" onclick="selectQuarter(4)">
                             <div class="timeline-badge">Q4</div>
-                            <div>
+                            <div style="flex: 1;">
                                 <h4 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 800;">FIDE Classical Tournament Conditioning</h4>
                                 <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 0.25rem;">Weeks 40-52: Bespoke opening tree rehearsals, psychological stamina, and post-match evaluation.</p>
                             </div>
+                            <img src="images/prog_syllabus_tournament.jpg" alt="Quarter 4 Tournament Syllabus" class="timeline-thumb-img">
                         </div>
                     </div>
                 </div>
 
                 <!-- Live Module Focus Card -->
                 <div class="evaluation-terminal-card">
+                    <img id="moduleImg" src="images/prog_syllabus_tactics.jpg" alt="Tactics &amp; Pattern Subconscious Syllabus" class="timeline-module-img">
                     <span class="sec-tag" id="moduleBadge"><i class="fas fa-check-circle"></i> Quarter 1 Focus</span>
                     <h3 style="font-family: var(--font-heading); font-size: 1.7rem; font-weight: 800; margin: 0.5rem 0;" id="moduleTitle">Tactics &amp; Pattern Subconscious</h3>
                     <p style="color: var(--text-secondary); font-size: 0.95rem;" id="moduleDesc">
@@ -2251,6 +2294,14 @@
                         <i class="fas fa-chess-knight"></i> Submit Application &amp; Schedule Diagnostic Evaluation
                     </button>
                 </form>
+
+                <div style="display: flex; align-items: center; gap: 1.5rem; background: var(--bg-primary); border: 1px solid var(--border-light); border-radius: 18px; padding: 1.25rem 1.5rem; margin-top: 2rem;">
+                    <img src="images/prog_scholarship_grant.jpg" alt="Prodigy Scholarship Grant Fund" style="width: 120px; height: 85px; object-fit: cover; border-radius: 12px; border: 1px solid var(--border-light); flex-shrink: 0;">
+                    <div>
+                        <h4 style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 800; margin-bottom: 0.3rem;"><i class="fas fa-graduation-cap" style="color: var(--accent);"></i> Prodigy Scholarship Grant Fund</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.5; margin: 0;">Need-based full tuition assistance and FIDE norm sponsorships available for qualifying junior contenders and title-track aspirants.</p>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -2526,22 +2577,26 @@
             1: {
                 badge: '<i class="fas fa-check-circle"></i> Quarter 1 Focus',
                 title: 'Tactics & Pattern Subconscious',
-                desc: "Students drill over 1,500 curated tactical puzzles sorted by motif frequency in tournament play. Weekly timed tests ensure puzzle solving time drops below 30 seconds per position."
+                desc: "Students drill over 1,500 curated tactical puzzles sorted by motif frequency in tournament play. Weekly timed tests ensure puzzle solving time drops below 30 seconds per position.",
+                img: "images/prog_syllabus_tactics.jpg"
             },
             2: {
                 badge: '<i class="fas fa-check-circle"></i> Quarter 2 Focus',
                 title: 'Positional Levers & Structure',
-                desc: "Deep dive into pawn structures including the Carlsbad formation, isolated queen pawns, and open-file doubling. Learn to create persistent weaknesses without overextending."
+                desc: "Deep dive into pawn structures including the Carlsbad formation, isolated queen pawns, and open-file doubling. Learn to create persistent weaknesses without overextending.",
+                img: "images/prog_syllabus_positional.jpg"
             },
             3: {
                 badge: '<i class="fas fa-check-circle"></i> Quarter 3 Focus',
                 title: 'Theoretical Endgame Conversion',
-                desc: "Master key rook endgames (Lucena and Philidor techniques), queen vs pawn on 7th rank, and knight versus bishop imbalances with tablebase accuracy."
+                desc: "Master key rook endgames (Lucena and Philidor techniques), queen vs pawn on 7th rank, and knight versus bishop imbalances with tablebase accuracy.",
+                img: "images/prog_syllabus_endgame.jpg"
             },
             4: {
                 badge: '<i class="fas fa-check-circle"></i> Quarter 4 Focus',
                 title: 'Tournament Psychological Conditioning',
-                desc: "Full tournament simulation: time management drills under increment pressure, game dossier preparation against specific opponent repertoires, and post-match audit workflows."
+                desc: "Full tournament simulation: time management drills under increment pressure, game dossier preparation against specific opponent repertoires, and post-match audit workflows.",
+                img: "images/prog_syllabus_tournament.jpg"
             }
         };
 
@@ -2556,6 +2611,11 @@
                 document.getElementById('moduleBadge').innerHTML = data.badge;
                 document.getElementById('moduleTitle').textContent = data.title;
                 document.getElementById('moduleDesc').textContent = data.desc;
+                const moduleImg = document.getElementById('moduleImg');
+                if (moduleImg && data.img) {
+                    moduleImg.src = data.img;
+                    moduleImg.alt = data.title + ' Syllabus';
+                }
             }
         }
 
