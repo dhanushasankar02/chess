@@ -995,16 +995,30 @@
             font-weight: 900;
             line-height: 1.06;
             margin-bottom: 1.4rem;
-            background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--text-primary) !important;
+            background: none !important;
+            -webkit-text-fill-color: initial !important;
+        }
+
+        .h2-hero-h1 .h2-accent {
+            color: #92400e !important;
+            font-weight: 900;
+        }
+
+        body.dark-mode .h2-hero-h1 .h2-accent {
+            color: #fbbf24 !important;
         }
 
         .h2-hero-p {
             font-size: 1.15rem;
-            color: var(--text-secondary);
+            color: #1e293b;
+            font-weight: 600;
             line-height: 1.75;
             margin-bottom: 2rem;
+        }
+
+        body.dark-mode .h2-hero-p {
+            color: #e2e8f0;
         }
 
         /* Live Move Analysis Engine Control Widget */
@@ -2503,7 +2517,7 @@
             <div class="h2-hero-grid idx-hero-grid">
                 <div>
                     <div class="h2-badge"><i class="fas fa-crown"></i> Grandmaster Studio</div>
-                    <h1 class="h2-hero-h1">The Masterclass Amphitheater.<br>Deep Positional Artistry.</h1>
+                    <h1 class="h2-hero-h1">The Masterclass Amphitheater.<br><span class="h2-accent">Deep Positional Artistry.</span></h1>
                     <p class="h2-hero-p">
                         Step into our high-performance grandmaster laboratory. Study romantic piece play alongside real-time engine evaluation and grandmaster opening novelty suites.
                     </p>
@@ -2511,7 +2525,7 @@
                     <!-- Interactive Live Move Analysis Engine Control Widget -->
                     <div class="engine-hud-box">
                         <div class="engine-hud-top">
-                            <span style="font-weight: 800; font-size: 0.88rem; text-transform: uppercase; color: var(--text-secondary);">Stockfish 16 Engine</span>
+                            <span style="font-weight: 800; font-size: 0.88rem; text-transform: uppercase; color: var(--text-primary);">Stockfish 16 Engine</span>
                             <span class="engine-eval-pill" id="engineEvalScore">+1.4 White Advantage</span>
                         </div>
                         <div class="engine-moves-row">

@@ -316,14 +316,24 @@
         }
 
         .action-btn.btn-login {
-            background: var(--accent);
-            color: #12151c;
-            border-color: var(--accent);
-            font-weight: 700;
+            background: #92400e;
+            color: #ffffff !important;
+            border: 2px solid #78350f;
+            font-weight: 800;
         }
 
         .action-btn.btn-login i {
-            color: #12151c;
+            color: #ffffff !important;
+        }
+
+        body.dark-mode .action-btn.btn-login {
+            background: var(--accent);
+            color: #0f172a !important;
+            border-color: var(--accent);
+        }
+
+        body.dark-mode .action-btn.btn-login i {
+            color: #0f172a !important;
         }
 
         .action-btn.btn-login:hover {
@@ -955,22 +965,22 @@
             align-items: center;
             gap: 8px;
             background: #fef3c7;
-            color: #92400e;
+            color: #78350f;
             font-size: 0.82rem;
-            font-weight: 800;
+            font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             padding: 0.5rem 1.2rem;
             border-radius: 50px;
-            border: 1.5px solid #fde68a;
+            border: 2px solid #d97706;
             margin-bottom: 1.2rem;
-            box-shadow: 0 2px 8px rgba(146, 64, 14, 0.08);
+            box-shadow: 0 2px 8px rgba(180, 83, 9, 0.15);
         }
 
         body.dark-mode .idx-badge {
             background: rgba(212, 163, 115, 0.2);
             color: #fbbf24;
-            border-color: rgba(251, 191, 36, 0.4);
+            border-color: rgba(251, 191, 36, 0.45);
             box-shadow: none;
         }
 
@@ -1015,38 +1025,57 @@
             font-weight: 900;
             line-height: 1.06;
             margin-bottom: 1.4rem;
-            background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--text-primary) !important;
+            background: none !important;
+            -webkit-text-fill-color: initial !important;
+        }
+
+        .idx-hero-h1 .h1-accent {
+            color: #92400e !important;
+            font-weight: 900;
+        }
+
+        body.dark-mode .idx-hero-h1 .h1-accent {
+            color: #fbbf24 !important;
         }
 
         .idx-hero-p {
             font-size: 1.15rem;
-            color: var(--text-secondary);
+            color: #1e293b;
+            font-weight: 600;
             line-height: 1.75;
             margin-bottom: 2rem;
         }
 
-        /* Interactive ELO Rating Target Calculator */
+        body.dark-mode .idx-hero-p {
+            color: #e2e8f0;
+        }
+
+        /* Interactive ELO Rating Target Calculator (High-Contrast Command Box) */
         .elo-calc-box {
             background: var(--card-bg);
-            border: 1.5px solid var(--border-light);
+            border: 2px solid #cbd5e1;
             border-radius: 24px;
-            padding: 1.6rem 1.8rem;
-            box-shadow: var(--shadow-sm);
+            padding: 1.8rem 2rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
             margin-bottom: 2.2rem;
             max-width: 520px;
         }
 
+        body.dark-mode .elo-calc-box {
+            border-color: rgba(255, 255, 255, 0.16);
+            box-shadow: var(--shadow-sm);
+        }
+
         .elo-calc-head {
             font-family: var(--font-heading);
-            font-size: 1.05rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
+            font-size: 1.15rem;
+            font-weight: 900;
+            margin-bottom: 1.1rem;
             display: flex;
             align-items: center;
-            gap: 8px;
-            color: #92400e;
+            gap: 9px;
+            color: #78350f;
         }
 
         body.dark-mode .elo-calc-head {
@@ -1068,69 +1097,104 @@
 
         .elo-input-group label {
             display: block;
-            font-size: 0.78rem;
-            font-weight: 700;
-            color: var(--text-secondary);
-            margin-bottom: 0.35rem;
+            font-size: 0.82rem;
+            font-weight: 900;
+            color: #0f172a;
+            margin-bottom: 0.45rem;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
+        }
+
+        body.dark-mode .elo-input-group label {
+            color: #f1f5f9;
         }
 
         .elo-select-field {
             width: 100%;
-            padding: 0.65rem 0.9rem;
-            border-radius: 10px;
-            border: 1.5px solid var(--border-light);
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            border: 2px solid #94a3b8;
             background: var(--bg-primary);
-            color: var(--text-primary);
-            font-size: 0.9rem;
-            font-weight: 600;
+            color: #0f172a;
+            font-size: 0.95rem;
+            font-weight: 800;
             font-family: inherit;
             outline: none;
+            cursor: pointer;
+            transition: var(--transition-smooth);
         }
 
+        body.dark-mode .elo-select-field {
+            border-color: rgba(255, 255, 255, 0.25);
+            color: #f8fafc;
+        }
+
+        .elo-select-field:focus {
+            border-color: #92400e;
+            box-shadow: 0 0 0 3px rgba(146, 64, 14, 0.2);
+        }
+
+        body.dark-mode .elo-select-field:focus {
+            border-color: #fbbf24;
+            box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.25);
+        }
+
+        .elo-select-field option {
+            background: var(--card-bg);
+            color: var(--text-primary);
+        }
+
+        /* High-Contrast Tactical Result Display Banner */
         .elo-result-banner {
-            background: #fffbeeb0;
-            border: 1.5px solid #fde68a;
-            border-radius: 16px;
-            padding: 1rem 1.2rem;
+            background: #0f172a;
+            border: 2px solid #1e293b;
+            border-radius: 18px;
+            padding: 1.15rem 1.4rem;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1rem;
+            gap: 1.2rem;
             align-items: center;
+            box-shadow: 0 6px 20px rgba(15, 23, 42, 0.2);
         }
 
         body.dark-mode .elo-result-banner {
-            background: rgba(212, 163, 115, 0.12);
-            border-color: rgba(212, 163, 115, 0.3);
+            background: #090d14;
+            border-color: rgba(251, 191, 36, 0.35);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
         }
 
         @media (max-width: 480px) {
             .elo-result-banner {
                 grid-template-columns: 1fr;
-                gap: 0.75rem;
+                gap: 0.85rem;
             }
         }
 
         .elo-res-col {
             display: flex;
             flex-direction: column;
-            gap: 0.2rem;
+            gap: 0.25rem;
         }
 
         .elo-res-label {
             font-size: 0.78rem;
-            font-weight: 700;
-            color: var(--text-secondary);
+            font-weight: 900;
+            color: #cbd5e1;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
+        }
+
+        body.dark-mode .elo-res-label {
+            color: #94a3b8;
         }
 
         .elo-res-val {
-            color: #b45309;
-            font-size: 1.1rem;
+            color: #fbbf24;
+            font-size: 1.35rem;
             font-weight: 900;
             line-height: 1.2;
+            font-family: var(--font-heading);
+            letter-spacing: 0.2px;
         }
 
         body.dark-mode .elo-res-val {
@@ -2448,7 +2512,7 @@
             <div class="idx-hero-grid">
                 <div>
                     <div class="idx-badge"><i class="fas fa-microchip"></i> Tactical Command Engine</div>
-                    <h1 class="idx-hero-h1">Elevate Your ELO.<br>Master Every Square.</h1>
+                    <h1 class="idx-hero-h1">Elevate Your ELO.<br><span class="h1-accent">Master Every Square.</span></h1>
                     <p class="idx-hero-p">
                         Transform your calculation speed with real-time tactical radar analysis, deep grandmaster positional audits, and automated blunder detection.
                     </p>
@@ -2489,10 +2553,10 @@
                     </div>
 
                     <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                        <a href="#idxDiagnostic" class="action-btn btn-login" style="padding: 0.95rem 2.2rem; font-size: 1rem;">
+                        <a href="#idxDiagnostic" class="action-btn btn-login" style="padding: 0.95rem 2.2rem; font-size: 1rem; height: auto; min-height: 48px;">
                             <i class="fas fa-paper-plane"></i> Request Free Audit
                         </a>
-                        <a href="#idxCurriculum" class="action-btn" style="padding: 0.95rem 2.2rem; font-size: 1rem;">
+                        <a href="#idxCurriculum" class="action-btn" style="padding: 0.95rem 2.2rem; font-size: 1rem; height: auto; min-height: 48px;">
                             <i class="fas fa-sitemap"></i> Explore Roadmap
                         </a>
                     </div>
